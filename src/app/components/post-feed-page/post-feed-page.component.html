@@ -14,7 +14,7 @@
 
     <ng-template #createPostTemplate>
         <form class="form" [formGroup]="postForm" (ngSubmit)="submitPost($event)">
-            <mat-form-field class="full-width" appearance="fill">
+            <mat-form-field class="full-width" appearance="fill" required>
                 <mat-label>Make a Post</mat-label>
                 <textarea matInput autofocus formControlName="text"></textarea>
             </mat-form-field>
@@ -24,7 +24,7 @@
             </mat-form-field>
             <div align="end">
                 <button mat-raised-button color="warn" (click)="toggleCreatePost()">Cancel</button>
-                <button mat-raised-button color="primary" (click)="submitPost($event)">Post</button>
+                <button mat-raised-button color="primary" (click)="submitPost($event)"[disabled]="!postForm.valid">Post</button>
             </div>
 
         </form>
