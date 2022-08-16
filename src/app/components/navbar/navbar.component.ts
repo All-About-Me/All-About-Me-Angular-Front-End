@@ -22,5 +22,8 @@ export class NavbarComponent implements OnInit{
     this.authService.logout();
     this.router.navigate(['login']);
   }
+  toggleDarkTheme(): void {
+    document.body.classList.toggle('dark-theme');
 
+}
 }

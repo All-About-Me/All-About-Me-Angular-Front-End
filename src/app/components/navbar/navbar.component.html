@@ -3,5 +3,8 @@
         <span [routerLink]="['/post-feed']">Revature Social Media</span>
         <span class="spacer"></span>
         <button mat-button (click)="logout();">Logout</button>
+        <mat-icon class="toggle" >brightness_5</mat-icon>
+        <mat-slide-toggle (click)="toggleDarkTheme()" color="primary" class="toggle"></mat-slide-toggle>
+        <mat-icon>bedtime</mat-icon>
     </mat-toolbar>
 </p>
