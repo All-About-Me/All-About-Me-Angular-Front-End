@@ -2,6 +2,12 @@
     <mat-toolbar>
         <span [routerLink]="['/post-feed']">Revature Social Media</span>
         <span class="spacer"></span>
-        <button mat-button (click)="logout();">Logout</button>
+        <button mat-icon-button style="width:85px; font-size: 16px;"><mat-icon style="vertical-align:sub;">home</mat-icon>Home</button>
+        <button mat-icon-button style="width:85px; font-size: 16px;"><mat-icon style="vertical-align:sub;">account_circle</mat-icon>Account</button>
+        <button mat-icon-button style="width:85px; font-size: 16px;"(click)="logout();"><mat-icon style="vertical-align:sub;">exit_to_app</mat-icon>Logout</button>
+       
+        <mat-icon class="toggle" >brightness_5</mat-icon>
+        <mat-slide-toggle (click)="toggleDarkTheme()" color="primary" class="toggle"></mat-slide-toggle>
+        <mat-icon>bedtime</mat-icon>
     </mat-toolbar>
 </p>
