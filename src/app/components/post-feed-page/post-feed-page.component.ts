@@ -1,9 +1,12 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import Bookmark from 'src/app/models/Bookmark';
 import Post from 'src/app/models/Post';
 import User from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
+import { BookmarkService } from 'src/app/services/bookmark.service';
 import { PostService } from 'src/app/services/post.service';
+import { MessengerService } from 'src/app/services/messenger.service';
 
 @Component({
   selector: 'app-post-feed-page',
@@ -16,13 +19,16 @@ export class PostFeedPageComponent implements OnInit {
   postForm = new FormGroup({
     text: new FormControl(''),
     imageUrl: new FormControl('')
+    //we should be able to create a custome validator here when we get to the optional functon "profanity filter"
   })
 
   posts: Post[] = [];
   createPost:boolean = false;
   showBookmarks:boolean=false;
+  bookmarkedPosts: Post[] = [];
+  allBookmarks:Bookmark[]=[];
 
-  constructor(private postService: PostService, private authService: AuthService) { }
+  constructor(private postService: PostService, private authService: AuthService, private bookmarkService: BookmarkService, private msg:MessengerService) { }
 
   ngOnInit(): void {
     this.postService.getAllPosts().subscribe(
@@ -30,6 +36,19 @@ export class PostFeedPageComponent implements OnInit {
         this.posts = response
       }
     )
+    
+    this.bookmarkService.getAllSavedPosts().subscribe(
+      (response) => {
+        this.allBookmarks = response
+        for (const element of this.allBookmarks){
+          this.bookmarkedPosts.push(element.post);
+        }
+      }
+    )
+
+    this.msg.getMsg().subscribe((bookmark:any)=>{
+      this.bookmarkedPosts.push(bookmark)
+    })
   }
 
   toggleCreatePost = () => {

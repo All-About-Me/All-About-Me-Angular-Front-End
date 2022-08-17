@@ -19,7 +19,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { BookmarkComponent } from './bookmark/bookmark.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { BookmarkComponent } from './components/bookmark/bookmark.component';
 
 
 
@@ -36,6 +37,7 @@ import { BookmarkComponent } from './bookmark/bookmark.component';
     UserInitialsPipe,
     UserProfileComponent,
     BookmarkComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
