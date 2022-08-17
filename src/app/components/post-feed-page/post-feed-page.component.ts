@@ -20,6 +20,7 @@ export class PostFeedPageComponent implements OnInit {
 
   posts: Post[] = [];
   createPost:boolean = false;
+  showBookmarks:boolean=false;
 
   constructor(private postService: PostService, private authService: AuthService) { }
 
@@ -44,5 +45,9 @@ export class PostFeedPageComponent implements OnInit {
           this.toggleCreatePost()
         }
       )
+  }
+
+  toggleFeed =()=>{
+    this.showBookmarks=!this.showBookmarks;
   }
 }

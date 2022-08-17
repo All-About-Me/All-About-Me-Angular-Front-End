@@ -19,6 +19,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { BookmarkComponent } from './bookmark/bookmark.component';
 
 
 
@@ -34,6 +35,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     NavbarComponent,
     UserInitialsPipe,
     UserProfileComponent,
+    BookmarkComponent,
   ],
   imports: [
     BrowserModule,
