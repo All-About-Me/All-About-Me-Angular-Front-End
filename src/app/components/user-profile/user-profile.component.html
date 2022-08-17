@@ -1,0 +1,10 @@
+<p>user-profile works!</p>
+
+<p>{{user.firstName}} {{user.lastName}}</p>
+<p>{{user.email}}</p>
+
+<form #editProfile="ngForm" (submit)="onSubmit(editProfile)">
+    <input class="form-control" name="inputFirstName" type="text" placeholder="First Name" [(ngModel)]="user.firstName"/>
+    <input class="form-control" name="inputLastName" type="text" placeholder="Last Name" [(ngModel)]="user.lastName"/>
+    <input type="submit" name="Update Profile"/>
+</form>
