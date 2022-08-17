@@ -14,6 +14,6 @@ export class UserService {
   constructor(private http:HttpClient) { }
 
   updateUser(user:User):Observable<any>{
-    return this.http.put<User>(this.baseUrl+"/update", user)
+    return this.http.put<User>(this.baseUrl+"/update", user, {headers: environment.headers, withCredentials: environment.withCredentials})
   }
 }
