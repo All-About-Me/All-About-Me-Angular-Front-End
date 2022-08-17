@@ -1,10 +1,16 @@
-<p>user-profile works!</p>
+<app-navbar></app-navbar>
+<button (click)="resetPassword()">Reset Password</button>
+<div class="container">
 
 <p>{{user.firstName}} {{user.lastName}}</p>
 <p>{{user.email}}</p>
 
 <form #editProfile="ngForm" (submit)="onSubmit(editProfile)">
     <input class="form-control" name="inputFirstName" type="text" placeholder="First Name" [(ngModel)]="user.firstName"/>
-    <input class="form-control" name="inputLastName" type="text" placeholder="Last Name" [(ngModel)]="user.lastName"/>
+    <input class="form-control" name="inputLastName" type="text" placeholder="Last Name" [(ngModel)]="user.lastName"/><br/>
+    <input class="form-control" name="inputEmail" type="text" placeholder="Email" [(ngModel)]="user.email"/>
+    <br/>
     <input type="submit" name="Update Profile"/>
 </form>
+
+</div>
