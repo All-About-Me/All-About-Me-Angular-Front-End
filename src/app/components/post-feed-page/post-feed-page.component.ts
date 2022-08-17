@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import Post from 'src/app/models/Post';
 import User from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,11 +17,13 @@ export class PostFeedPageComponent implements OnInit {
     text: new FormControl(''),
     imageUrl: new FormControl('')
   })
+  
+  submitForm:FormGroup;
 
   posts: Post[] = [];
   createPost:boolean = false;
 
-  constructor(private postService: PostService, private authService: AuthService) { }
+  constructor(private postService: PostService, private authService: AuthService, private fb:FormBuilder) { }
 
   ngOnInit(): void {
     this.postService.getAllPosts().subscribe(
@@ -29,7 +31,9 @@ export class PostFeedPageComponent implements OnInit {
         this.posts = response
       }
     )
-  }
+    this.submitForm = this.fb.group({
+      search_field: [''],
+  })}
 
   toggleCreatePost = () => {
     this.createPost = !this.createPost
@@ -44,5 +48,12 @@ export class PostFeedPageComponent implements OnInit {
           this.toggleCreatePost()
         }
       )
+  }
+
+  onSearch = () => {
+    this.authService.search(this.submitForm.value).subscribe((response)=>{
+      console.log(response);
+    })
+    alert("Work in progress")
   }
 }

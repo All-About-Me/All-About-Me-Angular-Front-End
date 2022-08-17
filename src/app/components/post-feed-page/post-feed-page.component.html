@@ -3,10 +3,10 @@
 <div class="sidebyside">
     <app-user-card></app-user-card>
 </div>
-<form>
+<form [formGroup]="submitForm" (ngSubmit)="onSearch()" novalidate>
     <label for="search_field">Search for User: </label>
-    <input type="text" name="search_field">
-    <button type="submit" name="submit_btn">Search</button> 
+    <input type="text" formControlName="search_field">
+    <button type="submit" name="submit_btn">Search</button>
     <button type="reset" name="reset_btn">Reset</button> 
 </form>
 
