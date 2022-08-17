@@ -11,8 +11,7 @@ import { Router } from '@angular/router';
 })
 export class UserProfileComponent implements OnInit {
 
-  user: User = {} as User;
-  
+  user: User = {} as User;  
 
   constructor(
     private authService: AuthService, 
@@ -28,8 +27,18 @@ export class UserProfileComponent implements OnInit {
       console.log(updateForm);
     this.user.firstName=updateForm.inputFirstName;
     this.user.lastName=updateForm.inputLastName;
+    this.user.email = updateForm.inputEmail;
+    this.user.phoneNumber = updateForm.inputPhoneNumber;
+    this.user.address= updateForm.inputAddress;
+    this.user.gender = updateForm.selectGender;
+    this.user.aboutMe = updateForm.inputAboutMe;
       console.log(this.user);
-    this._userService.updateUser(this.user).subscribe(data=>this.user=data);
+    this._userService.updateUser(this.user).subscribe(
+      (data)=>this.user=data);
+    let tag :HTMLElement = document.createElement('p');
+    let text = document.createTextNode("Successfully updated profile!");
+    tag.appendChild(text);
+    document.getElementById("edit")?.appendChild(tag);
   }
 
   resetPassword():void{

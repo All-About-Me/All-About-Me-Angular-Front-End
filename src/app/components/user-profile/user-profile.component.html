@@ -1,16 +1,27 @@
 <app-navbar></app-navbar>
-<button (click)="resetPassword()">Reset Password</button>
-<div class="container">
 
-<p>{{user.firstName}} {{user.lastName}}</p>
-<p>{{user.email}}</p>
 
+
+    <div class="sidebyside">
+        <app-user-card></app-user-card>
+    </div>
+    
+    <div class="sidebyside" id="edit">
+        <button (click)="resetPassword()">Reset Password</button>
 <form #editProfile="ngForm" (submit)="onSubmit(editProfile)">
+    <h2>Edit Profile Information</h2>
     <input class="form-control" name="inputFirstName" type="text" placeholder="First Name" [(ngModel)]="user.firstName"/>
     <input class="form-control" name="inputLastName" type="text" placeholder="Last Name" [(ngModel)]="user.lastName"/><br/>
-    <input class="form-control" name="inputEmail" type="text" placeholder="Email" [(ngModel)]="user.email"/>
+    <input class="form-control" name="inputEmail" type="text" placeholder="Email" [(ngModel)]="user.email"/><br/>
+    <input class="form-control" name="inputPhoneNumber" type="text" placeholder="Phone Number" [(ngModel)]="user.phoneNumber"/><br/>
+    <input class="form-control" name="inputAddress" type="text" placeholder="Address" [(ngModel)]="user.address"/><br/>
+    <select name="selectGender" [(ngModel)]="user.gender">
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+    </select> <br/>
+    <textarea class="form-control" name="inputAboutMe" placeholder="About Me" [(ngModel)]="user.aboutMe"></textarea>
     <br/>
     <input type="submit" name="Update Profile"/>
 </form>
-
 </div>
