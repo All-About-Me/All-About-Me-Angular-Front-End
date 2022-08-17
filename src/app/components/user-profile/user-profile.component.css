@@ -1,0 +1,31 @@
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  min-height: 100vh;
+  background: var(--bkg-color);
+  --text-color:black; 
+  --bkg-color:#fff;
+  --btn-txt-color:white;
+  --btn-bg-color:rgb(11,88,160);
+}
+
+h1,
+div,
+p {
+  color: var(--text-color);
+}
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 2px;
+  color: var(--btn-txt-color);
+  background-color: var(--btn-bg-color);
+}
+.login-wrapper {
+    height: 100%;
+  }
