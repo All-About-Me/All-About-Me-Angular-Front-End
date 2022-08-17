@@ -10,3 +10,4 @@ export class AppComponent {
   toggleDarkTheme(): void {
     document.body.classList.toggle('dark-theme');
 }
+}
