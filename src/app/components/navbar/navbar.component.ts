@@ -23,4 +23,9 @@ export class NavbarComponent implements OnInit{
     this.router.navigate(['login']);
   }
 
+  viewProfile(): void {
+    this.router.navigate(['/profile-page']);
+
+  }
+
 }
