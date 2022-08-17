@@ -24,6 +24,7 @@ export class NavbarComponent implements OnInit{
   }
   toggleDarkTheme(): void {
     document.body.classList.toggle('dark-theme');
+  }
 
   viewProfile(): void {
     this.router.navigate(['/profile-page']);
@@ -31,4 +32,6 @@ export class NavbarComponent implements OnInit{
   }
 
 }
-}
+
+
+

@@ -15,12 +15,12 @@ import { CommentComponent } from './components/comment/comment.component';
 import { UserCardComponent } from './components/user-card/user-card.component';
 import { UserInitialsPipe } from './pipes/user-initials.pipe';
 import { NavbarComponent } from './components/navbar/navbar.component';
-<<<<<<< HEAD
+
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
-=======
+
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
->>>>>>> d32425f065f256c2b912b4a3c39eadc4ec4f2d8e
+
 
 @NgModule({
   declarations: [
@@ -42,11 +42,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
-<<<<<<< HEAD
-    FormsModule
-=======
+    FormsModule,
     MatSlideToggleModule
->>>>>>> d32425f065f256c2b912b4a3c39eadc4ec4f2d8e
   ],
   providers: [],
   bootstrap: [AppComponent]
