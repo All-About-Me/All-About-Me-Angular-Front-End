@@ -35,8 +35,6 @@ export class AuthService {
 
   search(firstName:any): Observable<User> {
        return this.http.get<User>("http://localhost:8080/auth/users/"+firstName)
-      
     } 
-
   }
 
