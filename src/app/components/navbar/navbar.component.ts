@@ -22,10 +22,13 @@ export class NavbarComponent implements OnInit{
     this.authService.logout();
     this.router.navigate(['login']);
   }
+  toggleDarkTheme(): void {
+    document.body.classList.toggle('dark-theme');
 
   viewProfile(): void {
     this.router.navigate(['/profile-page']);
 
   }
 
+}
 }
