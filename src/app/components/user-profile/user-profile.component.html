@@ -1,28 +1,5 @@
 <app-navbar></app-navbar>
-<!-- <button (click)="resetPassword()">Reset Password</button>
-<div class="container">
-    <div class="sidebyside">
-        <app-user-card></app-user-card>
-    </div>
-    <div class="sidebyside" id="edit">
-        <button (click)="resetPassword()">Reset Password</button>
-<form #editProfile="ngForm" (submit)="onSubmit(editProfile)">
-    <h2>Edit Profile Information</h2>
-    <input class="form-control" name="inputFirstName" type="text" placeholder="First Name" [(ngModel)]="user.firstName"/>
-    <input class="form-control" name="inputLastName" type="text" placeholder="Last Name" [(ngModel)]="user.lastName"/><br/>
-    <input class="form-control" name="inputEmail" type="text" placeholder="Email" [(ngModel)]="user.email"/><br/>
-    <input class="form-control" name="inputPhoneNumber" type="text" placeholder="Phone Number" [(ngModel)]="user.phoneNumber"/><br/>
-    <input class="form-control" name="inputAddress" type="text" placeholder="Address" [(ngModel)]="user.address"/><br/>
-    <select name="selectGender" [(ngModel)]="user.gender">
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="Other">Other</option>
-    </select> <br/>
-    <textarea class="form-control" name="inputAboutMe" placeholder="About Me" [(ngModel)]="user.aboutMe"></textarea>
-    <br/>
-    <button style="border-radius: 5px; width: 120px;" type="submit" name="Update Profile">Update Profile</button>
-</form>
-</div> -->
+
 <div class="main-content">
   <!-- Header -->
   <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(https://gp1.com/wp-content/uploads/2017/07/SOCIALMedia.jpeg); background-size: cover; background-position: center top;">
@@ -76,13 +53,13 @@
                 {{user.firstName}} {{user.lastName}}
               </h3>
               <div class="h5 font-weight-300">
-                <i class="ni location_pin mr-2"></i>City, State
+                <i class="ni location_pin mr-2"></i>{{user.city}}, {{user.state}}
               </div>
               <div class="h5 mt-4">
-                <i class="ni business_briefcase-24 mr-2"></i>Software Engineer
+                <i class="ni business_briefcase-24 mr-2"></i>About Me
               </div>
               <div>
-                <i class="ni education_hat mr-2"></i>University of Computer Science
+                <i class="ni education_hat mr-2"></i>{{user.aboutMe}}
               </div>
               <hr class="my-4">
               <p>
@@ -90,9 +67,9 @@
                 &nbsp;
                 <button style="border-radius: 5px; width: 150px;">Message</button>
                 <br><br>
-                <button style="border-radius: 5px; width: 150px;">Update Profile</button>
+                <button style="border-radius: 5px; width: 150px;" (click)="allowUpdate()">Update Profile</button>
                 &nbsp;
-                <button style="border-radius: 5px; width: 150px;">Reset Password</button>
+                <button style="border-radius: 5px; width: 150px;" (click)="resetPassword()">Reset Password</button>
               </p>
             </div>
           </div>
@@ -102,7 +79,7 @@
         <div class="card bg-secondary shadow">
           <div class="card-header bg-white border-0">
             <div class="row align-items-center">
-              <div class="col-8">
+              <div class="col-8" id="accountHeader">
                 <h3 class="mb-0">My account</h3>
               </div>
               <div class="col-4 text-right">
@@ -111,14 +88,15 @@
             </div>
           </div>
           <div class="card-body">
-            <form>
+            <form #editProfile="ngForm" (submit)="onSubmit(editProfile)" >
+                <fieldset id="fieldsetEdit" disabled>
               <h6 class="heading-small text-muted mb-4">User information</h6>
               <div class="pl-lg-4">
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="form-group focused">
                         <label class="form-control-label" for="input-first-name">First name</label>
-                        <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value="{{user.firstName}}">
+                        <input type="text" name="inputFirstName" class="form-control form-control-alternative" placeholder="First name" [(ngModel)]="user.firstName">
 
 
                     </div>
@@ -127,7 +105,7 @@
                     <div class="form-group">
 
                         <label class="form-control-label" for="input-last-name">Last name</label>
-                        <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="{{user.lastName}}">
+                        <input type="text" name="inputLastName" class="form-control form-control-alternative" placeholder="Last name" [(ngModel)]="user.lastName">
 
 
                     </div>
@@ -138,7 +116,7 @@
                     <div class="form-group focused">
 
                         <label class="form-control-label" for="input-email">Email address</label>
-                        <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="allaboutme@example.com" value="{{user.email}}">
+                        <input type="email" name="inputEmail" class="form-control form-control-alternative" placeholder="allaboutme@example.com" [(ngModel)]="user.email">
 
                     </div>
                   </div>
@@ -147,7 +125,7 @@
 
 
                       <label class="form-control-label" for="input-phone">Phone Number</label>
-                      <input type="text" id="input-phone" class="form-control form-control-alternative" placeholder="Phone Number" value="">
+                      <input type="text" name="inputPhoneNumber" class="form-control form-control-alternative" placeholder="Phone Number" [(ngModel)]="user.phoneNumber">
                     </div>
                   </div>
                 </div>
@@ -160,7 +138,7 @@
                   <div class="col-md-12">
                     <div class="form-group focused">
                       <label class="form-control-label" for="input-address">Address</label>
-                      <input id="input-address" class="form-control form-control-alternative" placeholder="Street" value="" type="text">
+                      <input name="inputAddress" class="form-control form-control-alternative" placeholder="Street" [(ngModel)]="user.address" type="text">
                     </div>
                   </div>
                 </div>
@@ -168,19 +146,19 @@
                   <div class="col-lg-4">
                     <div class="form-group focused">
                       <label class="form-control-label" for="input-city">City</label>
-                      <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="">
+                      <input type="text" name="inputCity" class="form-control form-control-alternative" placeholder="City"  [(ngModel)]="user.city">
                     </div>
                   </div>
                   <div class="col-lg-4">
                     <div class="form-group focused">
                       <label class="form-control-label" for="input-country">State</label>
-                      <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="State" value="">
+                      <input type="text" name="inputState" class="form-control form-control-alternative" placeholder="State"  [(ngModel)]="user.state">
                     </div>
                   </div>
                   <div class="col-lg-4">
                     <div class="form-group">
                       <label class="form-control-label" for="input-country">Postal code</label>
-                      <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Postal code" value="">
+                      <input type="number" name="inputPostalCode" class="form-control form-control-alternative" placeholder="Postal code"  [(ngModel)]="user.postalCode">
                     </div>
                   </div>
                 </div>
@@ -190,10 +168,21 @@
               <h6 class="heading-small text-muted mb-4">About me</h6>
               <div class="pl-lg-4">
                 <div class="form-group focused">
-                  <label>About Me</label>
-                  <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ..."></textarea>
+                  <label class="form-control-label" for="inputAboutMe">About Me</label>
+                  <textarea rows="4" class="form-control form-control-alternative" name="inputAboutMe" placeholder="A few words about you ..." [(ngModel)]="user.aboutMe"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="gender">Gender</label>
+                    <select class="form-control form-control-alternative" name="selectGender" [(ngModel)]="user.gender">
+                        <option value="Male">Male (He/Him)</option>
+                        <option value="Female">Female (She/Her)</option>
+                        <option value="Nonbinary">Nonbinary (They/Them)</option>
+                        <option value="Other">Other</option>
+                    </select>
                 </div>
               </div>
+              <input hidden style="border-radius: 5px; width: 150px;" id="submitProfile" type="submit" name="Update Profile"/>
+              </fieldset>
             </form>
           </div>
         </div>

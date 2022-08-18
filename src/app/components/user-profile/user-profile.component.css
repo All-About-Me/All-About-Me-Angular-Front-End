@@ -50,6 +50,15 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+.updateNotif {
+    border: 1px solid #233dd2;
+    background-color: #11cdef;
+}
+
+fieldset {
+    border: none;
+}
+
 @-ms-viewport {
   width: device-width;
 }
@@ -2032,3 +2041,4 @@ p {
 #navbar .navbar {
   margin-bottom: 20px;
 }
+
