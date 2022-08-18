@@ -3,11 +3,11 @@
 <div class="sidebyside">
     <app-user-card></app-user-card>
 </div>
-<form>
-    <label for="search_field">Search for User: </label>
-    <input type="text" name="search_field">
-    <button type="submit" name="submit_btn">Search</button> 
 
+<form [formGroup]="submitForm" (ngSubmit)="onSearch()" novalidate>
+    <label for="search_field">Search for User: </label>
+    <input type="text" formControlName="search_field">
+    <button type="submit" name="submit_btn">Search</button>
     <button type="reset" name="reset_btn">Reset</button> 
 </form>
 
@@ -37,8 +37,20 @@
 
         </form>
     </ng-template>
-
+<div *ngIf="!showBookmarks; else toggleButton">
+<button (click)="toggleFeed()">Show Bookmarked Posts</button>
+</div>
+<ng-template #toggleButton>
+    <button (click)="toggleFeed()">Show Feed</button>
+</ng-template>
+<div *ngIf="!showBookmarks; else bookmarkFeed">
     <div id="post-feed" *ngFor="let post of posts">
         <app-post [post]="post"></app-post>
     </div>
+</div>
+<ng-template #bookmarkFeed>
+    <div id="post-feed" *ngFor="let post of bookmarkedPosts">
+        <app-bookmark [bookmarkedPost]="post"></app-bookmark>
+    </div>
+</ng-template>
 </div>

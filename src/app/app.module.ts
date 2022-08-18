@@ -20,6 +20,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { BookmarkComponent } from './components/bookmark/bookmark.component';
 
 
 
@@ -35,6 +36,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     NavbarComponent,
     UserInitialsPipe,
     UserProfileComponent,
+    BookmarkComponent,
     ResetPasswordComponent,
   ],
   imports: [

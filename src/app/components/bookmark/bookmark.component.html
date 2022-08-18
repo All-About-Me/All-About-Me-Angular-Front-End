@@ -16,18 +16,7 @@
             </div>
         </mat-card-content>
         <mat-card-actions align="end">
-<<<<<<< HEAD
-            <button style="border-radius: 5px; width: 60px;" (click)="toggleReplyToPost()">Reply</button>
-=======
-            <div *ngIf="!isBookmarked else unbookmark">
-                <button mat-raised-button color="Gold" (click)="toggleBookmark()">Bookmark</button>
-            </div>
-            <ng-template #unbookmark>
-                <button mat-raised-button color="Yellow" (click)="toggleBookmark()">Remove Bookmark</button>
-            </ng-template>
-            
             <button mat-raised-button color="primary" (click)="toggleReplyToPost()">Reply</button>
->>>>>>> 0c65121f6b85f13a7788bc9df7054b7d8bcd18cc
         </mat-card-actions>
         <form class="form" *ngIf="replyToPost" [formGroup]="commentForm" (ngSubmit)="submitReply($event)">
             <mat-form-field class="full-width" appearance="fill">
@@ -35,9 +24,8 @@
                 <textarea matInput autofocus formControlName="text"></textarea>
             </mat-form-field>
             <div align="end">
-                <button style="border-radius: 5px; width: 60px;" (click)="toggleReplyToPost()">Cancel</button>
-                &nbsp;
-                <button style="border-radius: 5px; width: 60px;" type="submit">Post</button>
+                <button mat-raised-button color="warn" (click)="toggleReplyToPost()">Cancel</button>
+                <button mat-raised-button color="primary" type="submit">Post</button>
             </div>
         </form>
     </mat-card>
