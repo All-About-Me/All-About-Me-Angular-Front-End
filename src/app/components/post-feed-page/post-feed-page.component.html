@@ -3,10 +3,11 @@
 <div class="sidebyside">
     <app-user-card></app-user-card>
 </div>
-<form>
+
+<form [formGroup]="submitForm" (ngSubmit)="onSearch()" novalidate>
     <label for="search_field">Search for User: </label>
-    <input type="text" name="search_field">
-    <button type="submit" name="submit_btn">Search</button> 
+    <input type="text" formControlName="search_field">
+    <button type="submit" name="submit_btn">Search</button>
     <button type="reset" name="reset_btn">Reset</button> 
 </form>
 
@@ -20,23 +21,36 @@
 
     <ng-template #createPostTemplate>
         <form class="form" [formGroup]="postForm" (ngSubmit)="submitPost($event)">
-            <mat-form-field class="full-width" appearance="fill" required>
+            <mat-form-field class="full-width" appearance="fill">
                 <mat-label>Make a Post</mat-label>
-                <textarea matInput autofocus formControlName="text"></textarea>
+                <textarea matInput autofocus formControlName="text" required></textarea>
             </mat-form-field>
             <mat-form-field class="full-width" appearance="fill">
                 <mat-label>Add an Image?</mat-label>
                 <input matInput formControlName="imageUrl">
             </mat-form-field>
             <div align="end">
-                <button mat-raised-button color="warn" (click)="toggleCreatePost()">Cancel</button>
-                <button mat-raised-button color="primary" (click)="submitPost($event)"[disabled]="!postForm.valid">Post</button>
+                <button style="border-radius: 5px; width: 60px;" (click)="toggleCreatePost()">Cancel</button>
+                &nbsp;
+                <button style="border-radius: 5px; width: 60px;" (click)="submitPost($event)" [disabled]="!postForm.valid">Post</button>
             </div>
 
         </form>
     </ng-template>
-
+<div *ngIf="!showBookmarks; else toggleButton">
+<button (click)="toggleFeed()">Show Bookmarked Posts</button>
+</div>
+<ng-template #toggleButton>
+    <button (click)="toggleFeed()">Show Feed</button>
+</ng-template>
+<div *ngIf="!showBookmarks; else bookmarkFeed">
     <div id="post-feed" *ngFor="let post of posts">
         <app-post [post]="post"></app-post>
     </div>
+</div>
+<ng-template #bookmarkFeed>
+    <div id="post-feed" *ngFor="let post of bookmarkedPosts">
+        <app-post [post]="post"></app-post>
+    </div>
+</ng-template>
 </div>

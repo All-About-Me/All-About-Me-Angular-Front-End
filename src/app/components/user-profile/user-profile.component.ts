@@ -33,6 +33,16 @@ export class UserProfileComponent implements OnInit {
     this.formChangesSubscription.unsubscribe();
   }
 
+  allowUpdate(){
+    let fs:HTMLElement = document.getElementById('fieldsetEdit')!;
+    if (fs.hasAttribute('disabled')){
+      fs.setAttribute('disabled','');
+    }
+    else{
+      fs.removeAttribute('disabled');
+    }
+  }
+
   onSubmit(editProfile:any){
     if (!document.getElementById('confirmUpdate')){
     let updateForm = editProfile.value;
@@ -58,8 +68,9 @@ export class UserProfileComponent implements OnInit {
     let tag :HTMLElement = document.createElement('p');
     let text = document.createTextNode("Successfully updated profile!");
     tag.appendChild(text);
+    tag.className='updateNotif';
     tag.setAttribute('id', 'confirmUpdate');
-    document.getElementById("edit")?.appendChild(tag);
+    document.getElementById("accountHeader")?.append(tag);
   }
 
   refuseUpdate():void{
@@ -67,8 +78,9 @@ export class UserProfileComponent implements OnInit {
     let tag:HTMLElement = document.createElement('p');
     let text = document.createTextNode("You have already changed your profile");
     tag.appendChild(text);
+    tag.className='updateNotif';
     tag.setAttribute('id','refuseUpdate');
-    document.getElementById("edit")?.appendChild(tag);
+    document.getElementById("accountHeader")?.append(tag);
     }
   }
 

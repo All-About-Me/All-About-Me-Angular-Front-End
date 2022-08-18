@@ -1,7 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import Bookmark from 'src/app/models/Bookmark';
 import Post from 'src/app/models/Post';
+import User from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
+import { BookmarkService } from 'src/app/services/bookmark.service';
+import { MessengerService } from 'src/app/services/messenger.service';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({
@@ -17,10 +22,12 @@ export class PostComponent implements OnInit {
 
   @Input('post') post: Post
   replyToPost: boolean = false
+  isBookmarked:boolean = false
 
-  constructor(private postService: PostService, private authService: AuthService) { }
+  constructor(private postService: PostService, private authService: AuthService, private msg:MessengerService, private bookmarkService:BookmarkService) { }
 
   ngOnInit(): void {
+    //getting rid of squiggly lol
   }
 
   toggleReplyToPost = () => {
@@ -37,5 +44,19 @@ export class PostComponent implements OnInit {
           this.toggleReplyToPost()
         }
       )
+  }
+
+  toggleBookmark = () => {
+    let bookmark = new Bookmark(0,this.authService.currentUser,this.post);
+    if(!this.isBookmarked){
+    this.bookmarkService.bookmarkPost(this.authService.currentUser,this.post).subscribe()
+    this.isBookmarked = !this.isBookmarked
+    this.msg.sendMsg(bookmark)
+    } else {
+    this.bookmarkService.deleteBookmark(bookmark).subscribe()
+    this.isBookmarked = !this.isBookmarked
+    }
+    
+
   }
 }
