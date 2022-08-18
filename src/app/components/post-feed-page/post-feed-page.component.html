@@ -50,7 +50,7 @@
 </div>
 <ng-template #bookmarkFeed>
     <div id="post-feed" *ngFor="let post of bookmarkedPosts">
-        <app-post [post]="post"></app-post>
+        <app-post [post]="post" [bookmarkList]="bookmarkedPosts"></app-post>
     </div>
 </ng-template>
 </div>
