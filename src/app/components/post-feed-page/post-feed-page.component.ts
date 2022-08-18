@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import Bookmark from 'src/app/models/Bookmark';
 import Post from 'src/app/models/Post';
 import User from 'src/app/models/User';
@@ -16,6 +16,8 @@ import { MessengerService } from 'src/app/services/messenger.service';
 
 export class PostFeedPageComponent implements OnInit {
 
+  search : String ="";
+  
   postForm = new FormGroup({
     text: new FormControl(''),
     imageUrl: new FormControl('')
@@ -28,7 +30,9 @@ export class PostFeedPageComponent implements OnInit {
   bookmarkedPosts: Post[] = [];
   allBookmarks:Bookmark[]=[];
 
-  constructor(private postService: PostService, private authService: AuthService, private bookmarkService: BookmarkService, private msg:MessengerService) { }
+  submitForm:FormGroup;
+
+  constructor(private postService: PostService, private authService: AuthService, private bookmarkService: BookmarkService, private msg:MessengerService, private fb:FormBuilder) { }
 
   ngOnInit(): void {
     this.postService.getAllPosts().subscribe(
@@ -50,6 +54,10 @@ export class PostFeedPageComponent implements OnInit {
     this.msg.getMsg().subscribe((bookmark:any)=>{
       this.bookmarkedPosts.push(bookmark.post)
     })
+
+        this.submitForm = this.fb.group({
+      search_field: [''],
+  })
   }
 
   toggleCreatePost = () => {
@@ -70,4 +78,13 @@ export class PostFeedPageComponent implements OnInit {
   toggleFeed =()=>{
     this.showBookmarks=!this.showBookmarks;
   }
+
+  onSearch= () => {
+    this.authService.search(this.submitForm.value).subscribe((res:any)=>{
+      console.log(res);
+    })
+    alert("Work in progress")
+  }
 }
+
+  
