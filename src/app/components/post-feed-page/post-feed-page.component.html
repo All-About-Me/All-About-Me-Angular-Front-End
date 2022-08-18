@@ -13,7 +13,7 @@
 
 <div [ngClass]="['sidebyside', 'post-feed-container']">
     <form class="form" *ngIf="!createPost; else createPostTemplate">
-        <mat-form-field class="full-width" appearance="fill">
+        <mat-form-field class="form-full-width">
             <mat-label>Something on your mind?</mat-label>
             <input matInput (focus)="toggleCreatePost()">
         </mat-form-field>
@@ -21,11 +21,11 @@
 
     <ng-template #createPostTemplate>
         <form class="form" [formGroup]="postForm" (ngSubmit)="submitPost($event)">
-            <mat-form-field class="full-width" appearance="fill">
+            <mat-form-field class="form-full-width">
                 <mat-label>Make a Post</mat-label>
                 <textarea matInput autofocus formControlName="text" required></textarea>
             </mat-form-field>
-            <mat-form-field class="full-width" appearance="fill">
+            <mat-form-field class="form-full-width">
                 <mat-label>Add an Image?</mat-label>
                 <input matInput formControlName="imageUrl">
             </mat-form-field>
