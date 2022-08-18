@@ -7,6 +7,7 @@
     <label for="search_field">Search for User: </label>
     <input type="text" name="search_field">
     <button type="submit" name="submit_btn">Search</button> 
+
     <button type="reset" name="reset_btn">Reset</button> 
 </form>
 
@@ -20,17 +21,18 @@
 
     <ng-template #createPostTemplate>
         <form class="form" [formGroup]="postForm" (ngSubmit)="submitPost($event)">
-            <mat-form-field class="full-width" appearance="fill" required>
+            <mat-form-field class="full-width" appearance="fill">
                 <mat-label>Make a Post</mat-label>
-                <textarea matInput autofocus formControlName="text"></textarea>
+                <textarea matInput autofocus formControlName="text" required></textarea>
             </mat-form-field>
             <mat-form-field class="full-width" appearance="fill">
                 <mat-label>Add an Image?</mat-label>
                 <input matInput formControlName="imageUrl">
             </mat-form-field>
             <div align="end">
-                <button mat-raised-button color="warn" (click)="toggleCreatePost()">Cancel</button>
-                <button mat-raised-button color="primary" (click)="submitPost($event)"[disabled]="!postForm.valid">Post</button>
+                <button style="border-radius: 5px; width: 60px;" (click)="toggleCreatePost()">Cancel</button>
+                &nbsp;
+                <button style="border-radius: 5px; width: 60px;" (click)="submitPost($event)" [disabled]="!postForm.valid">Post</button>
             </div>
 
         </form>

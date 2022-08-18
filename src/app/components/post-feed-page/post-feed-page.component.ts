@@ -13,6 +13,8 @@ import { PostService } from 'src/app/services/post.service';
 
 export class PostFeedPageComponent implements OnInit {
 
+  search : String ="";
+  
   postForm = new FormGroup({
     text: new FormControl(''),
     imageUrl: new FormControl('')
