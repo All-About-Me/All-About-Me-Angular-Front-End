@@ -1,12 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import Bookmark from 'src/app/models/Bookmark';
 import Post from 'src/app/models/Post';
 import User from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookmarkService } from 'src/app/services/bookmark.service';
-import { MessengerService } from 'src/app/services/messenger.service';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({
@@ -21,13 +20,19 @@ export class PostComponent implements OnInit {
   })
 
   @Input('post') post: Post
+  @Input('bookmarkList') bookmarkList:Post []=[]
+  @Output() bookmarkListChanges = new EventEmitter<Post[]>()
   replyToPost: boolean = false
   isBookmarked:boolean = false
 
-  constructor(private postService: PostService, private authService: AuthService, private msg:MessengerService, private bookmarkService:BookmarkService) { }
+  constructor(private postService: PostService, private authService: AuthService, private bookmarkService:BookmarkService) { }
 
   ngOnInit(): void {
-    //getting rid of squiggly lol
+    
+    if(this.bookmarkList.includes(this.post)){
+      this.isBookmarked=true
+    }
+
   }
 
   toggleReplyToPost = () => {
@@ -51,9 +56,9 @@ export class PostComponent implements OnInit {
     if(!this.isBookmarked){
     this.bookmarkService.bookmarkPost(this.authService.currentUser,this.post).subscribe()
     this.isBookmarked = !this.isBookmarked
-    this.msg.sendMsg(bookmark)
     } else {
     this.bookmarkService.deleteBookmark(bookmark).subscribe()
+    this.bookmarkList.splice(this.bookmarkList.indexOf(this.post), 1)
     this.isBookmarked = !this.isBookmarked
     }
     

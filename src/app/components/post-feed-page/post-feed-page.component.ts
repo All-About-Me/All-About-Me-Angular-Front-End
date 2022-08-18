@@ -6,7 +6,6 @@ import User from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookmarkService } from 'src/app/services/bookmark.service';
 import { PostService } from 'src/app/services/post.service';
-import { MessengerService } from 'src/app/services/messenger.service';
 
 @Component({
   selector: 'app-post-feed-page',
@@ -32,7 +31,7 @@ export class PostFeedPageComponent implements OnInit {
 
   submitForm:FormGroup;
 
-  constructor(private postService: PostService, private authService: AuthService, private bookmarkService: BookmarkService, private msg:MessengerService, private fb:FormBuilder) { }
+  constructor(private postService: PostService, private authService: AuthService, private bookmarkService: BookmarkService, private fb:FormBuilder) { }
 
   ngOnInit(): void {
     this.postService.getAllPosts().subscribe(
@@ -47,13 +46,8 @@ export class PostFeedPageComponent implements OnInit {
         for (const element of this.allBookmarks){
           this.bookmarkedPosts.push(element.post);
         }
-        console.log(this.bookmarkedPosts)
       }
     )
-
-    this.msg.getMsg().subscribe((bookmark:any)=>{
-      this.bookmarkedPosts.push(bookmark.post)
-    })
 
         this.submitForm = this.fb.group({
       search_field: [''],
