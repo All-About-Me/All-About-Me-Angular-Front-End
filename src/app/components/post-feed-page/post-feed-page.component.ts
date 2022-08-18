@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { BookmarkService } from 'src/app/services/bookmark.service';
 import { PostService } from 'src/app/services/post.service';
 import { MessengerService } from 'src/app/services/messenger.service';
+import { Search } from 'src/app/models/Search';
 
 @Component({
   selector: 'app-post-feed-page',
@@ -16,7 +17,7 @@ import { MessengerService } from 'src/app/services/messenger.service';
 
 export class PostFeedPageComponent implements OnInit {
 
-  search : String ="";
+  //search : String ="";
   
   postForm = new FormGroup({
     text: new FormControl(''),
@@ -31,7 +32,7 @@ export class PostFeedPageComponent implements OnInit {
   allBookmarks:Bookmark[]=[];
 
   submitForm:FormGroup;
-
+  
   constructor(private postService: PostService, private authService: AuthService, private bookmarkService: BookmarkService, private msg:MessengerService, private fb:FormBuilder) { }
 
   ngOnInit(): void {
@@ -79,7 +80,11 @@ export class PostFeedPageComponent implements OnInit {
     this.showBookmarks=!this.showBookmarks;
   }
 
+   
   onSearch= () => {
+    //this.submitForm.controls['search_field'].value
+    //console.log( this.submitForm.controls['search_field'])
+    //this.submitForm.get('search_field').value
     this.authService.search(this.submitForm.value).subscribe((res:any)=>{
       console.log(res);
     })
