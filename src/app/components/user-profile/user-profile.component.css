@@ -1022,7 +1022,7 @@ textarea.form-control {
 }
 
 .card {
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: column;
   min-width: 0;
