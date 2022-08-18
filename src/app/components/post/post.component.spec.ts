@@ -45,6 +45,7 @@ describe("PostComponent", () => {
       city: "",
       state: "",
       postalCode: 0,
+      password: "password",
     };
     post = new Post(
       10000,
