@@ -34,6 +34,7 @@ export class AuthService {
     return this.http.post<any>(`${this.authUrl}/register`, payload, {headers: environment.headers});
   }
 
+
   search(first_Name:any): Observable<User> {
       // console.log(first_Name);
           
@@ -43,5 +44,11 @@ export class AuthService {
        // this.first_Name.get('select_field').value
        return this.http.get<User>("http://localhost:8080/auth/users/"+x)
     } 
+
+    
+  resetPassword(user: User): Observable<User>{
+    return this.http.put<User>(this.authUrl+"/resetPwd", user, {headers: environment.headers, withCredentials: environment.withCredentials})
+  }
+
   }
 
