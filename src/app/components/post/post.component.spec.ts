@@ -1,28 +1,58 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component } from "@angular/core";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import Bookmark from "src/app/models/Bookmark";
+import Post from "src/app/models/Post";
+import User from "src/app/models/User";
 
-import { PostComponent } from './post.component';
+import { PostComponent } from "./post.component";
 
-describe('PostComponent', () => {
-  let component: PostComponent;
-  let fixture: ComponentFixture<PostComponent>;
+describe("PostComponent", () => {
+  let testHostComponent: TestHostComponent;
+  let testHostFixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PostComponent ]
-    })
-    .compileComponents();
+      declarations: [PostComponent],
+    }).compileComponents();
 
-    // fixture = TestBed.createComponent(PostComponent);
-    // component = fixture.componentInstance;
-    // fixture.detectChanges();
+    testHostFixture = TestBed.createComponent(TestHostComponent);
+    testHostComponent = testHostFixture.componentInstance;
+    testHostFixture.detectChanges();
   });
 
-  
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it("should create", () => {
+    expect(testHostComponent).toBeTruthy();
+  });
 
-  it('TestBed should be Truthy', () => {
+  it("TestBed should be Truthy", () => {
     expect(TestBed).toBeTruthy();
   });
+
+  @Component({
+    selector: `host-component`,
+    template: `<app-post input="test input"></app-post>`,
+  })
+  class TestHostComponent {
+    user: User = {
+      id: 1,
+      email: "testuser@gmail.com",
+      firstName: "Test",
+      lastName: "User",
+      phoneNumber: "",
+      address: "",
+      gender: "",
+      aboutMe: "",
+      city: "",
+      state: "",
+      postalCode: 0,
+    };
+    post = new Post(
+      10000,
+      "The classic",
+      "https://i.imgur.com/fhgzVEt.jpeg",
+      this.user,
+      []
+    );
+    bookmark = new Bookmark(28, this.user, this.post);
+  }
 });
