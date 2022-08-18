@@ -29,3 +29,10 @@ button {
 .login-wrapper {
     height: 100%;
   }
+.profile-wrapper {
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    margin: 3em;
+    padding: 2em;
+}

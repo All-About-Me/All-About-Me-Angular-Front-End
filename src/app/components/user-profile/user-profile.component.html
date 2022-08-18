@@ -5,6 +5,18 @@
     <div class="sidebyside">
         <app-user-card></app-user-card>
     </div>
+    <div class="sidebyside">
+        <div class="profile-wrapper">
+        <h2>View Profile Page</h2>
+        <p>Name: {{user.firstName}} {{user.lastName}}</p>
+        <p>Email: {{user.email}}</p>
+        <p>Phone: {{user.phoneNumber}}</p>
+        <p>Address: {{user.address}}</p>
+        <p>Gender: {{user.gender}}</p>
+        <p>About Me:</p>
+        <p>{{user.aboutMe}}</p>
+        </div>
+    </div>
     
     <div class="sidebyside" id="edit">
         <button (click)="resetPassword()">Reset Password</button>
