@@ -47,21 +47,16 @@ export class PostComponent implements OnInit {
   }
 
   toggleBookmark = () => {
-    //implements logic of adding bookmark
-    //needs to create a bookmark object
-    //^ Needs a user and a Post Object
-    alert(this.post.id)
     let bookmark = new Bookmark(0,this.authService.currentUser,this.post);
     if(!this.isBookmarked){
-    //here will go the method for posting the bookmark to api call.
-    this.bookmarkService.bookmarkPost(this.authService.currentUser,this.post)
+    this.bookmarkService.bookmarkPost(this.authService.currentUser,this.post).subscribe()
     this.isBookmarked = !this.isBookmarked
     this.msg.sendMsg(bookmark)
     } else {
-    //here will go the method to delete from bookmarks to api call.
-    this.bookmarkService.deleteBookmark(bookmark)
+    this.bookmarkService.deleteBookmark(bookmark).subscribe()
     this.isBookmarked = !this.isBookmarked
     }
     
+
   }
 }

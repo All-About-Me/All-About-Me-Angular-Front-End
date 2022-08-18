@@ -37,17 +37,18 @@ export class PostFeedPageComponent implements OnInit {
       }
     )
     
-    this.bookmarkService.getAllSavedPosts().subscribe(
+    this.bookmarkService.getAllSavedPosts(this.authService.currentUser).subscribe(
       (response) => {
         this.allBookmarks = response
         for (const element of this.allBookmarks){
           this.bookmarkedPosts.push(element.post);
         }
+        console.log(this.bookmarkedPosts)
       }
     )
 
     this.msg.getMsg().subscribe((bookmark:any)=>{
-      this.bookmarkedPosts.push(bookmark)
+      this.bookmarkedPosts.push(bookmark.post)
     })
   }
 

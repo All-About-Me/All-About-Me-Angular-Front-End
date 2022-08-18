@@ -16,17 +16,16 @@ export class BookmarkService {
 
   constructor(private http: HttpClient) { }
 
-  getAllSavedPosts(): Observable<Bookmark[]> {
-    return this.http.get<Bookmark[]>(`${this.postUrl}`, {headers: environment.headers, withCredentials: environment.withCredentials} )
+  getAllSavedPosts(user:User): Observable<Bookmark[]> {
+    return this.http.request<Bookmark[]>('put', `${this.postUrl}`,{body: user, headers: environment.headers, withCredentials: environment.withCredentials} )
   }
 
   bookmarkPost(user:User,post:Post): Observable<Bookmark> {
-    
-    return this.http.post<Bookmark>(`${this.postUrl}`,{user, post}, {headers: environment.headers, withCredentials: environment.withCredentials} )
+    let bookmark:Bookmark = new Bookmark(0, user, post)
+    return this.http.post<Bookmark>(`${this.postUrl}`,bookmark, {headers: environment.headers, withCredentials: environment.withCredentials} )
   }
 
   deleteBookmark(bookmark:Bookmark): Observable<ArrayBuffer> {
-
     return this.http.request<ArrayBuffer>('delete', `${this.postUrl}`,{body: bookmark, headers: environment.headers, withCredentials: environment.withCredentials})
   }
 }
