@@ -4,12 +4,12 @@
     <app-user-card></app-user-card>
 </div>
 
-<form [formGroup]="submitForm" (ngSubmit)="onSearch()" novalidate>
+<form [formGroup]="submitForm" (ngSubmit)="onSearch(box.value)" novalidate>
     <label for="search_field">Search for User: </label>
-    <input type="text" formControlName="search_field">
+    <input class="her" #box type="text" formControlName="search_field">
     <button type="submit" name="submit_btn">Search</button>
     <button type="reset" name="reset_btn">Reset</button> 
-</form>
+</form><br>
 
 <div [ngClass]="['sidebyside', 'post-feed-container']">
     <form class="form" *ngIf="!createPost; else createPostTemplate">

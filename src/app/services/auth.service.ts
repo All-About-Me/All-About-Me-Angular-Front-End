@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import User from '../models/User';
-import { Search } from '../models/Search';
 
 @Injectable({
   providedIn: 'root'
@@ -35,14 +34,14 @@ export class AuthService {
   }
 
 
-  search(first_Name:any): Observable<User> {
-      // console.log(first_Name);
+  search(first_Name:string): Observable<User> {
+      console.log(first_Name);
           
-      //    let se= new Search    
-         let x= first_Name.controls['search_field'].value 
+            
+         //let x= first_Name.controls['search_field'].value 
       //   console.log(x)
        // this.first_Name.get('select_field').value
-       return this.http.get<User>("http://localhost:8080/auth/users/"+x)
+       return this.http.get<User>("http://localhost:8080/auth/users/"+first_Name)
     } 
 
     
