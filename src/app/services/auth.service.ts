@@ -35,6 +35,10 @@ export class AuthService {
 
   search(firstName:any): Observable<User> {
        return this.http.get<User>("http://localhost:8080/auth/users/"+firstName)
-    } 
+    }
+    
+  resetPassword(user: User): Observable<User>{
+    return this.http.put<User>(this.authUrl+"/resetPwd", user, {headers: environment.headers, withCredentials: environment.withCredentials})
+  }
   }
 
