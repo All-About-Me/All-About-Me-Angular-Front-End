@@ -55,6 +55,10 @@ html {
     background-color: #11cdef;
 }
 
+fieldset {
+    border: none;
+}
+
 @-ms-viewport {
   width: device-width;
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import User from 'src/app/models/User';
+import  User  from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
@@ -35,11 +35,14 @@ export class UserProfileComponent implements OnInit {
 
   allowUpdate(){
     let fs:HTMLElement = document.getElementById('fieldsetEdit')!;
-    if (fs.hasAttribute('disabled')){
+    let submit:HTMLElement = document.getElementById('submitProfile')!;
+    if (!fs.hasAttribute('disabled')){
       fs.setAttribute('disabled','');
+      submit.setAttribute('hidden','');
     }
     else{
       fs.removeAttribute('disabled');
+      submit.removeAttribute('hidden');
     }
   }
 
@@ -54,10 +57,14 @@ export class UserProfileComponent implements OnInit {
     this.user.address= updateForm.inputAddress;
     this.user.gender = updateForm.selectGender;
     this.user.aboutMe = updateForm.inputAboutMe;
+    this.user.city = updateForm.inputCity;
+    this.user.state = updateForm.inputState;
+    this.user.postalCode = updateForm.inputPostalCode;
       console.log(this.user);
     this._userService.updateUser(this.user).subscribe(
       (data)=>this.user=data);
     this.confirmUpdate();
+    this.allowUpdate();
     }
     else {
       this.refuseUpdate();
