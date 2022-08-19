@@ -32,32 +32,44 @@ describe("PostComponent", () => {
     selector: `host-component`,
     template: `<app-post input="test input"></app-post>`,
   })
- class TestHostComponent { 
-
-  /* 
-    user: User = {
-      id: 1,
-      email: "testuser@gmail.com",
-      firstName: "Test",
-      lastName: "User",
-      phoneNumber: "",
-      address: "",
-      gender: "",
-      aboutMe: "",
-      city: "",
-      state: "",
-      postalCode: 0,
-      password: "password",
-    };
+  class TestHostComponent {
+/*     bookmark = new Bookmark(
+      28, */
+/*       {
+          id: 1,
+          email: "testuser@gmail.com",
+          firstName: "Test",
+          lastName: "User",
+          phoneNumber: '',
+          address: '',
+          gender: '',
+          aboutMe: ''
+      },
+      {
+          id: 10000,
+          text: "The classic",
+          imageUrl: "https://i.imgur.com/fhgzVEt.jpeg",
+          comments: [],
+          author: {
+              id: 1,
+              email: "testuser@gmail.com",
+          firstName: "Test",
+          lastName: "User",
+          phoneNumber: '',
+          address: '',
+          gender: '',
+          aboutMe: ''
+          }
+      }
+      
+    )
     post = new Post(
       10000,
       "The classic",
       "https://i.imgur.com/fhgzVEt.jpeg",
       this.user,
       []
-    );
-    bookmark = new Bookmark(28, this.user, this.post);
-  } */
-
-  }
-})
+    )*/
+  } 
+  
+  });

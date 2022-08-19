@@ -34,22 +34,16 @@ export class PostFeedPageComponent implements OnInit {
   submitForm:FormGroup;
   constructor(private postService: PostService, private authService: AuthService, private bookmarkService: BookmarkService, private fb:FormBuilder) { }
   ngOnInit(): void {
+
+    this.getBookmarks()  
+
     this.postService.getAllPosts().subscribe(
       (response) => {
         this.posts = response
       }
     )
     
-    this.bookmarkService.getAllSavedPosts(this.authService.currentUser).subscribe(
-      (response) => {
-        this.allBookmarks = response
-        for (const element of this.allBookmarks){
-          this.bookmarkedPosts.push(element.post);
-        }
-      }
-    )
-
-        this.submitForm = this.fb.group({
+      this.submitForm = this.fb.group({
       search_field: [''],
   })
   }
@@ -71,18 +65,30 @@ export class PostFeedPageComponent implements OnInit {
 
   toggleFeed =()=>{
     this.showBookmarks=!this.showBookmarks;
+    this.getBookmarks()
   }
 
   getValue(val:string){
     console.log(val)
   }
-   
+  
   onSearch= (someInput:string) => {
-           this.authService.search(someInput).subscribe((res:any)=>{
+          this.authService.search(someInput).subscribe((res:any)=>{
       console.log(res);
     })
     alert("Work in progress")
   }
+
+  getBookmarks(){
+    this.bookmarkService.getAllSavedPosts(this.authService.currentUser).subscribe(
+    (response) => {
+      this.bookmarkedPosts.length=0
+      this.allBookmarks = response
+      for (const element of this.allBookmarks){
+        this.bookmarkedPosts.push(element.post);
+      }
+    }
+  )}
 }
 
   

@@ -21,14 +21,13 @@ export class PostComponent implements OnInit {
 
   @Input('post') post: Post
   @Input('bookmarkList') bookmarkList:Post []=[]
-  @Output() bookmarkListChanges = new EventEmitter<Post[]>()
+  @Output() bookmarkListChange = new EventEmitter<Post[]>()
   replyToPost: boolean = false
   isBookmarked:boolean = false
 
   constructor(private postService: PostService, private authService: AuthService, private bookmarkService:BookmarkService) { }
 
   ngOnInit(): void {
-    
     if(this.bookmarkList.includes(this.post)){
       this.isBookmarked=true
     }
@@ -55,11 +54,14 @@ export class PostComponent implements OnInit {
     let bookmark = new Bookmark(0,this.authService.currentUser,this.post);
     if(!this.isBookmarked){
     this.bookmarkService.bookmarkPost(this.authService.currentUser,this.post).subscribe()
+    this.bookmarkList.push(this.post)
     this.isBookmarked = !this.isBookmarked
+    this.bookmarkListChange.emit(this.bookmarkList)
     } else {
     this.bookmarkService.deleteBookmark(bookmark).subscribe()
     this.bookmarkList.splice(this.bookmarkList.indexOf(this.post), 1)
     this.isBookmarked = !this.isBookmarked
+    this.bookmarkListChange.emit(this.bookmarkList)
     }
     
 

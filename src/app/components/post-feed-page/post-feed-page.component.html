@@ -36,7 +36,9 @@
             </div>
 
         </form>
-    </ng-template>
+</ng-template>
+
+<div >
 <div *ngIf="!showBookmarks; else toggleButton">
 <button (click)="toggleFeed()">Show Bookmarked Posts</button>
 </div>
@@ -45,12 +47,13 @@
 </ng-template>
 <div *ngIf="!showBookmarks; else bookmarkFeed">
     <div id="post-feed" *ngFor="let post of posts">
-        <app-post [post]="post"></app-post>
+        <app-post [post]="post" [(bookmarkList)]="bookmarkedPosts"></app-post>
     </div>
 </div>
 <ng-template #bookmarkFeed>
     <div id="post-feed" *ngFor="let post of bookmarkedPosts">
-        <app-post [post]="post" [bookmarkList]="bookmarkedPosts"></app-post>
+        <app-post [post]="post" [(bookmarkList)]="bookmarkedPosts" ></app-post>
     </div>
 </ng-template>
+</div>
 </div>
