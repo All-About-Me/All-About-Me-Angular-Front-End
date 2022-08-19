@@ -29,7 +29,7 @@ pipeline {
 
           post {
         always {
-          archiveArtifacts artifacts: 'dist/*'
+          archiveArtifacts artifacts: 'AAMFront-End/dist/*'
         }
           }
         }
