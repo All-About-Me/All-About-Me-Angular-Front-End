@@ -32,7 +32,9 @@ describe("PostComponent", () => {
     selector: `host-component`,
     template: `<app-post input="test input"></app-post>`,
   })
-  class TestHostComponent {
+ class TestHostComponent { 
+
+  /* 
     user: User = {
       id: 1,
       email: "testuser@gmail.com",
@@ -54,5 +56,7 @@ describe("PostComponent", () => {
       []
     );
     bookmark = new Bookmark(28, this.user, this.post);
+  } */
+
   }
-});
+})
