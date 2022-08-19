@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import User from '../models/User';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  
 
   authUrl: string = `${environment.baseUrl}/auth`;
   currentUser: User
@@ -33,8 +33,21 @@ export class AuthService {
     return this.http.post<any>(`${this.authUrl}/register`, payload, {headers: environment.headers});
   }
 
-  search(firstName:any): Observable<User> {
-       return this.http.get<User>("http://localhost:8080/auth/users/"+firstName)
+
+  search(first_Name:string): Observable<User> {
+      console.log(first_Name);
+          
+            
+         //let x= first_Name.controls['search_field'].value 
+      //   console.log(x)
+       // this.first_Name.get('select_field').value
+       return this.http.get<User>("http://localhost:8080/auth/users/"+first_Name)
     } 
+
+    
+  resetPassword(user: User): Observable<User>{
+    return this.http.put<User>(this.authUrl+"/resetPwd", user, {headers: environment.headers, withCredentials: environment.withCredentials})
+  }
+
   }
 
