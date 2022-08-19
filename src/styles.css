@@ -13,7 +13,8 @@ body{
   --bkg-color:#fff;
   --btn-txt-color:white;
   --btn-bg-color:rgb(11,88,160);
-  --form-bkg-color:rgb(224, 223, 223);
+  --form-bkg-color:whitesmoke;
+  --post-bkg-color: whitesmoke;
 }
 
 body.dark-theme{
@@ -21,7 +22,10 @@ body.dark-theme{
   --bkg-color:gray;
   --btn-txt-color:white;
   --btn-bg-color:rgb(250, 114, 3);
-  --form-bkg-color:whitesmoke;
+  --form-bkg-color:lightgray;
+  --post-bkg-color:lightgray;
+  --profile-bkg-color:lightgray;
+  --card-bkg-color:lightgray;
 }
 
 h1,
@@ -185,6 +189,7 @@ button {
 
 .post-card {
   margin-bottom: 1em;
+  background: #888080;
 }
 
 .form {
@@ -202,4 +207,13 @@ button {
 
 .spacer {
   flex: 1 1 auto;
+}
+.mat-card{
+  background-color: var(--post-bkg-color);
+}
+.card.card-profile.shadow{
+  background: var(--profile-bkg-color);
+}
+.card-body{
+  background: var(--card-bkg-color);
 }
