@@ -6,7 +6,7 @@ import User from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookmarkService } from 'src/app/services/bookmark.service';
 import { PostService } from 'src/app/services/post.service';
-import { Search } from 'src/app/models/Search';
+
 
 
 @Component({
@@ -17,7 +17,7 @@ import { Search } from 'src/app/models/Search';
 
 export class PostFeedPageComponent implements OnInit {
 
-  //search : String ="";
+  
   
   postForm = new FormGroup({
     text: new FormControl(''),
@@ -73,12 +73,12 @@ export class PostFeedPageComponent implements OnInit {
     this.showBookmarks=!this.showBookmarks;
   }
 
+  getValue(val:string){
+    console.log(val)
+  }
    
-  onSearch= () => {
-    //this.submitForm.controls['search_field'].value
-    //console.log( this.submitForm.controls['search_field'])
-    //this.submitForm.get('search_field').value
-    this.authService.search(this.submitForm.value).subscribe((res:any)=>{
+  onSearch= (someInput:string) => {
+           this.authService.search(someInput).subscribe((res:any)=>{
       console.log(res);
     })
     alert("Work in progress")
