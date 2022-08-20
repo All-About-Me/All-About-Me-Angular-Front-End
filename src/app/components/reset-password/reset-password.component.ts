@@ -25,8 +25,9 @@ export class ResetPasswordComponent implements OnInit {
   onCall(pwdForm:any){
     let updateForm = pwdForm.value;
       console.log(updateForm);
-    
-      this.user.password=updateForm.newPassword;
+      if(this.user.password===updateForm.currentPassword)
+      {
+        this.user.password=updateForm.newPassword;
 
       console.log(this.user);
       this.authService.resetPassword(this.user).subscribe(
@@ -35,17 +36,10 @@ export class ResetPasswordComponent implements OnInit {
       let text = document.createTextNode("Successfully updated password!");
       tag.appendChild(text);
       document.getElementById("edit")?.appendChild(tag);
-    /*if(this.user.password===updateForm.currentPassword){
-      this.user.password=updateForm.newPassword;
-
-      console.log(this.user);
-      this._userService.updateUser(this.user).subscribe(
-        (data)=>this.user=data);
-      let tag :HTMLElement = document.createElement('p');
-      let text = document.createTextNode("Successfully updated password!");
-      tag.appendChild(text);
-      document.getElementById("edit")?.appendChild(tag);
-    }*/
+  }
+   else{
+    alert("Not correct password");
+   }
    
     
   }
