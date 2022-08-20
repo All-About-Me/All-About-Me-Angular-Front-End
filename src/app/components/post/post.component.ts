@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import Bookmark from 'src/app/models/Bookmark';
 import Post from 'src/app/models/Post';
 import User from 'src/app/models/User';
@@ -24,16 +25,17 @@ export class PostComponent implements OnInit {
   @Output() bookmarkListChanges = new EventEmitter<Post[]>()
   replyToPost: boolean = false
   isBookmarked:boolean = false
-  profileLink:string
 
-  constructor(private postService: PostService, private authService: AuthService, private bookmarkService:BookmarkService) { }
+  constructor(private postService: PostService, 
+    private authService: AuthService, 
+    private bookmarkService:BookmarkService,
+    private router:Router) { }
 
   ngOnInit(): void {
     
     if(this.bookmarkList.includes(this.post)){
       this.isBookmarked=true
     }
-    this.profileLink="profile-page/"+this.post.author.id;
   }
 
   toggleReplyToPost = () => {
@@ -62,7 +64,9 @@ export class PostComponent implements OnInit {
     this.bookmarkList.splice(this.bookmarkList.indexOf(this.post), 1)
     this.isBookmarked = !this.isBookmarked
     }
-    
+  }
 
+  viewProfile(){
+    this.router.navigate(["/profile-page/"+this.post.author.id])
   }
 }
