@@ -24,6 +24,7 @@ export class PostComponent implements OnInit {
   @Output() bookmarkListChanges = new EventEmitter<Post[]>()
   replyToPost: boolean = false
   isBookmarked:boolean = false
+  profileLink:string
 
   constructor(private postService: PostService, private authService: AuthService, private bookmarkService:BookmarkService) { }
 
@@ -32,7 +33,7 @@ export class PostComponent implements OnInit {
     if(this.bookmarkList.includes(this.post)){
       this.isBookmarked=true
     }
-
+    this.profileLink="profile-page/"+this.post.author.id;
   }
 
   toggleReplyToPost = () => {

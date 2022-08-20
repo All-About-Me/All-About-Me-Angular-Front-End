@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "post-feed", component: PostFeedPageComponent},
-  { path: "profile-page", component: UserProfileComponent},
+  { path: "profile-page/:id", component: UserProfileComponent},
   { path: "reset-password", component: ResetPasswordComponent}
 ];
 
