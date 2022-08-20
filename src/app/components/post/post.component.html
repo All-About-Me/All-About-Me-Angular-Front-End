@@ -1,7 +1,7 @@
 <div class="post-card">
     <mat-card>
         <mat-card-header>
-            <div mat-card-avatar class="header-image"></div>
+            <div mat-card-avatar class="header-image" (click)="viewProfile()"></div>
             <mat-card-title (click)="viewProfile()">{{post.author.firstName}} {{post.author.lastName}}</mat-card-title>
             <mat-card-subtitle>{{post.author.email}}</mat-card-subtitle>
         </mat-card-header>

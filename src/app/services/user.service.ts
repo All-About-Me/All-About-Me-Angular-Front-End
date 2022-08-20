@@ -18,7 +18,6 @@ export class UserService {
   }
 
   getUserById(id:number):Observable<User>{
-    console.log(this.baseUrl+"/"+id);
     return this.http.get<User>(this.baseUrl+"/"+id)
   }
 }

@@ -27,13 +27,11 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedInUser = this.authService.currentUser;
-    console.log(this.loggedInUser);
     this.route.params.subscribe(params =>{
       this.viewId=params['id'];
     });
     this._userService.getUserById(this.viewId).subscribe(data=>{
       this.user=data;
-      console.log(this.user);
       });
       
     
