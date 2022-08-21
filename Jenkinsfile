@@ -29,16 +29,10 @@ pipeline {
 
           post {
         always {
-          archiveArtifacts 'dist/*'
+          archiveArtifacts 'dist/'
         }
           }
-        }
-        stage('DockerBuild') {
-      steps {
-        sh 'docker build -t aam/socialmedia:latest .'
-      }
         }
          
   }
 }
-Footer

@@ -16,4 +16,8 @@ export class UserService {
   updateUser(user:User):Observable<any>{
     return this.http.put<User>(this.baseUrl+"/update", user, {headers: environment.headers, withCredentials: environment.withCredentials})
   }
+
+  getUserById(id:number):Observable<User>{
+    return this.http.get<User>(this.baseUrl+"/"+id)
+  }
 }

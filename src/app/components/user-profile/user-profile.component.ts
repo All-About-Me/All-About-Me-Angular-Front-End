@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import  User  from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from '../../services/user.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -13,20 +13,36 @@ import { NgForm } from '@angular/forms';
 export class UserProfileComponent implements OnInit {
   @ViewChild('editProfile',{static:true}) ngForm:NgForm;
 
-  user: User = {} as User;  
+  loggedInUser: User = {} as User;  
+  user: User |any;
+  viewId :number |any;
   formChangesSubscription: any;
+  canEdit:boolean;
 
   constructor(
     private authService: AuthService, 
     private _userService: UserService,  
-    private router: Router) { }
+    private router: Router,
+    private route:ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.user = this.authService.currentUser;
+    this.loggedInUser = this.authService.currentUser;
+    this.route.params.subscribe(params =>{
+      this.viewId=params['id'];
+    });
+    this._userService.getUserById(this.viewId).subscribe(data=>{
+      this.user=data;
+      });
+      
+    
     this.formChangesSubscription = this.ngForm.form.valueChanges.subscribe(x => {
       if (document.getElementById('confirmUpdate')){ document.getElementById('confirmUpdate')?.remove()};
       if (document.getElementById('refuseUpdate')){ document.getElementById('refuseUpdate')?.remove()}
     })
+  }
+
+  ngAfterViewChecked(){
+    if (this.loggedInUser.id===this.user.id){this.canEdit=true} else {this.canEdit=false}
   }
 
   ngOnDestroy() {

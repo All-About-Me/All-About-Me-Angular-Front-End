@@ -24,6 +24,8 @@ body.dark-theme{
   --btn-bg-color:rgb(250, 114, 3);
   --form-bkg-color:lightgray;
   --post-bkg-color:lightgray;
+  --profile-bkg-color:lightgray;
+  --card-bkg-color:lightgray;
 }
 
 h1,
@@ -208,4 +210,10 @@ button {
 }
 .mat-card{
   background-color: var(--post-bkg-color);
+}
+.card.card-profile.shadow{
+  background: var(--profile-bkg-color);
+}
+.card-body{
+  background: var(--card-bkg-color);
 }
