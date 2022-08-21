@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import Bookmark from 'src/app/models/Bookmark';
 import Post from 'src/app/models/Post';
@@ -13,7 +13,7 @@ import { PostService } from 'src/app/services/post.service';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit, OnChanges {
 
   commentForm = new FormGroup({
     text: new FormControl(''),
@@ -28,10 +28,17 @@ export class PostComponent implements OnInit {
   constructor(private postService: PostService, private authService: AuthService, private bookmarkService:BookmarkService) { }
 
   ngOnInit(): void {
-    if(this.bookmarkList.includes(this.post)){
+    for(let listPost of this.bookmarkList){
+    if(listPost.id==this.post.id){
       this.isBookmarked=true
     }
-
+  }
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+      if(this.bookmarkList.includes(this.post)){
+        this.isBookmarked=true
+      }      
+    
   }
 
   toggleReplyToPost = () => {

@@ -65,7 +65,7 @@ export class PostFeedPageComponent implements OnInit {
 
   toggleFeed =()=>{
     this.showBookmarks=!this.showBookmarks;
-    this.getBookmarks()
+    
   }
 
   getValue(val:string){
