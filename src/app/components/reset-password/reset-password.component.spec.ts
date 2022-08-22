@@ -13,14 +13,15 @@ describe("ResetPasswordComponent", () => {
       imports: [HttpClientTestingModule, RouterTestingModule, FormsModule],
       declarations: [ResetPasswordComponent],
     }).compileComponents();
-    console.log("point A");
     fixture = TestBed.createComponent(ResetPasswordComponent);
-    console.log("point B");
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it("TestBed should be Truthy", () => {
     expect(TestBed).toBeTruthy();
+  });
+  it("should be created", () => {
+    expect(component).toBeTruthy();
   });
 });
