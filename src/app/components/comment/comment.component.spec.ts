@@ -20,7 +20,7 @@ describe('CommentComponent', () => {
     console.log("point B");
     component = fixture.componentInstance;
     console.log("point C");
-    fixture.detectChanges();
+    // fixture.detectChanges();
     console.log("point D");
   });
 
