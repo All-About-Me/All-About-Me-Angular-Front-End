@@ -84,7 +84,7 @@ export class PostFeedPageComponent implements OnInit {
           alert("No user with that first name exists!")
           throw 'Wrong User Information'; //creates custom error   
         }this.router.navigate(['/profile-page/'+res.id])
-      },
+      },//similar to working with a promoise
       (error: HttpErrorResponse) => { //used to catch error
         console.log(error); 
       });
