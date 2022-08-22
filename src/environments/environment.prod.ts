@@ -5,6 +5,6 @@ export const environment = {
   headers: {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin":
-      "http://aamfront-enddeploy.s3-website-us-east-1.amazonaws.com/login",
+      "http://aamfront-enddeploy.s3-website-us-east-1.amazonaws.com",
   },
 };
