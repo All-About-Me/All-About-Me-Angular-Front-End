@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import Bookmark from 'src/app/models/Bookmark';
 import Post from 'src/app/models/Post';
 import User from 'src/app/models/User';
@@ -32,7 +33,10 @@ export class PostFeedPageComponent implements OnInit {
   allBookmarks:Bookmark[]=[];
 
   submitForm:FormGroup;
-  constructor(private postService: PostService, private authService: AuthService, private bookmarkService: BookmarkService, private fb:FormBuilder) { }
+  constructor(
+    private postService: PostService, private authService: AuthService, private bookmarkService: BookmarkService, 
+    private fb:FormBuilder, private router: Router) { }
+    users:User| any;
   ngOnInit(): void {
 
     this.getBookmarks()  
@@ -73,10 +77,15 @@ export class PostFeedPageComponent implements OnInit {
   }
   
   onSearch= (someInput:string) => {
-          this.authService.search(someInput).subscribe((res:any)=>{
-      console.log(res);
-    })
-    alert("Work in progress")
+      this.authService.search(someInput).subscribe((res:any)=>{
+      this.router.navigate(['/profile-page/'+res.id]);
+     }); //based on first name
+    } //currently working to handle exception when input is invalid
+
+  viewAll= () => { //concerned onSearch might be too specific
+    this.authService.viewAllUsers().subscribe(data=>{ //this provides data on all users in database
+      this.users =data; //worried this might display too much un-needed information
+    });
   }
 
   getBookmarks(){

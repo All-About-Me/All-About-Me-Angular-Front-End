@@ -1,6 +1,6 @@
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import User from '../models/User';
 
@@ -35,14 +35,13 @@ export class AuthService {
 
 
   search(first_Name:string): Observable<User> {
-      console.log(first_Name);
-          
-            
-         //let x= first_Name.controls['search_field'].value 
-      //   console.log(x)
-       // this.first_Name.get('select_field').value
-       return this.http.get<User>("http://localhost:8080/auth/users/"+first_Name)
+      return this.http.get<User>("http://localhost:8080/auth/users/"+first_Name)
+
     } 
+   
+   viewAllUsers():Observable<User>{
+    return this.http.get<User>("http://localhost:8080/auth/post-feed/")
+   } 
 
     
   resetPassword(user: User): Observable<User>{
