@@ -64,7 +64,7 @@
               <hr class="my-4">
               
                 <div *ngIf="canEdit; then editOptions; else userOptions"></div>
-               <ng-template #userOptions><button style="border-radius: 5px; width: 150px;">Follow</button>
+               <ng-template #userOptions><button (click)="followUser()" style="border-radius: 5px; width: 150px;">Follow</button>
                 &nbsp;
                 <button style="border-radius: 5px; width: 150px;">Message</button>
                 </ng-template>
@@ -73,7 +73,14 @@
                 &nbsp;
                 <button (click)="resetPassword()" style="border-radius: 5px; width: 150px;">Reset Password</button>
                 </ng-template>
-            
+                <hr class="my-4">
+                <div>
+                    Following:
+                    <ul>
+                        <li *ngFor="let f of followList">{{f.firstName}} {{f.lastName}}</li>
+                    </ul>
+                    
+                </div>
             </div>
           </div>
         </div>
@@ -188,6 +195,7 @@
               <input hidden style="border-radius: 5px; width: 150px;" id="submitProfile" type="submit" name="Update Profile"/>
               </fieldset>
             </form>
+            
           </div>
         </div>
       </div>

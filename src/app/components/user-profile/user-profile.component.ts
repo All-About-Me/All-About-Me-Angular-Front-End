@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { FollowerService } from '../../services/follower.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -18,10 +19,12 @@ export class UserProfileComponent implements OnInit {
   viewId :number |any;
   formChangesSubscription: any;
   canEdit:boolean;
+  followList:User[] = [];
 
   constructor(
     private authService: AuthService, 
     private _userService: UserService,  
+    private _followerService: FollowerService,
     private router: Router,
     private route:ActivatedRoute) { }
 
@@ -33,8 +36,7 @@ export class UserProfileComponent implements OnInit {
     this._userService.getUserById(this.viewId).subscribe(data=>{
       this.user=data;
       });
-      
-    
+
     this.formChangesSubscription = this.ngForm.form.valueChanges.subscribe(x => {
       if (document.getElementById('confirmUpdate')){ document.getElementById('confirmUpdate')?.remove()};
       if (document.getElementById('refuseUpdate')){ document.getElementById('refuseUpdate')?.remove()}
@@ -43,6 +45,7 @@ export class UserProfileComponent implements OnInit {
 
   ngAfterViewChecked(){
     if (this.loggedInUser.id===this.user.id){this.canEdit=true} else {this.canEdit=false}
+    this._followerService.getFollows(this.user).subscribe(data=>{this.followList=data});
   }
 
   ngOnDestroy() {
@@ -105,6 +108,10 @@ export class UserProfileComponent implements OnInit {
     tag.setAttribute('id','refuseUpdate');
     document.getElementById("accountHeader")?.append(tag);
     }
+  }
+
+  followUser(){
+    this._followerService.addFollow(this.loggedInUser,this.user).subscribe()
   }
 
   resetPassword():void{
