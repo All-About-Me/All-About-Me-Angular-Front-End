@@ -33,13 +33,8 @@ export class AuthService{
     return this.http.post<any>(`${this.authUrl}/register`, payload, {headers: environment.headers});
   }
 
-
-  search(first_Name:string): Observable<User> {
-      return this.http.get<User>("http://localhost:8080/auth/users/"+first_Name)
-    } 
-   
    viewAllUsers():Observable<User>{
-    return this.http.get<User>("http://localhost:8080/auth/post-feed/")
+    return this.http.get<User>("http://localhost:8080/auth/" , {headers: environment.headers, withCredentials: environment.withCredentials})
    } 
 
     
