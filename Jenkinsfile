@@ -18,7 +18,7 @@ pipeline {
 	    sh 'npm install -g @angular/cli'
 	    sh 'npm install'
 		sh 'ng test --no-watch --no-progress --browsers=ChromeHeadlessCI'
-		sh 'ng build'
+		sh 'ng build --configuration production --output-hashing none'
 		
 	   // in case the ng command goes back to not working, the following can be used instead
 	   // sh 'npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI'
@@ -33,6 +33,23 @@ pipeline {
         }
           }
         }
+	stage ('S3 Upload') {
+			steps {
+			
+			s3Upload consoleLogLevel: 'INFO', 
+			dontSetBuildResultOnFailure: false, 
+			dontWaitForConcurrentBuildCompletion: false, 
+			entries: [[
+				bucket: 'aamfront-enddeploy', excludedFile: '', flatten: true, 
+				gzipFiles: false, keepForever: false, managedArtifacts: false, 
+				noUploadOnFailure: true, selectedRegion: 'us-east-1', showDirectlyInBrowser: false, 
+				sourceFile: 'dist/', storageClass: 'STANDARD', uploadFromSlave: false, useServerSideEncryption: false
+				]],
+			pluginFailureResultConstraint: 'FAILURE', 
+			profileName: 'aamfront-enddeploy', 
+			userMetadata: []
+		
+		}
          
   }
 }
