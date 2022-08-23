@@ -1,0 +1,6 @@
+<div *ngIf="!currentUserLikes; else alreadyLiked">
+    {{this.likeCount}}&nbsp;<button (click)="likePost()">Like</button>
+</div>
+<ng-template #alreadyLiked>
+    {{this.likeCount}}&nbsp; <button (click)="unlikePost()">Remove Like</button>
+</ng-template>

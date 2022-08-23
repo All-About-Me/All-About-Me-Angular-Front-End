@@ -3,10 +3,12 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import Bookmark from 'src/app/models/Bookmark';
+import Like from 'src/app/models/Like';
 import Post from 'src/app/models/Post';
 import User from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookmarkService } from 'src/app/services/bookmark.service';
+import { LikeService } from 'src/app/services/like.service';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({
@@ -20,11 +22,12 @@ export class PostComponent implements OnInit, OnChanges {
     text: new FormControl(''),
   })
 
-  @Input('post') post: Post
-  @Input('bookmarkList') bookmarkList:Post []=[]
-  @Output() bookmarkListChange = new EventEmitter<Post[]>()
-  replyToPost: boolean = false
-  isBookmarked:boolean = false
+  @Input('post') post: Post;
+  @Input('bookmarkList') bookmarkList:Post []=[];
+  @Output() bookmarkListChange = new EventEmitter<Post[]>();
+  replyToPost: boolean = false;
+  isBookmarked:boolean = false;
+
 
   constructor(private postService: PostService, 
     private authService: AuthService, 
@@ -39,11 +42,16 @@ export class PostComponent implements OnInit, OnChanges {
   }
   }
   ngOnChanges(changes: SimpleChanges): void {
-      if(this.bookmarkList.includes(this.post)){
+/*       if(this.bookmarkList.includes(this.post)){
         this.isBookmarked=true
-      }      
-    
+      }   */
+      for(let listPost of this.bookmarkList){
+        if(listPost.id==this.post.id){
+          this.isBookmarked=true
+        }  
   }
+
+}
 
   toggleReplyToPost = () => {
     this.replyToPost = !this.replyToPost
@@ -79,4 +87,5 @@ export class PostComponent implements OnInit, OnChanges {
   viewProfile(){
     this.router.navigate(["/profile-page/"+this.post.author.id])
   }
+
 }

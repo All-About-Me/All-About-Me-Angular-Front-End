@@ -16,6 +16,9 @@
             </div>
         </mat-card-content>
         <mat-card-actions align="end">
+
+            <app-like [post]="post"></app-like>
+            
             <button style="border-radius: 5px; width: 60px;" (click)="toggleReplyToPost()">Reply</button>
 
             <div  *ngIf="!isBookmarked else unbookmark">

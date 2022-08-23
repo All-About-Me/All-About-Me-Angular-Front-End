@@ -1,14 +1,14 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { FollowerService } from './follower.service';
+import { LikeService } from './like.service';
 
-describe('FollowerService', () => {
-  let service: FollowerService;
+describe('LikeService', () => {
+  let service: LikeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({imports:[HttpClientTestingModule]});
-    service = TestBed.inject(FollowerService);
+    service = TestBed.inject(LikeService);
   });
 
   it('should be created', () => {

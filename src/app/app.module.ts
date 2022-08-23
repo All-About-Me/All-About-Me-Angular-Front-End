@@ -24,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { LikeComponent } from './like/like.component';
 
 
 
@@ -39,7 +40,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     NavbarComponent,
     UserInitialsPipe,
     UserProfileComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    LikeComponent
   ],
   imports: [
     BrowserModule,

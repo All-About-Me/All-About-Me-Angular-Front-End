@@ -7,6 +7,7 @@ import Post from 'src/app/models/Post';
 import User from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookmarkService } from 'src/app/services/bookmark.service';
+import { LikeService } from 'src/app/services/like.service';
 import { PostService } from 'src/app/services/post.service';
 
 
@@ -36,10 +37,12 @@ export class PostFeedPageComponent implements OnInit {
   submitForm:FormGroup;
   constructor(
     private postService: PostService, private authService: AuthService, private bookmarkService: BookmarkService, 
-    private fb:FormBuilder, private router: Router) { }
+    private fb:FormBuilder, private router: Router, private likeService:LikeService) { }
     users:User| any;
   ngOnInit(): void {
-
+    if(this.authService.currentUser){
+    this.likeService.getAllMyLikes(this.authService.currentUser)
+    }
     this.getBookmarks()  
 
     this.postService.getAllPosts().subscribe(
