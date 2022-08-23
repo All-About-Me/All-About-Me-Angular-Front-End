@@ -19,6 +19,7 @@ export class UserProfileComponent implements OnInit {
   viewId :number |any;
   formChangesSubscription: any;
   canEdit:boolean;
+  followList:User[] = [];
 
   constructor(
     private authService: AuthService, 
@@ -35,8 +36,7 @@ export class UserProfileComponent implements OnInit {
     this._userService.getUserById(this.viewId).subscribe(data=>{
       this.user=data;
       });
-      
-    
+
     this.formChangesSubscription = this.ngForm.form.valueChanges.subscribe(x => {
       if (document.getElementById('confirmUpdate')){ document.getElementById('confirmUpdate')?.remove()};
       if (document.getElementById('refuseUpdate')){ document.getElementById('refuseUpdate')?.remove()}
@@ -45,6 +45,7 @@ export class UserProfileComponent implements OnInit {
 
   ngAfterViewChecked(){
     if (this.loggedInUser.id===this.user.id){this.canEdit=true} else {this.canEdit=false}
+    this._followerService.getFollows(this.user).subscribe(data=>{this.followList=data});
   }
 
   ngOnDestroy() {
@@ -110,7 +111,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   followUser(){
-    this._followerService.addFollow(this.loggedInUser,this.user).subscribe();
+    this._followerService.addFollow(this.loggedInUser,this.user).subscribe()
   }
 
   resetPassword():void{
