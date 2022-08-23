@@ -37,6 +37,7 @@ export class NavbarComponent implements OnInit{
 
   viewProfile(): void {
     this.router.navigate(['/profile-page/'+this.authService.currentUser.id]);
+    window.location.reload();
   }
 
 }
