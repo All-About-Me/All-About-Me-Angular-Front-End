@@ -77,14 +77,26 @@ export class PostFeedPageComponent implements OnInit {
     console.log(val)
   }
   
-  viewAll= () => {
-    this.authService.viewAllUsers().subscribe(data=>{
-      this.users =data; 
+  onSearch= (someInput:string) => {
+    try{
+      this.authService.search(someInput).subscribe((res:any)=>{
+        if (res == null) { //checks input, should return user if they exist, else its null
+          alert("No user with that first name exists!")
+          throw 'Wrong User Information'; //creates custom error   
+        }this.router.navigate(['/profile-page/'+res.id])
+      },//similar to working with a promoise
+      (error: HttpErrorResponse) => { //used to catch error
+        console.log(error); 
+      });
+  } catch(e) {  //used to catch error
+  }      
+  }
+
+  viewAll= () => { //concerned onSearch might be too specific
+    this.authService.viewAllUsers().subscribe(data=>{ //this provides data on all users in database
+      this.users =data; //worried this might display too much un-needed information
     });
   }
-  linkAll= (input:any) => {
-    this.router.navigate(['/profile-page/'+(input+1)]);
-};
 
   getBookmarks(){
     this.bookmarkService.getAllSavedPosts(this.authService.currentUser).subscribe(
