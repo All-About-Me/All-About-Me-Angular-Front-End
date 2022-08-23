@@ -47,7 +47,7 @@
               <hr class="my-4">
               
                 <div *ngIf="canEdit; then editOptions; else userOptions"></div>
-               <ng-template #userOptions><button style="border-radius: 5px; width: 150px;">Follow</button>
+               <ng-template #userOptions><button (click)="followUser()" style="border-radius: 5px; width: 150px;">Follow</button>
                 &nbsp;
                 <button style="border-radius: 5px; width: 150px;">Message</button>
                 </ng-template>
