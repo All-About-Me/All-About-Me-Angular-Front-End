@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import Like from '../models/Like';
-import Post from '../models/Post';
-import { AuthService } from '../services/auth.service';
-import { LikeService } from '../services/like.service';
+import Like from '../../models/Like';
+import Post from '../../models/Post';
+import { AuthService } from '../../services/auth.service';
+import { LikeService } from '../../services/like.service';
 
 @Component({
   selector: 'app-like',
