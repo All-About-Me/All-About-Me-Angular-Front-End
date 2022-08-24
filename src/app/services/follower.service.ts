@@ -19,4 +19,6 @@ export class FollowerService {
   getFollows(user:User):Observable<User[]>{
     return this.http.get<User[]>(this.baseUrl+"/"+user.id);
   }
+
+ 
 }
