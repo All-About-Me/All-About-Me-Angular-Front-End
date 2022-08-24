@@ -80,20 +80,16 @@ export class PostFeedPageComponent implements OnInit {
     this.showBookmarks = !this.showBookmarks;
   };
 
-<<<<<<< Updated upstream
-  getValue(val:string){
-    console.log(val)
-  }
-  
-
-  viewAll= () => {
-    this.authService.viewAllUsers().subscribe(data=>{
-      this.users =data;
-      alert("Ensure Correct Spelling!");
-=======
   getValue(val: string) {
     console.log(val);
   }
+
+  viewAll = () => {
+    this.authService.viewAllUsers().subscribe((data) => {
+      this.users = data;
+      alert("Ensure Correct Spelling!");
+    });
+  };
 
   onSearch = (someInput: string) => {
     //   try{
@@ -110,15 +106,6 @@ export class PostFeedPageComponent implements OnInit {
     // }
   };
 
-  viewAll = () => {
-    //concerned onSearch might be too specific
-    this.authService.viewAllUsers().subscribe((data) => {
-      //this provides data on all users in database
-      this.users = data; //worried this might display too much un-needed information
->>>>>>> Stashed changes
-    });
-  };
-
   getBookmarks() {
     this.bookmarkService
       .getAllSavedPosts(this.authService.currentUser)
@@ -130,21 +117,8 @@ export class PostFeedPageComponent implements OnInit {
         }
       });
   }
-<<<<<<< Updated upstream
-  linkAll= (input:any) => {
-    this.router.navigate(['/profile-page/'+(input+1)]);
-};
 
-  getBookmarks(){
-    this.bookmarkService.getAllSavedPosts(this.authService.currentUser).subscribe(
-    (response) => {
-      this.bookmarkedPosts.length=0
-      this.allBookmarks = response
-      for (const element of this.allBookmarks){
-        this.bookmarkedPosts.push(element.post);
-      }
-    }
-  )}
-=======
->>>>>>> Stashed changes
+  linkAll = (input: any) => {
+    this.router.navigate(["/profile-page/" + (input + 1)]);
+  };
 }
