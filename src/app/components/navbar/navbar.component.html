@@ -35,13 +35,13 @@
         </button>
         <mat-menu #dropMenu="matMenu">
             <button mat-menu-item [fxShow]="false" [fxShow.sm]="true" [fxShow.xs]="true"
-                style="width:150px; font-size: 16px;" (click)="darkTheme()">
+                style="width:150px; font-size: 16px;" [routerLink]="['/post-feed']">
                 <mat-icon style="vertical-align:sub;">home</mat-icon>
                 <span>Home</span>
             </button>
 
             <button mat-menu-item [fxShow]="false" [fxShow.sm]="false" [fxShow.xs]="true"
-                style="width:150px; font-size: 16px;" (click)="darkTheme()">
+                style="width:150px; font-size: 16px;" (click)="viewProfile()">
                 <mat-icon style="vertical-align:sub;">account_circle</mat-icon>
                 <span>Account</span>
             </button>
