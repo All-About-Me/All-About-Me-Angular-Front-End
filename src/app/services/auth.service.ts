@@ -45,9 +45,10 @@ export class AuthService {
       headers: environment.headers,
     });
   }
+
    viewAllUsers():Observable<User>{
     return this.http.get<User>(`${this.authUrl}` , {headers: environment.headers, withCredentials: environment.withCredentials})
-   } 
+   }
 
     
   resetPassword(user: User): Observable<User>{
