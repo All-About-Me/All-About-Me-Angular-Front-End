@@ -1,17 +1,57 @@
-<p>
+<!-- <p>
     <mat-toolbar>
-        <span [routerLink]="['/post-feed']">Revature Social Media</span>
+        <span [routerLink]="['/post-feed']">All About Me</span>
         <span class="spacer"></span>
-
-        
-
         <button mat-icon-button style="width:85px; font-size: 16px;" [routerLink]="['/post-feed']"><mat-icon style="vertical-align:sub;">home</mat-icon>Home</button>
         <button mat-icon-button style="width:85px; font-size: 16px;" (click)="viewProfile()"><mat-icon style="vertical-align:sub;">account_circle</mat-icon>Account</button>
         <button mat-icon-button style="width:85px; font-size: 16px;"(click)="logout()"><mat-icon style="vertical-align:sub;">exit_to_app</mat-icon>Logout</button>
-       
         <mat-icon>brightness_5</mat-icon>
         <mat-slide-toggle (click)="darkTheme()" color="primary"></mat-slide-toggle>
         <mat-icon>bedtime</mat-icon>
-
     </mat-toolbar>
-</p>
+</p> -->
+
+<mat-toolbar fxLayout="row">
+    <span fxFlex>All About Me</span>
+
+    <button mat-icon-button [fxShow]="true" [fxShow.xs]="false" [fxShow.sm]="false" style="width:85px; font-size: 16px;"
+        [routerLink]="['/post-feed']">
+        <mat-icon style="vertical-align:sub;">home</mat-icon>Home
+    </button>
+
+    <button mat-icon-button [fxShow]="true" [fxShow.xs]="false" [fxShow.sm]="true" style="width:85px; font-size: 16px;"
+        (click)="viewProfile()">
+        <mat-icon style="vertical-align:sub;">account_circle</mat-icon>Account
+    </button>
+
+    <button mat-icon-button [fxShow]="true" [fxShow.xs]="true" [fxShow.sm]="true" style="width:85px; font-size: 16px;"
+        (click)="logout()">
+        <mat-icon style="vertical-align:sub;">exit_to_app</mat-icon>Logout
+    </button>
+
+    <ng-container>
+        <button mat-icon-button [matMenuTriggerFor]="dropMenu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #dropMenu="matMenu">
+            <button mat-menu-item [fxShow]="false" [fxShow.sm]="true" [fxShow.xs]="true"
+                style="width:150px; font-size: 16px;" [routerLink]="['/post-feed']">
+                <mat-icon style="vertical-align:sub;">home</mat-icon>
+                <span>Home</span>
+            </button>
+
+            <button mat-menu-item [fxShow]="false" [fxShow.sm]="false" [fxShow.xs]="true"
+                style="width:150px; font-size: 16px;" (click)="viewProfile()">
+                <mat-icon style="vertical-align:sub;">account_circle</mat-icon>
+                <span>Account</span>
+            </button>
+
+            <button mat-menu-item [fxShow]="true" [fxShow.sm]="true" [fxShow.xs]="true"
+                style="width:150px; font-size: 16px;" (click)="darkTheme()">
+                <mat-icon style="vertical-align:sub;">brightness_6</mat-icon>
+                <span>Theme</span>
+            </button>
+
+        </mat-menu>
+    </ng-container>
+</mat-toolbar>

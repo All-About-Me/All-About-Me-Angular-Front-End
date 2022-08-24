@@ -4,20 +4,27 @@
     <app-user-card></app-user-card>
 </div>
 
-<form [formGroup]="submitForm" (ngSubmit)="onSearch(box.value)" novalidate>
-    <label for="search_field">Search for User: </label>
-    <input class="her" #box type="text" formControlName="search_field">
-    <button type="submit" name="submit_btn">Search</button>
-    <button type="reset" name="reset_btn">Reset</button> 
-</form><br>
+<ul *ngFor = "let b of users">
+    <li>{{ b.email }} - {{ b.firstName }} - {{b.lastName}} - {{b.phoneNumber}}</li> 
+</ul>
 
 <div [ngClass]="['sidebyside', 'post-feed-container']">
+    
+    <form [formGroup]="submitForm" (ngSubmit)="onSearch(box.value)" novalidate>
+        <label for="search_field">Search for User: </label>
+        <input class="her" #box type="text" formControlName="search_field" placeholder="Enter user's first name...">
+        <button type="submit" name="submit_btn">Search</button>
+        <button type="reset" name="reset_btn">Reset</button> 
+    </form>
+
     <form class="form" *ngIf="!createPost; else createPostTemplate">
         <mat-form-field class="form-full-width">
             <mat-label>Something on your mind?</mat-label>
             <input matInput (focus)="toggleCreatePost()">
         </mat-form-field>
     </form>
+
+
 
     <ng-template #createPostTemplate>
         <form class="form" [formGroup]="postForm" (ngSubmit)="submitPost($event)">

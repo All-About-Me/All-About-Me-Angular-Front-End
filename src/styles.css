@@ -15,6 +15,7 @@ body{
   --btn-bg-color:rgb(11,88,160);
   --form-bkg-color:whitesmoke;
   --post-bkg-color: whitesmoke;
+  --card-bkg-color:white;
 }
 
 body.dark-theme{
@@ -183,7 +184,7 @@ button {
 }
 
 #post-feed {
-  width: 60%;
+  width: 100%;
   align-content: center;
 }
 

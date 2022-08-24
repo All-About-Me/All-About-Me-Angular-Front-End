@@ -27,24 +27,7 @@
             </div>
           </div>
           <div class="card-body pt-0 pt-md-4">
-            <!-- <div class="row">
-              <div class="col">
-                <div class="card-profile-stats d-flex justify-content-center mt-md-5">
-                  <div>
-                    <span class="heading">22</span>
-                    <span class="description">Friends</span>
-                  </div>
-                  <div>
-                    <span class="heading">10</span>
-                    <span class="description">Photos</span>
-                  </div>
-                  <div>
-                    <span class="heading">89</span>
-                    <span class="description">Comments</span>
-                  </div>
-                </div>
-              </div>
-            </div> -->
+
             <div class="text-center mt-md-5">
               <br>
               <button *ngIf="canEdit" style="border-radius: 5px; width: 150px;">Profile Photo</button>
@@ -64,7 +47,7 @@
               <hr class="my-4">
               
                 <div *ngIf="canEdit; then editOptions; else userOptions"></div>
-               <ng-template #userOptions><button style="border-radius: 5px; width: 150px;">Follow</button>
+               <ng-template #userOptions><button (click)="followUser()" style="border-radius: 5px; width: 150px;">Follow</button>
                 &nbsp;
                 <button style="border-radius: 5px; width: 150px;">Message</button>
                 </ng-template>
@@ -73,7 +56,14 @@
                 &nbsp;
                 <button (click)="resetPassword()" style="border-radius: 5px; width: 150px;">Reset Password</button>
                 </ng-template>
-            
+                <hr class="my-4">
+                <div>
+                    Following:
+                    <ul>
+                        <li *ngFor="let f of followList">{{f.firstName}} {{f.lastName}}</li>
+                    </ul>
+                    
+                </div>
             </div>
           </div>
         </div>
@@ -87,7 +77,7 @@
                <ng-template #viewAcc> <h3 class="mb=0">View Account</h3></ng-template>
               </div>
               <div class="col-4 text-right">
-                <!-- <a href="#!" class="btn btn-sm btn-primary">Settings</a> -->
+
               </div>
             </div>
           </div>
@@ -188,6 +178,7 @@
               <input hidden style="border-radius: 5px; width: 150px;" id="submitProfile" type="submit" name="Update Profile"/>
               </fieldset>
             </form>
+            
           </div>
         </div>
       </div>
