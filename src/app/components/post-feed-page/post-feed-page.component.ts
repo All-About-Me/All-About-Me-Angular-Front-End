@@ -80,7 +80,8 @@ export class PostFeedPageComponent implements OnInit {
 
   viewAll= () => {
     this.authService.viewAllUsers().subscribe(data=>{
-      this.users =data; 
+      this.users =data;
+      alert("Ensure Correct Spelling!");
     });
   }
   linkAll= (input:any) => {
