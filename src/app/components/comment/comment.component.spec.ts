@@ -7,21 +7,17 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CommentComponent } from './comment.component';
 
 describe('CommentComponent', () => {
-  let component: CommentComponent;
-  let fixture: ComponentFixture<CommentComponent>;
+  let component: CommentHostComponent;
+  let fixture: ComponentFixture<CommentHostComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule],
-      declarations: [ CommentComponent , TestCommentComponent]
+      imports: [HttpClientTestingModule, RouterTestingModule, FormsModule],
+      declarations: [ CommentComponent , CommentHostComponent]
     }).compileComponents();
-    console.log("point A");
-    fixture = TestBed.createComponent(CommentComponent);
-    console.log("point B");
+    fixture = TestBed.createComponent(CommentHostComponent);
     component = fixture.componentInstance;
-    console.log("point C");
-    // fixture.detectChanges();
-    console.log("point D");
+    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -34,9 +30,9 @@ describe('CommentComponent', () => {
 
   @Component({
     selector:`host-component`,
-    template:'<TestCommentComponent [input] = "testing"></TestCommentComponent>'
+    template:'<app-component [input] = "testing"></app-component>'
 
   })
-  class TestCommentComponent{}
+  class CommentHostComponent{}
 
 });
