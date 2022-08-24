@@ -8,6 +8,7 @@ import User from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookmarkService } from 'src/app/services/bookmark.service';
 import { PostService } from 'src/app/services/post.service';
+import { FollowerService } from '../../services/follower.service';
 
 
 
@@ -32,11 +33,15 @@ export class PostFeedPageComponent implements OnInit {
   showBookmarks:boolean=false;
   bookmarkedPosts: Post[] = [];
   allBookmarks:Bookmark[]=[];
+  showFollows:boolean = true;
+  followList:User[] = [];
+  loggedInUser:User;
+  followedPosts: Post[] = [];
 
   submitForm:FormGroup;
   constructor(
     private postService: PostService, private authService: AuthService, private bookmarkService: BookmarkService, 
-    private fb:FormBuilder, private router: Router) { }
+    private followerService:FollowerService, private fb:FormBuilder, private router: Router) { }
     users:User| any;
   ngOnInit(): void {
 
@@ -47,6 +52,9 @@ export class PostFeedPageComponent implements OnInit {
         this.posts = response
       }
     )
+    this.loggedInUser = this.authService.currentUser;
+
+    this.getFollowedPosts();
     
       this.submitForm = this.fb.group({
       search_field: [''],
@@ -99,7 +107,7 @@ export class PostFeedPageComponent implements OnInit {
   }
 
   getBookmarks(){
-    this.bookmarkService.getAllSavedPosts(this.authService.currentUser).subscribe(
+    this.bookmarkService.getAllSavedPosts(this.loggedInUser).subscribe(
     (response) => {
       this.bookmarkedPosts.length=0
       this.allBookmarks = response
@@ -108,6 +116,16 @@ export class PostFeedPageComponent implements OnInit {
       }
     }
   )}
+
+  getFollowedPosts(){
+    this.postService.getFollowedPosts(this.loggedInUser).subscribe(
+      data =>{this.followedPosts=data}
+    )
+  }
+
+  toggleFollowedPosts =()=>{
+    this.showFollows=!this.showFollows; 
+  }
 }
 
   

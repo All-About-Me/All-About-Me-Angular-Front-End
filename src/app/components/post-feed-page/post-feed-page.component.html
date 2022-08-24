@@ -42,16 +42,31 @@
 </ng-template>
 
 <div >
+<div class="row">
 <div *ngIf="!showBookmarks; else toggleButton">
 <button (click)="toggleFeed()">Show Bookmarked Posts</button>
 </div>
 <ng-template #toggleButton>
     <button (click)="toggleFeed()">Show Feed</button>
 </ng-template>
+<div *ngIf="!showFollows; else toggleFollow">
+    <button (click)="toggleFollowedPosts()">Show Followed Posts</button>
+</div>
+<ng-template #toggleFollow>
+    <button (click)="toggleFollowedPosts()">Show Global Feed</button>
+</ng-template>
+</div>
 <div *ngIf="!showBookmarks; else bookmarkFeed">
+    <div *ngIf = "!showFollows; else followFeed">
     <div id="post-feed" *ngFor="let post of posts">
         <app-post [post]="post" [(bookmarkList)]="bookmarkedPosts"></app-post>
     </div>
+    </div>
+    <ng-template #followFeed>
+        <div id="post-feed" *ngFor="let post of followedPosts" >
+            <app-post [post]="post" [(bookmarkList)]="bookmarkedPosts"></app-post>
+        </div>
+    </ng-template>
 </div>
 <ng-template #bookmarkFeed>
     <div id="post-feed" *ngFor="let post of bookmarkedPosts">

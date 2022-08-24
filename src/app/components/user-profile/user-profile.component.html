@@ -52,7 +52,7 @@
               <h3>
                 {{user.firstName}} {{user.lastName}}
               </h3>
-              <div class="h5 font-weight-300">
+              <div class="h5 font-weight-300" *ngIf="user.city and user.state">
                 <i class="ni location_pin mr-2"></i>{{user.city}}, {{user.state}}
               </div>
               <div class="h5 mt-4">
@@ -64,7 +64,11 @@
               <hr class="my-4">
               
                 <div *ngIf="canEdit; then editOptions; else userOptions"></div>
-               <ng-template #userOptions><button (click)="followUser()" style="border-radius: 5px; width: 150px;">Follow</button>
+               <ng-template #userOptions>
+                <button *ngIf="!isFollowing; else unfollowButton" (click)="followUser()" style="border-radius: 5px; width: 150px;">Follow</button>
+               <ng-template #unfollowButton>
+                <button (click)="unfollow()" style="border-radius: 5px; width: 150px;">Unfollow</button>
+               </ng-template>
                 &nbsp;
                 <button style="border-radius: 5px; width: 150px;">Message</button>
                 </ng-template>
@@ -74,10 +78,12 @@
                 <button (click)="resetPassword()" style="border-radius: 5px; width: 150px;">Reset Password</button>
                 </ng-template>
                 <hr class="my-4">
-                <div>
+                <div *ngIf="canEdit">
                     Following:
                     <ul>
-                        <li *ngFor="let f of followList">{{f.firstName}} {{f.lastName}}</li>
+                        <li *ngFor="let f of followList">{{f.firstName}} {{f.lastName}} 
+                          <button>Unfollow</button>
+                        </li>
                     </ul>
                     
                 </div>

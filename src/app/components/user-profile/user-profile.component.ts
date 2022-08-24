@@ -20,6 +20,7 @@ export class UserProfileComponent implements OnInit {
   formChangesSubscription: any;
   canEdit:boolean;
   followList:User[] = [];
+  isFollowing:boolean;
 
   constructor(
     private authService: AuthService, 
@@ -36,7 +37,7 @@ export class UserProfileComponent implements OnInit {
     this._userService.getUserById(this.viewId).subscribe(data=>{
       this.user=data;
       });
-
+      this._followerService.getFollows(this.loggedInUser).subscribe(data=>{this.followList=data});
     this.formChangesSubscription = this.ngForm.form.valueChanges.subscribe(x => {
       if (document.getElementById('confirmUpdate')){ document.getElementById('confirmUpdate')?.remove()};
       if (document.getElementById('refuseUpdate')){ document.getElementById('refuseUpdate')?.remove()}
@@ -45,7 +46,8 @@ export class UserProfileComponent implements OnInit {
 
   ngAfterViewChecked(){
     if (this.loggedInUser.id===this.user.id){this.canEdit=true} else {this.canEdit=false}
-    this._followerService.getFollows(this.user).subscribe(data=>{this.followList=data});
+    
+    if (this.followList.includes(this.user)) {this.isFollowing=true} else {this.isFollowing=false}
   }
 
   ngOnDestroy() {
@@ -111,7 +113,13 @@ export class UserProfileComponent implements OnInit {
   }
 
   followUser(){
-    this._followerService.addFollow(this.loggedInUser,this.user).subscribe()
+    this._followerService.addFollow(this.loggedInUser,this.user).subscribe();
+    this.isFollowing=true;
+  }
+
+  unfollow(){
+    console.log("In unfollow method");
+    this._followerService.unfollow(this.loggedInUser, this.user).subscribe()
   }
 
   resetPassword():void{
