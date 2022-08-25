@@ -2,7 +2,8 @@
 
 <div class="main-content" *ngIf="user$ | async as user">
   <!-- Header -->
-  <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(https://gp1.com/wp-content/uploads/2017/07/SOCIALMedia.jpeg); background-size: cover; background-position: center top;">
+  <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+    style="min-height: 600px; background-image: url(https://gp1.com/wp-content/uploads/2017/07/SOCIALMedia.jpeg); background-size: cover; background-position: center top;">
     <!-- Mask -->
     <span class="mask bg-gradient-default opacity-8"></span>
   </div>
@@ -14,65 +15,56 @@
           <div class="row justify-content-center">
             <div class="col-lg-3 order-lg-2">
               <div class="card-profile-image">
-                <a href="#">
-                  <img src="https://i.pinimg.com/736x/f8/59/10/f8591012654c7e140435ddceceb71a3d--bleach.jpg" class="rounded-circle">
-                </a>
+                <img src="./assets/images/favicon.png" class="rounded-circle">
               </div>
             </div>
           </div>
           <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
             <div class="d-flex justify-content-between">
-              
             </div>
           </div>
           <div class="card-body pt-0 pt-md-4">
-
             <div class="text-center mt-md-5">
               <br>
               <button style="border-radius: 5px; width: 150px;">Profile Photo</button>
               <br><br>
-              <div *ngIf="user$ | async as user">
+              <div *ngIf="user$ | async as user"></div>
               <h3>
                 {{user.firstName}} {{user.lastName}}
               </h3>
-              <div class="h5 font-weight-300" *ngIf="user.city and user.state">
+              <div class="h5 font-weight-300">
                 <i class="ni location_pin mr-2"></i>{{user.city}}, {{user.state}}
               </div>
               <div class="h5 mt-4">
                 <i class="ni business_briefcase-24 mr-2"></i>About Me
               </div>
+              <hr>
+              <div class="h5 mt-4">
+                <i class="ni business_briefcase-24 mr-2"></i>Following
+                <ul>
+                  <li *ngFor="let f of followList$ | async">{{f.firstName}} {{f.lastName}}</li>
+                </ul>
+              </div>
               <div>
                 <i class="ni education_hat mr-2"></i>{{user.aboutMe}}
               </div>
               <hr class="my-4">
-              
-                <!-- <div *ngIf="canEdit; then editOptions; else userOptions"></div> -->
-                <div *ngIf="user.id==loggedInUser.id; then editOptions; else userOptions"></div>
-               <ng-template #userOptions>
-                <div *ngIf="followList$ | async" >
-                <button *ngIf="!checkIfFollowing(); else unfollowButton" (click)="followUser()" style="border-radius: 5px; width: 150px;">Follow</button>
-               </div>
-                <ng-template #unfollowButton>
-                <button (click)="unfollow()" style="border-radius: 5px; width: 150px;">Unfollow</button>
+              <!-- <div *ngIf="canEdit; then editOptions; else userOptions"></div> -->
+              <div *ngIf="user.id==loggedInUser.id; then editOptions; else userOptions"></div>
+              <ng-template #userOptions>
+               <div *ngIf="followList$ | async" >
+               <button *ngIf="!checkIfFollowing(); else unfollowButton" (click)="followUser()" style="border-radius: 5px; width: 150px;">Follow</button>
+              </div>
+               <ng-template #unfollowButton>
+               <button (click)="unfollow()" style="border-radius: 5px; width: 150px;">Unfollow</button>
+              </ng-template>
+              <!-- <button style="border-radius: 5px; width: 150px;">Message</button> -->
                </ng-template>
-               <!-- <button style="border-radius: 5px; width: 150px;">Message</button> -->
-                </ng-template>
-                <ng-template #editOptions>
-                <button style="border-radius: 5px; width: 150px;" (click)="allowUpdate()">Update Profile</button>
-                &nbsp;
-                <button (click)="resetPassword()" style="border-radius: 5px; width: 150px;">Change Password</button>
-                </ng-template>
-               
-                <div class="col-lg-4">              
-                <hr class="my-4">
-                <div *ngIf="user.id==loggedInUser.id">
-                  <label class="form-control-label" >Following:</label>
-                    <ul>
-                        <li *ngFor="let f of followList$ | async">{{f.firstName}} {{f.lastName}}</li>
-                    </ul>
-
-                </div>
-                
+               <ng-template #editOptions>
+               <button style="border-radius: 5px; width: 150px;" (click)="allowUpdate()">Update Profile</button>
+               &nbsp;
+               <button (click)="resetPassword()" style="border-radius: 5px; width: 150px;">Change Password</button>
+               </ng-template>
             </div>
           </div>
         </div>
@@ -81,114 +73,110 @@
         <div class="card bg-secondary shadow">
           <div class="card-header bg-white border-0">
             <div class="row align-items-center">
-              <div class="col-8" id="accountHeader" >
+              <div class="col-8" id="accountHeader">
                 <h3 class="mb-0" *ngIf="user.id==loggedInUser.id; else viewAcc">My Account</h3>
                 <ng-template #viewAcc> <h3 class="mb=0">View Account</h3></ng-template>
-
-              </div>
-              <div class="col-4 text-right">
-
               </div>
             </div>
           </div>
           <div class="card-body">
-            <form #editProfile="ngForm" (submit)="onSubmit(editProfile)" >
-                <fieldset id="fieldsetEdit" disabled>
-              <h6 class="heading-small text-muted mb-4">User information</h6>
-              <div class="pl-lg-4">
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="form-group focused">
+            <form #editProfile="ngForm" (submit)="onSubmit(editProfile)">
+              <fieldset id="fieldsetEdit" disabled>
+                <h6 class="heading-small text-muted mb-4">User information</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group focused">
                         <label class="form-control-label" for="input-first-name">First name</label>
-                        <input type="text" name="inputFirstName" class="form-control form-control-alternative" placeholder="First name" [(ngModel)]="user.firstName">
-
-
+                        <input type="text" name="inputFirstName" class="form-control form-control-alternative"
+                          placeholder="First name" [(ngModel)]="user.firstName">
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="form-group">
-
+                    <div class="col-lg-6">
+                      <div class="form-group">
                         <label class="form-control-label" for="input-last-name">Last name</label>
-                        <input type="text" name="inputLastName" class="form-control form-control-alternative" placeholder="Last name" [(ngModel)]="user.lastName">
-
-
+                        <input type="text" name="inputLastName" class="form-control form-control-alternative"
+                          placeholder="Last name" [(ngModel)]="user.lastName">
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="form-group focused">
-
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group focused">
                         <label class="form-control-label" for="input-email">Email address</label>
-                        <input type="email" name="inputEmail" class="form-control form-control-alternative" placeholder="allaboutme@example.com" [(ngModel)]="user.email">
-
+                        <input type="email" name="inputEmail" class="form-control form-control-alternative"
+                          placeholder="allaboutme@example.com" [(ngModel)]="user.email">
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="form-group focused">
-
-
-                      <label class="form-control-label" for="input-phone">Phone Number</label>
-                      <input type="text" name="inputPhoneNumber" class="form-control form-control-alternative" placeholder="Phone Number" [(ngModel)]="user.phoneNumber">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <hr class="my-4">
-              <!-- Address -->
-              <h6 class="heading-small text-muted mb-4">Contact information</h6>
-              <div class="pl-lg-4">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group focused">
-                      <label class="form-control-label" for="input-address">Address</label>
-                      <input name="inputAddress" class="form-control form-control-alternative" placeholder="Street" [(ngModel)]="user.address" type="text">
+                    <div class="col-lg-6">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-phone">Phone Number</label>
+                        <input type="text" name="inputPhoneNumber" class="form-control form-control-alternative"
+                          placeholder="Phone Number" [(ngModel)]="user.phoneNumber">
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-lg-4">
-                    <div class="form-group focused">
-                      <label class="form-control-label" for="input-city">City</label>
-                      <input type="text" name="inputCity" class="form-control form-control-alternative" placeholder="City"  [(ngModel)]="user.city">
+                <hr class="my-4">
+                <!-- Address -->
+                <h6 class="heading-small text-muted mb-4">Contact information</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-address">Address</label>
+                        <input name="inputAddress" class="form-control form-control-alternative" placeholder="Street"
+                          [(ngModel)]="user.address" type="text">
+                      </div>
                     </div>
                   </div>
-                  <div class="col-lg-4">
-                    <div class="form-group focused">
-                      <label class="form-control-label" for="input-country">State</label>
-                      <input type="text" name="inputState" class="form-control form-control-alternative" placeholder="State"  [(ngModel)]="user.state">
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-city">City</label>
+                        <input type="text" name="inputCity" class="form-control form-control-alternative"
+                          placeholder="City" [(ngModel)]="user.city">
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-lg-4">
-                    <div class="form-group">
-                      <label class="form-control-label" for="input-country">Postal code</label>
-                      <input type="number" name="inputPostalCode" class="form-control form-control-alternative" placeholder="Postal code"  [(ngModel)]="user.postalCode">
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-country">State</label>
+                        <input type="text" name="inputState" class="form-control form-control-alternative"
+                          placeholder="State" [(ngModel)]="user.state">
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-country">Postal code</label>
+                        <input type="number" name="inputPostalCode" class="form-control form-control-alternative"
+                          placeholder="Postal code" [(ngModel)]="user.postalCode">
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <hr class="my-4">
-              <!-- Description -->
-              <h6 class="heading-small text-muted mb-4">About me</h6>
-              <div class="pl-lg-4">
-                <div class="form-group focused">
-                  <label class="form-control-label" for="inputAboutMe">About Me</label>
-                  <textarea rows="4" class="form-control form-control-alternative" name="inputAboutMe" placeholder="A few words about you ..." [(ngModel)]="user.aboutMe"></textarea>
-                </div>
-                <div class="form-group">
+                <hr class="my-4">
+                <!-- Description -->
+                <h6 class="heading-small text-muted mb-4">About me</h6>
+                <div class="pl-lg-4">
+                  <div class="form-group focused">
+                    <label class="form-control-label" for="inputAboutMe">About Me</label>
+                    <textarea rows="4" class="form-control form-control-alternative" name="inputAboutMe"
+                      placeholder="A few words about you ..." [(ngModel)]="user.aboutMe"></textarea>
+                  </div>
+                  <div class="form-group">
                     <label class="form-control-label" for="gender">Gender</label>
                     <select class="form-control form-control-alternative" name="selectGender" [(ngModel)]="user.gender">
-                        <option value="Male">Male (He/Him)</option>
-                        <option value="Female">Female (She/Her)</option>
-                        <option value="Nonbinary">Nonbinary (They/Them)</option>
-                        <option value="Other">Other</option>
+                      <option value="Male">Male (He/Him)</option>
+                      <option value="Female">Female (She/Her)</option>
+                      <option value="Nonbinary">Nonbinary (They/Them)</option>
+                      <option value="Other">Other</option>
                     </select>
+                  </div>
                 </div>
-              </div>
-              <input hidden style="border-radius: 5px; width: 150px;" id="submitProfile" type="submit" name="Update Profile"/>
+                <input hidden style="border-radius: 5px; width: 150px;" id="submitProfile" type="submit"
+                  name="Update Profile" />
               </fieldset>
             </form>
-            </div>
           </div>
         </div>
       </div>
