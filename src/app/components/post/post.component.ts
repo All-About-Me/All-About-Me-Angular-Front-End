@@ -3,10 +3,12 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import Bookmark from 'src/app/models/Bookmark';
+import { Like } from 'src/app/models/like.model';
 import Post from 'src/app/models/Post';
 import User from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookmarkService } from 'src/app/services/bookmark.service';
+import { LikeService } from 'src/app/services/like.service';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({
@@ -25,11 +27,15 @@ export class PostComponent implements OnInit, OnChanges {
   @Output() bookmarkListChange = new EventEmitter<Post[]>()
   replyToPost: boolean = false
   isBookmarked:boolean = false
-
+  isLiked: boolean = true
+  isUnliked: boolean = true 
+  countLikes: number = 0
+  public likes:Like[];
   constructor(private postService: PostService, 
     private authService: AuthService, 
     private bookmarkService:BookmarkService,
-    private router:Router) { }
+    private router:Router,
+    private likeService: LikeService) { }
 
   ngOnInit(): void {
     for(let listPost of this.bookmarkList){
@@ -79,4 +85,21 @@ export class PostComponent implements OnInit, OnChanges {
   viewProfile(){
     this.router.navigate(["/profile-page/"+this.post.author.id])
   }
+
+  toggleLike= () => {
+    if(this.isLiked)
+    {
+      this.countLikes += 1
+      console.log(this.countLikes)
+    }
+  }
+  toggleUnlike= () => {
+    if(this.isUnliked)
+    {
+      this.countLikes -= 1
+    }
+
+  }    
 }
+
+
