@@ -22,6 +22,8 @@ export class UserProfileComponent implements OnInit{
   canEdit:boolean;
   followList:User[] = [];
   isFollowing:boolean;
+  followList$: Observable<User[]>;
+  user$=new Observable<User>;
 
   constructor(
     private authService: AuthService,
