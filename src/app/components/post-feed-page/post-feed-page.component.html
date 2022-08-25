@@ -7,19 +7,17 @@
     
     <form [formGroup]="submitForm" (ngSubmit)="viewAll()" novalidate>
         <label for="search_field">Search for User: </label>
-        <input class="her" #box type="text" formControlName="search_field" placeholder="Enter user's first/last name!">
+        <input class="her" #box type="text" formControlName="search_field" placeholder="Enter user's first/last name!" >
         <button type="submit" name="submit_btn">Load User Credentials</button>
         <button type="reset" name="reset_btn">Reset</button> 
-        <ul *ngFor = "let b of users; let indexOfElement =index;">
+        <ul *ngFor = "let user of users; let indexOfElement =index;">
             <li
-            style="list-style:none" *ngIf="box.value== b.firstName || box.value == b.lastName">User Email: {{ b.email }}<br> User First Name: 
-        {{ b.firstName }}<br> User Last Name: {{b.lastName}}<br> User Id: {{b.id}} 
-    
+            style="list-style:none" *ngIf="box.value== user.firstName|| box.value == user.lastName">User Email: {{ user.email }}<br> User First Name: 
+        {{ user.firstName }}<br> User Last Name: {{user.lastName}}<br> User Id: {{user.id}} 
         <button (click)="linkAll(indexOfElement)">View user profile </button>
             </li> 
         </ul>
     </form>
-
     <form class="form" *ngIf="!createPost; else createPostTemplate">
         <mat-form-field class="form-full-width">
             <mat-label>Something on your mind?</mat-label>
