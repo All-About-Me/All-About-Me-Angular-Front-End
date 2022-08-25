@@ -63,6 +63,7 @@ export class UserProfileComponent implements OnInit{
         }
       } 
     );*/
+
   }
 
   ngAfterViewInit() {
@@ -73,10 +74,10 @@ export class UserProfileComponent implements OnInit{
   checkIfFollowing():boolean{
       for (let i=0; i<this.followList.length; i++){
         if (this.followList[i].id==this.user.id){
-          return true
+          return true;
         }
       }
-      return false
+      return false;
   }
 
   allowUpdate() {
@@ -141,13 +142,17 @@ export class UserProfileComponent implements OnInit{
 
   followUser(){
     this._followerService.addFollow(this.loggedInUser,this.user).subscribe();
-    this.isFollowing=true;
+    let tag: HTMLElement = document.createElement("p");
+      let text = document.createTextNode(
+        `Now following ${this.user}`
+      );
+      tag.appendChild(text);
+      document.getElementById("followButton")?.append(tag);
   }
 
   unfollow(){
-    console.log("In unfollow method");
     this._followerService.unfollow(this.loggedInUser, this.user).subscribe();
-    this.isFollowing=false;
+    this.checkIfFollowing();
   }
 
   resetPassword(): void {

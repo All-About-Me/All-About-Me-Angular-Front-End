@@ -28,9 +28,9 @@ export class PostComponent implements OnInit, OnChanges {
   replyToPost: boolean = false
   isBookmarked:boolean = false
   isLiked: boolean = true
-  isUnliked: boolean = true 
-  countLikes: number = 0
-  public likes:Like[];
+  isUnliked: boolean = true
+  totalLikes = Like.length + 1
+
   constructor(private postService: PostService, 
     private authService: AuthService, 
     private bookmarkService:BookmarkService,
@@ -86,20 +86,10 @@ export class PostComponent implements OnInit, OnChanges {
     this.router.navigate(["/profile-page/"+this.post.author.id])
   }
 
-  toggleLike= () => {
+  toggleLike():any {
     if(this.isLiked)
     {
-      this.countLikes += 1
-      console.log(this.countLikes)
+      this.totalLikes + 1
     }
   }
-  toggleUnlike= () => {
-    if(this.isUnliked)
-    {
-      this.countLikes -= 1
-    }
-
-  }    
 }
-
-

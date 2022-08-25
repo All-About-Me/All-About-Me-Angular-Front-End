@@ -16,8 +16,15 @@ describe('UserProfileComponent', () => {
       declarations: [ UserProfileComponent ]
     })
     .compileComponents();
-
     
+    fixture = TestBed.createComponent(UserProfileComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    
+  });
+
+  it("should create", () => {
+    expect(component).toBeTruthy();
   });
 
   it('TestBed should be Truthy', () => {

@@ -69,22 +69,6 @@ export class PostFeedPageComponent implements OnInit {
     console.log(val)
   }
   
-  onSearch= (someInput:string) => {
-    try{
-      this.authService.search(someInput).subscribe((res:any)=>{
-        if (res == null) { //checks input, should return user if they exist, else its null
-          alert("No user with that first name exists!")
-          throw 'Wrong User Information'; //creates custom error   
-        }this.router.navigate(['/profile-page/'+res.id])
-      },//similar to working with a promoise
-      (error: HttpErrorResponse) => { //used to catch error
-        console.log(error); 
-      });
-  } catch(e) {  //used to catch error
-  }      
-  }
-
-
   getBookmarks(){
     this.bookmarkService.getAllSavedPosts(this.loggedInUser).subscribe(
     (response) => {
@@ -136,4 +120,5 @@ export class PostFeedPageComponent implements OnInit {
   linkAll = (input: any) => {
     this.router.navigate(["/profile-page/" + (input + 1)]);
   };
+
 }

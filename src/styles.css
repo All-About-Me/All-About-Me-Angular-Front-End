@@ -16,6 +16,7 @@ body{
   --form-bkg-color:whitesmoke;
   --post-bkg-color: whitesmoke;
   --card-bkg-color:white;
+  --card-header-bkg-color: white;
 }
 
 body.dark-theme{
@@ -25,8 +26,8 @@ body.dark-theme{
   --btn-bg-color:rgb(250, 114, 3);
   --form-bkg-color:lightgray;
   --post-bkg-color:lightgray;
-  --profile-bkg-color:lightgray;
   --card-bkg-color:lightgray;
+  --card-header-bkg-color:rgb(230, 230, 230);
 }
 
 h1,
@@ -209,12 +210,17 @@ button {
 .spacer {
   flex: 1 1 auto;
 }
+
 .mat-card{
   background-color: var(--post-bkg-color);
 }
-.card.card-profile.shadow{
-  background: var(--profile-bkg-color);
-}
+
 .card-body{
   background: var(--card-bkg-color);
+}
+
+.card-header{
+  background-color: var(--card-header-bkg-color);
+  border-top-left-radius: .375rem;
+  border-top-right-radius: .375rem;
 }
