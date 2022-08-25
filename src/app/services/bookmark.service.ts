@@ -17,7 +17,7 @@ export class BookmarkService {
   constructor(private http: HttpClient) { }
 
   getAllSavedPosts(user:User): Observable<Bookmark[]> {
-    return this.http.request<Bookmark[]>('put', `${this.postUrl}`,{body: user, headers: environment.headers, withCredentials: environment.withCredentials} )
+    return this.http.get<Bookmark[]>(`${this.postUrl}/${user.id}`,{headers: environment.headers, withCredentials: environment.withCredentials} )
   }
 
   bookmarkPost(user:User,post:Post): Observable<Bookmark> {

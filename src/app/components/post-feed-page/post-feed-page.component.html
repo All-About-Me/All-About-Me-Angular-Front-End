@@ -7,7 +7,7 @@
     
     <form [formGroup]="submitForm" (ngSubmit)="viewAll()" novalidate>
         <label for="search_field">Search for User: </label>
-        <input class="her" #box type="text" formControlName="search_field" placeholder="Enter user's first/last name!">
+        <input class="her" #box type="text" formControlName="search_field" placeholder="Enter user's first or last name!">
         <button type="submit" name="submit_btn">Load User Credentials</button>
         <button type="reset" name="reset_btn">Reset</button> 
         <ul *ngFor = "let b of users; let indexOfElement =index;">

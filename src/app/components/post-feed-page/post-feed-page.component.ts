@@ -43,14 +43,12 @@ export class PostFeedPageComponent implements OnInit {
   ) {}
   users: User | any;
   ngOnInit(): void {
-    this.getBookmarks();
-
     this.postService.getAllPosts().subscribe((response) => {
       this.posts = response;
     });
 
     this.loggedInUser = this.authService.currentUser;
-
+    this.getBookmarks();
     this.getFollowedPosts();
     
       this.submitForm = this.fb.group({
