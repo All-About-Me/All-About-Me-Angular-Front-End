@@ -35,14 +35,21 @@
               <div *ngIf="user.city and user.state" class="h5 font-weight-300">
                 <i class="ni location_pin mr-2"></i>{{user.city}}, {{user.state}}
               </div>
+              <hr>
               <div class="h5 mt-4">
                 <i class="ni business_briefcase-24 mr-2"></i>About Me
               </div>
               <div>
                 <i class="ni education_hat mr-2"></i>{{user.aboutMe}}
-              </div>
-              <hr class="my-4">
-              
+              </div>            
+                <hr >
+                <div class="h5 mt-4" *ngIf="user.id==loggedInUser.id">
+                  <i class="ni business_briefcase-24 mr-2"></i>Following
+                    <ul>
+                        <li *ngFor="let f of followList$ | async">{{f.firstName}} {{f.lastName}}</li>
+                    </ul>
+                </div>
+              <hr>
                 <!-- <div *ngIf="canEdit; then editOptions; else userOptions"></div> -->
                 <div id="followButton" *ngIf="user.id==loggedInUser.id; then editOptions; else userOptions"></div>
                <ng-template #userOptions>
@@ -59,17 +66,6 @@
                 &nbsp;
                 <button (click)="resetPassword()" style="border-radius: 5px; width: 150px;">Change Password</button>
                 </ng-template>
-               
-                <div class="col-lg-4">              
-                <hr class="my-4">
-                <div *ngIf="user.id==loggedInUser.id">
-                  <label class="form-control-label" >Following:</label>
-                    <ul>
-                        <li *ngFor="let f of followList$ | async">{{f.firstName}} {{f.lastName}}</li>
-                    </ul>
-
-                </div>
-                
             </div>
           </div>
         </div>
