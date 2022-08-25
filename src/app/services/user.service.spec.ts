@@ -1,14 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PostService } from './post.service';
+import { UserService } from './user.service';
 
-describe('PostService', () => {
-  let service: PostService;
+describe('UserService', () => {
+  let service: UserService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    
+   
   });
+
  
   it('TestBed should be Truthy', () => {
     expect(TestBed).toBeTruthy();

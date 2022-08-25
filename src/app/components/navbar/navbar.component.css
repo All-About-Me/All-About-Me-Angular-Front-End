@@ -1,0 +1,8 @@
+mat-toolbar{
+    background:rgb(250, 114, 3);
+    color:white;
+}
+
+mat-slide-toggle.dark{
+    transform: rotate(180deg)
+}
