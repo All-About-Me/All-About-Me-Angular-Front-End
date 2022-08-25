@@ -20,7 +20,7 @@ export class UserProfileComponent implements OnInit{
   viewId: number | any;
   formChangesSubscription: any;
   canEdit:boolean;
-  followList:User[] = [];
+  followList:User[] = [] as User[];
   isFollowing:boolean;
   followList$: Observable<User[]>;
   user$=new Observable<User>;

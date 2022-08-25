@@ -49,8 +49,8 @@
                 <!-- <div *ngIf="canEdit; then editOptions; else userOptions"></div> -->
                 <div *ngIf="user.id==loggedInUser.id; then editOptions; else userOptions"></div>
                <ng-template #userOptions>
-                <div *ngIf="followList$ | async as followList" >
-                <button *ngIf="checkIfFollowing();" (click)="followUser()" style="border-radius: 5px; width: 150px;">Follow</button>
+                <div *ngIf="followList$ | async" >
+                <button *ngIf="!checkIfFollowing(); else unfollowButton" (click)="followUser()" style="border-radius: 5px; width: 150px;">Follow</button>
                </div>
                 <ng-template #unfollowButton>
                 <button (click)="unfollow()" style="border-radius: 5px; width: 150px;">Unfollow</button>
@@ -63,25 +63,14 @@
                 <button (click)="resetPassword()" style="border-radius: 5px; width: 150px;">Change Password</button>
                 </ng-template>
                
-                <div class="col-lg-4">
-                  <div class="form-group focused">
-                    <label class="form-control-label" >Following:</label>
-                    <ul>
-                      <li *ngFor="let f of followList">{{f.firstName}} {{f.lastName}} </li>
-                      <button (click)="resetPassword()" style="border-radius: 5px; width: 150px;">Unfollow</button>
-                  </ul>
-                  </div>
-
-                
+                <div class="col-lg-4">              
                 <hr class="my-4">
                 <div *ngIf="user.id==loggedInUser.id">
-                    Following:
+                  <label class="form-control-label" >Following:</label>
                     <ul>
                         <li *ngFor="let f of followList$ | async">{{f.firstName}} {{f.lastName}}</li>
                     </ul>
 
-                    
->>>>>>> a45b9db1803d7cca6518a4b1f9914b476b511bf6
                 </div>
                 
             </div>
