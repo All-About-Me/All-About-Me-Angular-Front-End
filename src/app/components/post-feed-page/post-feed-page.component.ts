@@ -9,47 +9,52 @@ import { AuthService } from 'src/app/services/auth.service';
 import { BookmarkService } from 'src/app/services/bookmark.service';
 import { LikeService } from 'src/app/services/like.service';
 import { PostService } from 'src/app/services/post.service';
-
+import { FollowerService } from '../../services/follower.service';
 
 
 @Component({
-  selector: 'app-post-feed-page',
-  templateUrl: './post-feed-page.component.html',
-  styleUrls: ['./post-feed-page.component.css']
+  selector: "app-post-feed-page",
+  templateUrl: "./post-feed-page.component.html",
+  styleUrls: ["./post-feed-page.component.css"],
 })
-
 export class PostFeedPageComponent implements OnInit {
-
-  
-  
   postForm = new FormGroup({
-    text: new FormControl(''),
-    imageUrl: new FormControl('')
+    text: new FormControl(""),
+    imageUrl: new FormControl(""),
     //we should be able to create a custome validator here when we get to the optional functon "profanity filter"
-  })
+  });
 
   posts: Post[] = [];
-  createPost:boolean = false;
-  showBookmarks:boolean=false;
+  createPost: boolean = false;
+  showBookmarks: boolean = false;
   bookmarkedPosts: Post[] = [];
   allBookmarks:Bookmark[]=[];
+  showFollows:boolean = true;
+  followList:User[] = [];
+  loggedInUser:User;
+  followedPosts: Post[] = [];
 
-  submitForm:FormGroup;
+  submitForm: FormGroup;
   constructor(
-    private postService: PostService, private authService: AuthService, private bookmarkService: BookmarkService, 
-    private fb:FormBuilder, private router: Router, private likeService:LikeService) { }
-    users:User| any;
+    private postService: PostService,
+    private authService: AuthService,
+    private bookmarkService: BookmarkService,
+    private fb: FormBuilder,
+    private router: Router, 
+    private likeService:LikeService
+  ) {}
+  users: User | any;
   ngOnInit(): void {
+    this.postService.getAllPosts().subscribe((response) => {
+      this.posts = response;
+    });
     if(this.authService.currentUser){
-    this.likeService.getAllMyLikes(this.authService.currentUser)
-    }
-    this.getBookmarks()  
-
-    this.postService.getAllPosts().subscribe(
-      (response) => {
-        this.posts = response
+      this.likeService.getAllMyLikes(this.authService.currentUser)
       }
-    )
+
+    this.loggedInUser = this.authService.currentUser;
+    this.getBookmarks();
+    this.getFollowedPosts();
     
       this.submitForm = this.fb.group({
       search_field: [''],
@@ -58,17 +63,6 @@ export class PostFeedPageComponent implements OnInit {
 
   toggleCreatePost = () => {
     this.createPost = !this.createPost
-  }
-
-  submitPost = (e: any) => {
-    e.preventDefault();
-    this.postService.upsertPost(new Post(0, this.postForm.value.text || "", this.postForm.value.imageUrl || "", this.authService.currentUser, []))
-      .subscribe(
-        (response) => {
-          this.posts = [response, ...this.posts]
-          this.toggleCreatePost()
-        }
-      )
   }
 
   toggleFeed =()=>{
@@ -80,18 +74,8 @@ export class PostFeedPageComponent implements OnInit {
     console.log(val)
   }
   
-
-  viewAll= () => {
-    this.authService.viewAllUsers().subscribe(data=>{
-      this.users =data; 
-    });
-  }
-  linkAll= (input:any) => {
-    this.router.navigate(['/profile-page/'+(input+1)]);
-};
-
   getBookmarks(){
-    this.bookmarkService.getAllSavedPosts(this.authService.currentUser).subscribe(
+    this.bookmarkService.getAllSavedPosts(this.loggedInUser).subscribe(
     (response) => {
       this.bookmarkedPosts.length=0
       this.allBookmarks = response
@@ -100,6 +84,46 @@ export class PostFeedPageComponent implements OnInit {
       }
     }
   )}
-}
-
   
+
+  getFollowedPosts(){
+    this.postService.getFollowedPosts(this.loggedInUser).subscribe(
+      data =>{this.followedPosts=data}
+    )
+  }
+
+  toggleFollowedPosts =()=>{
+    this.showFollows=!this.showFollows; 
+  }
+
+  submitPost = (e: any) => {
+    e.preventDefault();
+    this.postService
+      .upsertPost(
+        new Post(
+          0,
+          this.postForm.value.text || "",
+          this.postForm.value.imageUrl || "",
+          this.authService.currentUser,
+          []
+        )
+      )
+      .subscribe((response) => {
+        this.posts = [response, ...this.posts];
+        this.toggleCreatePost();
+      });
+  };
+
+
+  viewAll = () => {
+    this.authService.viewAllUsers().subscribe((data) => {
+      this.users = data;
+      alert("Ensure Correct Spelling!");
+    });
+  };
+
+  linkAll = (input: any) => {
+    this.router.navigate(["/profile-page/" + (input + 1)]);
+  };
+
+}

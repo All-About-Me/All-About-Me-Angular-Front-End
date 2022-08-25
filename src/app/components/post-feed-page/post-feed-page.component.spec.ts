@@ -19,7 +19,7 @@ describe('PostFeedPageComponent', () => {
 
     fixture = TestBed.createComponent(PostFeedPageComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    //fixture.detectChanges(); Temporarily removing to test docker build -Austin 8/25 11:53 CST
   });
 
   it('TestBed should be Truthy', () => {
