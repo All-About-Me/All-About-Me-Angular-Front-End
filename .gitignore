@@ -1,3 +1,6 @@
+
+node_modules
+
 # Created by https://www.toptal.com/developers/gitignore/api/angular
 # Edit at https://www.toptal.com/developers/gitignore?templates=angular
 
@@ -35,5 +38,9 @@ e2e/*.map
 
 # End of https://www.toptal.com/developers/gitignore/api/angular
 
+
 package-lock.json
 package.json
+
+.angular
+

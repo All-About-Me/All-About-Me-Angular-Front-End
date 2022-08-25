@@ -62,6 +62,16 @@
                 &nbsp;
                 <button (click)="resetPassword()" style="border-radius: 5px; width: 150px;">Change Password</button>
                 </ng-template>
+               
+                <div class="col-lg-4">
+                  <div class="form-group focused">
+                    <label class="form-control-label" >Following:</label>
+                    <ul>
+                      <li *ngFor="let f of followList">{{f.firstName}} {{f.lastName}} </li>
+                      <button (click)="resetPassword()" style="border-radius: 5px; width: 150px;">Unfollow</button>
+                  </ul>
+                  </div>
+
                 
                 <hr class="my-4">
                 <div *ngIf="user.id==loggedInUser.id">
@@ -71,7 +81,9 @@
                     </ul>
 
                     
+>>>>>>> a45b9db1803d7cca6518a4b1f9914b476b511bf6
                 </div>
+                
             </div>
           </div>
         </div>
