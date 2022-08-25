@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<div class="main-content">
+<div class="main-content" *ngIf="user$ | async as user">
   <!-- Header -->
   <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(https://gp1.com/wp-content/uploads/2017/07/SOCIALMedia.jpeg); background-size: cover; background-position: center top;">
     <!-- Mask -->
@@ -30,8 +30,9 @@
 
             <div class="text-center mt-md-5">
               <br>
-              <button *ngIf="canEdit" style="border-radius: 5px; width: 150px;">Profile Photo</button>
+              <button style="border-radius: 5px; width: 150px;">Profile Photo</button>
               <br><br>
+              <div *ngIf="user$ | async as user">
               <h3>
                 {{user.firstName}} {{user.lastName}}
               </h3>
@@ -46,7 +47,8 @@
               </div>
               <hr class="my-4">
               
-                <div *ngIf="canEdit; then editOptions; else userOptions"></div>
+                <!-- <div *ngIf="canEdit; then editOptions; else userOptions"></div> -->
+                <div *ngIf="user.id==loggedInUser.id; then editOptions; else userOptions"></div>
                <ng-template #userOptions><button (click)="followUser()" style="border-radius: 5px; width: 150px;">Follow</button>
                 &nbsp;
                 <button style="border-radius: 5px; width: 150px;">Message</button>
@@ -56,12 +58,14 @@
                 &nbsp;
                 <button (click)="resetPassword()" style="border-radius: 5px; width: 150px;">Reset Password</button>
                 </ng-template>
+                
                 <hr class="my-4">
                 <div>
                     Following:
                     <ul>
-                        <li *ngFor="let f of followList">{{f.firstName}} {{f.lastName}}</li>
+                        <li *ngFor="let f of followList$ | async">{{f.firstName}} {{f.lastName}}</li>
                     </ul>
+
                     
                 </div>
             </div>
@@ -72,9 +76,10 @@
         <div class="card bg-secondary shadow">
           <div class="card-header bg-white border-0">
             <div class="row align-items-center">
-              <div class="col-8" id="accountHeader">
-                <h3 class="mb-0" *ngIf="canEdit; else viewAcc">My Account</h3>
-               <ng-template #viewAcc> <h3 class="mb=0">View Account</h3></ng-template>
+              <div class="col-8" id="accountHeader" >
+                <h3 class="mb-0" *ngIf="user.id==loggedInUser.id; else viewAcc">My Account</h3>
+                <ng-template #viewAcc> <h3 class="mb=0">View Account</h3></ng-template>
+
               </div>
               <div class="col-4 text-right">
 
@@ -178,7 +183,7 @@
               <input hidden style="border-radius: 5px; width: 150px;" id="submitProfile" type="submit" name="Update Profile"/>
               </fieldset>
             </form>
-            
+            </div>
           </div>
         </div>
       </div>

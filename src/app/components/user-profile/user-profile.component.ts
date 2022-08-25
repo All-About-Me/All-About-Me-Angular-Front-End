@@ -1,25 +1,27 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
 import User from "src/app/models/User";
 import { AuthService } from "src/app/services/auth.service";
 import { UserService } from "../../services/user.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { FollowerService } from "../../services/follower.service";
+import { Observable, Observer } from "rxjs";
 
 @Component({
   selector: "app-user-profile",
   templateUrl: "./user-profile.component.html",
   styleUrls: ["./user-profile.component.css"],
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit{
   @ViewChild("editProfile", { static: true }) ngForm: NgForm;
 
   loggedInUser: User = {} as User;
-  user: User | any;
+  user: User;
   viewId: number | any;
   formChangesSubscription: any;
-  canEdit: boolean;
   followList: User[] = [];
+  followList$: Observable<User[]>;
+  user$=new Observable<User>;
 
   constructor(
     private authService: AuthService,
@@ -31,14 +33,24 @@ export class UserProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loggedInUser = this.authService.currentUser;
+    if(this.authService.currentUser){
+    this.loggedInUser= this.authService.currentUser
+    }else if(this.authService.currentUser==undefined){
+    }
     this.route.params.subscribe((params) => {
       this.viewId = params["id"];
     });
-    this._userService.getUserById(this.viewId).subscribe((data) => {
+    this.user$ =this._userService.getUserById(this.viewId)
+    this.user$.subscribe((data) => {
       this.user = data;
     });
 
+    // this.followList$=this._followerService.getFollows(this.user)
+    // this.followList$.subscribe((data) => {
+    //   this.followList = data;
+    // });
+
+    // this.cd.detectChanges();
     this.formChangesSubscription = this.ngForm.form.valueChanges.subscribe(
       (x) => {
         if (document.getElementById("confirmUpdate")) {
@@ -52,19 +64,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    if (this.loggedInUser.id === this.user.id) {
-      this.canEdit = true;
-    } else {
-      this.canEdit = false;
-    }
-    this._followerService.getFollows(this.user).subscribe((data) => {
-      this.followList = data;
-    });
     this.cd.detectChanges();
-  }
-
-  ngOnDestroy() {
-    this.formChangesSubscription.unsubscribe();
   }
 
   allowUpdate() {
@@ -80,6 +80,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   onSubmit(editProfile: any) {
+    console.log("submitted")
     if (!document.getElementById("confirmUpdate")) {
       let updateForm = editProfile.value;
       console.log(updateForm);
