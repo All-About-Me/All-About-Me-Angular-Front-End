@@ -47,13 +47,13 @@ export class UserProfileComponent implements OnInit{
       this.user = data;
     });
 
-    // this.followList$=this._followerService.getFollows(this.user)
-    // this.followList$.subscribe((data) => {
-    //   this.followList = data;
-    // });
+     this.followList$=this._followerService.getFollows(this.loggedInUser)
+     this.followList$.subscribe((data) => {
+       this.followList = data;
+     });
 
     // this.cd.detectChanges();
-    this.formChangesSubscription = this.ngForm.form.valueChanges.subscribe(
+   /* this.formChangesSubscription = this.ngForm.form.valueChanges.subscribe(
       (x) => {
         if (document.getElementById("confirmUpdate")) {
           document.getElementById("confirmUpdate")?.remove();
@@ -61,12 +61,22 @@ export class UserProfileComponent implements OnInit{
         if (document.getElementById("refuseUpdate")) {
           document.getElementById("refuseUpdate")?.remove();
         }
-      }
-    );
+      } 
+    );*/
   }
 
   ngAfterViewInit() {
     this.cd.detectChanges();
+    
+  }
+
+  checkIfFollowing():boolean{
+      for (let i=0; i<this.followList.length; i++){
+        if (this.followList[i].id==this.user.id){
+          return true
+        }
+      }
+      return false
   }
 
   allowUpdate() {
@@ -136,7 +146,8 @@ export class UserProfileComponent implements OnInit{
 
   unfollow(){
     console.log("In unfollow method");
-    this._followerService.unfollow(this.loggedInUser, this.user).subscribe()
+    this._followerService.unfollow(this.loggedInUser, this.user).subscribe();
+    this.isFollowing=false;
   }
 
   resetPassword(): void {

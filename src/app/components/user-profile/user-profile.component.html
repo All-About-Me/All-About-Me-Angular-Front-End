@@ -49,12 +49,13 @@
                 <!-- <div *ngIf="canEdit; then editOptions; else userOptions"></div> -->
                 <div *ngIf="user.id==loggedInUser.id; then editOptions; else userOptions"></div>
                <ng-template #userOptions>
-                <button *ngIf="!isFollowing; else unfollowButton" (click)="followUser()" style="border-radius: 5px; width: 150px;">Follow</button>
-               <ng-template #unfollowButton>
+                <div *ngIf="followList$ | async as followList" >
+                <button *ngIf="checkIfFollowing();" (click)="followUser()" style="border-radius: 5px; width: 150px;">Follow</button>
+               </div>
+                <ng-template #unfollowButton>
                 <button (click)="unfollow()" style="border-radius: 5px; width: 150px;">Unfollow</button>
                </ng-template>
-                &nbsp;
-                <button style="border-radius: 5px; width: 150px;">Message</button>
+               <!-- <button style="border-radius: 5px; width: 150px;">Message</button> -->
                 </ng-template>
                 <ng-template #editOptions>
                 <button style="border-radius: 5px; width: 150px;" (click)="allowUpdate()">Update Profile</button>
@@ -63,7 +64,7 @@
                 </ng-template>
                 
                 <hr class="my-4">
-                <div *ngIf="canEdit">
+                <div *ngIf="user.id==loggedInUser.id">
                     Following:
                     <ul>
                         <li *ngFor="let f of followList$ | async">{{f.firstName}} {{f.lastName}}</li>
