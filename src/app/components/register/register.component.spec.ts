@@ -13,15 +13,7 @@ describe('RegisterComponent', () => {
     .compileComponents();
   });
 
-  // beforeEach(() => {
-  //   fixture = TestBed.createComponent(RegisterComponent);
-  //   component = fixture.componentInstance;
-  //   fixture.detectChanges();
-  // });
-
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  
   it('TestBed should be Truthy', () => {
     expect(TestBed).toBeTruthy();
   });
