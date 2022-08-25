@@ -47,7 +47,7 @@
               <hr class="my-4">
               
                 <!-- <div *ngIf="canEdit; then editOptions; else userOptions"></div> -->
-                <div *ngIf="user.id==loggedInUser.id; then editOptions; else userOptions"></div>
+                <div id="followButton" *ngIf="user.id==loggedInUser.id; then editOptions; else userOptions"></div>
                <ng-template #userOptions>
                 <div *ngIf="followList$ | async" >
                 <button *ngIf="!checkIfFollowing(); else unfollowButton" (click)="followUser()" style="border-radius: 5px; width: 150px;">Follow</button>
