@@ -4,6 +4,6 @@ export const environment = {
   baseUrl: "http://34.235.88.178:3600",
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': 'http://34.235.88.178:4200/',
+    'Access-Control-Allow-Origin': 'http://34.235.88.178:4200',
   },
 };
