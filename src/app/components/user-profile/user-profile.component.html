@@ -65,7 +65,9 @@
                 <div *ngIf="user.id==loggedInUser.id">
                   <label class="form-control-label" >Following:</label>
                     <ul>
-                        <li *ngFor="let f of followList$ | async">{{f.firstName}} {{f.lastName}}</li>
+                        <li *ngFor="let f of followList$ | async">{{f.firstName}} {{f.lastName}}
+                          <button (click)="unfollowFromList()" style="border-radius: 5px; width: 100px; height:35px">Unfollow</button>
+                        </li>
                     </ul>
 
                 </div>
@@ -94,14 +96,14 @@
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-first-name">First name</label>
                         <input type="text" name="inputFirstName" class="form-control form-control-alternative"
-                          placeholder="First name" [(ngModel)]="user.firstName">
+                          [placeholder]="user.firstName || 'Input First Name'" ngModel>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-last-name">Last name</label>
                         <input type="text" name="inputLastName" class="form-control form-control-alternative"
-                          placeholder="Last name" [(ngModel)]="user.lastName">
+                          [placeholder]="user.lastName || 'Input Last Name'" ngModel>
                       </div>
                     </div>
                   </div>
@@ -110,14 +112,14 @@
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-email">Email address</label>
                         <input type="email" name="inputEmail" class="form-control form-control-alternative"
-                          placeholder="allaboutme@example.com" [(ngModel)]="user.email">
+                          [placeholder]="user.email || 'Input Email'" ngModel>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-phone">Phone Number</label>
                         <input type="text" name="inputPhoneNumber" class="form-control form-control-alternative"
-                          placeholder="Phone Number" [(ngModel)]="user.phoneNumber">
+                          [placeholder]="user.phoneNumber || 'Input Phone Number'" ngModel>
                       </div>
                     </div>
                   </div>
@@ -130,8 +132,9 @@
                     <div class="col-md-12">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-address">Address</label>
-                        <input name="inputAddress" class="form-control form-control-alternative" placeholder="Street"
-                          [(ngModel)]="user.address" type="text">
+                        <input name="inputAddress" class="form-control form-control-alternative" 
+                        [placeholder]="user.address || 'Input Address'"
+                          ngModel type="text">
                       </div>
                     </div>
                   </div>
@@ -140,21 +143,21 @@
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-city">City</label>
                         <input type="text" name="inputCity" class="form-control form-control-alternative"
-                          placeholder="City" [(ngModel)]="user.city">
+                          [placeholder]="user.city || 'Input City'" ngModel>
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-country">State</label>
                         <input type="text" name="inputState" class="form-control form-control-alternative"
-                          placeholder="State" [(ngModel)]="user.state">
+                          [placeholder]="user.state || 'Input State'" ngModel>
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-country">Postal code</label>
                         <input type="number" name="inputPostalCode" class="form-control form-control-alternative"
-                          placeholder="Postal code" [(ngModel)]="user.postalCode">
+                          [placeholder]="user.postalCode || 'Input Postal Code'" ngModel>
                       </div>
                     </div>
                   </div>
@@ -166,7 +169,7 @@
                   <div class="form-group focused">
                     <label class="form-control-label" for="inputAboutMe">About Me</label>
                     <textarea rows="4" class="form-control form-control-alternative" name="inputAboutMe"
-                      placeholder="A few words about you ..." [(ngModel)]="user.aboutMe"></textarea>
+                      [placeholder]="user.aboutMe || 'Tell us about yourself...'" ngModel></textarea>
                   </div>
                   <div class="form-group">
                     <label class="form-control-label" for="gender">Gender</label>

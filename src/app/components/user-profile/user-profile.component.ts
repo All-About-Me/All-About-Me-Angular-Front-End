@@ -155,6 +155,10 @@ export class UserProfileComponent implements OnInit{
     this.checkIfFollowing();
   }
 
+  unfollowFromList(){
+    
+  }
+
   resetPassword(): void {
     this.router.navigate(["/reset-password"]);
   }
