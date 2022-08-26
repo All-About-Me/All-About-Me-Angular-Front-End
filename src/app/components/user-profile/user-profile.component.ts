@@ -37,7 +37,11 @@ export class UserProfileComponent implements OnInit{
     private router: Router,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef
-  ) {}
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+  };
+  }
 
   ngOnInit(): void {
     if(this.authService.currentUser){
@@ -175,6 +179,10 @@ export class UserProfileComponent implements OnInit{
 
   unfollowFromList(){
 
+  }
+
+  viewProfilePage(fid:number){
+    this.router.navigate(["/profile-page/"+fid]);
   }
 
   resetPassword(): void {

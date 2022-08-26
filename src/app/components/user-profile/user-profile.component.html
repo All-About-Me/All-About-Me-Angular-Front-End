@@ -70,17 +70,18 @@
                 </ng-template>
                 <ng-container *ngIf="viewFollowing">
                   <hr >
-                    <i class="ni business_briefcase-24 mr-2"></i>Following
+                    <i class="ni business_briefcase-24 mr-2"></i><label class="form-control-label">Following</label>
                       <ul>
-                          <li *ngFor="let f of followList$ | async">{{f.firstName}} {{f.lastName}}</li>
+                          <li style="list-style:none;" *ngFor="let f of followList$ | async"><span>{{f.firstName}} {{f.lastName}}</span>
+                          &nbsp;&nbsp;<button (click)="viewProfilePage(f.id)" style="border-radius: 5px; width: 100px">View Profile</button></li>
                       </ul>
                       </ng-container>
                 
                 <ng-container *ngIf="viewFollowers">
                 <hr/>
-                <i class="ni business_briefcase-24 mr-2"></i>Followers
+                <i class="ni business_briefcase-24 mr-2"></i><label class="form-control-label">Followers</label>
                       <ul>
-                        <li *ngFor="let u of followers$ | async">{{u.firstName}} {{u.lastName}}</li>
+                        <li style="list-style:none; text-align:left" *ngFor="let u of followers$ | async">{{u.firstName}} {{u.lastName}}</li>
                       </ul>
                     </ng-container>
               </ng-template>
