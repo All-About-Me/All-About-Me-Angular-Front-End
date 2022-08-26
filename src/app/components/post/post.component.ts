@@ -16,20 +16,25 @@ import { PostService } from 'src/app/services/post.service';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
+
 export class PostComponent implements OnInit, OnChanges {
 
   commentForm = new FormGroup({
     text: new FormControl(''),
   })
 
+  //post represents this particular post as retrieved from the database by the post-feed-page
+  //bookmarkList lists all of the posts that the current user has bookmarked and is used to set the value of isBookmarked at initialization
+  //replyToPost toggles the display of the text entry form to make comments 
   @Input('post') post: Post
   @Input('bookmarkList') bookmarkList:Post []=[]
   @Output() bookmarkListChange = new EventEmitter<Post[]>()
   replyToPost: boolean = false
   isBookmarked:boolean = false
-  isLiked: boolean = true
-  isUnliked: boolean = true
-  totalLikes = Like.length + 1
+
+  isLiked: boolean = false
+  
+  totalLikes = 1
 
   constructor(private postService: PostService, 
     private authService: AuthService, 
@@ -37,6 +42,8 @@ export class PostComponent implements OnInit, OnChanges {
     private router:Router,
     private likeService: LikeService) { }
 
+    //when initialized, this post will check the list of bookmarks which it recieves from the post-feed-page.
+    //  if it finds a post id which matches its own, then it will set itself as bookmarked (this in turn changes the icon that is displayed)
   ngOnInit(): void {
     for(let listPost of this.bookmarkList){
     if(listPost.id==this.post.id){
@@ -44,6 +51,7 @@ export class PostComponent implements OnInit, OnChanges {
     }
   }
   }
+
   ngOnChanges(changes: SimpleChanges): void {
       if(this.bookmarkList.includes(this.post)){
         this.isBookmarked=true
@@ -51,10 +59,12 @@ export class PostComponent implements OnInit, OnChanges {
     
   }
 
+  //toggles whether the comment creation form is displayed or not
   toggleReplyToPost = () => {
     this.replyToPost = !this.replyToPost
   }
 
+  //creates a new comment for this post and sends it to the database as a post
   submitReply = (e: any) => {
     e.preventDefault()
     let newComment = new Post(0, this.commentForm.value.text || "", "", this.authService.currentUser, [])
@@ -67,6 +77,10 @@ export class PostComponent implements OnInit, OnChanges {
       )
   }
 
+  //toggles the bookmark status of a post. if it is currently bookmarked: will send the new bookmak to the server, 
+  //add the bookmark to the bookmark list, flip the boolean marking it as not bookmarked, and emit the new bookmarkList
+  //if it is not currently bookmarked: it will send a delete command to the server for this bookmark, remove the bookmark from the bookmarkList, 
+  //flip the boolean marking it as bookmarked, and emit the new bookmarkList
   toggleBookmark = () => {
     let bookmark = new Bookmark(0,this.authService.currentUser,this.post);
     if(!this.isBookmarked){
@@ -80,16 +94,16 @@ export class PostComponent implements OnInit, OnChanges {
     this.isBookmarked = !this.isBookmarked
     this.bookmarkListChange.emit(this.bookmarkList)
     }
+
   }
 
+  //sends the current user to view the profile page for the author of the post
   viewProfile(){
     this.router.navigate(["/profile-page/"+this.post.author.id])
   }
 
+  
   toggleLike():any {
-    if(this.isLiked)
-    {
-      this.totalLikes + 1
-    }
+    this.isLiked=!this.isLiked
   }
 }
