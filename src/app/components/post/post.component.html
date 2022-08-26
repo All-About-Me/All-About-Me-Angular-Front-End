@@ -20,12 +20,12 @@
         <mat-card-actions align="end">
             
             <div  *ngIf="isLiked">
-                <button mat-icon-button color="accent" (click)="toggleLike()"><mat-icon>favorite</mat-icon>{{totalLikes}}</button>
+                <button mat-icon-button color="accent" (click)="getLike()">><mat-icon>favorite_border</mat-icon>{{allLikes_eachpost.length}}</button>
             </div>
             
             <ng-template #unLike>
-                <button mat-icon-button (click)="toggleLike()">favorite</button>
-            </ng-template> -->
+                <button mat-icon-button (click)="getLike()"><mat-icon>favorite</mat-icon></button>
+            </ng-template> 
 
             <button style="border-radius: 5px; width: 60px;" (click)="toggleReplyToPost()">Reply</button>
 

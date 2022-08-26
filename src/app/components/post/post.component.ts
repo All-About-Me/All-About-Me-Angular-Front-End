@@ -29,6 +29,9 @@ export class PostComponent implements OnInit, OnChanges {
   isBookmarked:boolean = false
   isLiked: boolean = true
   totalLikes:Like[] = []
+  allLikes_eachpost: Like[] = [];
+  userLike: Like;
+  userUnlike: Like;
 
   constructor(private postService: PostService, 
     private authService: AuthService, 
@@ -84,11 +87,22 @@ export class PostComponent implements OnInit, OnChanges {
   viewProfile(){
     this.router.navigate(["/profile-page/"+this.post.author.id])
   }
-
-  toggleLike():any {
-    if(this.isLiked)
-    {
-      // this.totalLikes + 1
+  getLike(){
+    this.likeService.getLike(this.post).subscribe(
+    (response) => {this.allLikes_eachpost = response}
+  )}
+  
+  addLike(){
+    if(!this.isLiked){
+      this.likeService.addLike(this.authService.currentUser, this.post).subscribe(
+        (response) => {
+          this.userLike = response
+        this.likeService.getLike(this.post)}
+      )}
+    else{
+      this.likeService.deleteLike(this.authService.currentUser, this.post).subscribe((response) => {
+        this.userUnlike = response
+        this.likeService.getLike(this.post)
+      })
     }
-  }
-}
+  }}

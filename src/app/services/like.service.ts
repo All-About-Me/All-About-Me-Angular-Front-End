@@ -13,14 +13,14 @@ export class LikeService  {
   postUrl: string = `${environment.baseUrl}/like`
   constructor(private http: HttpClient) { }
 
-  public getLike():Observable<Like[]> {
+  public getLike(post:Post):Observable<Like[]> {
     return this.http.get<Like[]>(`${this.postUrl}/like/all`)
   }
   public addLike(user:User, post:Post):Observable<Like> {
     let like = new Like(0, user, post);
     return this.http.post<Like>(`${this.postUrl}/like/add`,like, {headers: environment.headers, withCredentials: environment.withCredentials} )
   }
-  public deleteLike(id:number):Observable<Like> {
+  public deleteLike(user:User, post:Post):Observable<Like> {
     return this.http.delete<Like>(`${this.postUrl}/like/remove`)
   }
 }
