@@ -535,12 +535,12 @@
   
   .form-control::-ms-input-placeholder {
     opacity: 1;
-    color: #adb5bd;
+    color: #7a93ac;
   }
   
   .form-control::placeholder {
     opacity: 1;
-    color: #adb5bd;
+    color: #838b93;
   }
   
   .form-control:disabled,
