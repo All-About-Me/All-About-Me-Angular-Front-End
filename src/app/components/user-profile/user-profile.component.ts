@@ -27,6 +27,8 @@ export class UserProfileComponent implements OnInit{
 
   followers:User[] = [] as User[];
   followers$: Observable<User[]>;
+  viewFollowing:boolean=false;
+  viewFollowers:boolean=false;
 
   constructor(
     private authService: AuthService,
@@ -161,6 +163,14 @@ export class UserProfileComponent implements OnInit{
   unfollow(){
     this._followerService.unfollow(this.loggedInUser, this.user).subscribe();
     this.checkIfFollowing();
+  }
+
+  viewFollowList(){
+    this.viewFollowing=!this.viewFollowing;
+  }
+
+  viewFollowerList(){
+    this.viewFollowers=!this.viewFollowers;
   }
 
   unfollowFromList(){

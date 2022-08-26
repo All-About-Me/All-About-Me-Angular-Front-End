@@ -59,6 +59,31 @@
                 <button style="border-radius: 5px; width: 150px;" (click)="allowUpdate()">Update Profile</button>
                 &nbsp;
                 <button (click)="resetPassword()" style="border-radius: 5px; width: 150px;">Change Password</button>
+                <hr >
+                <button *ngIf="!viewFollowing; else hideFollowing" (click)="viewFollowList()" style="border-radius: 5px; width: 150px;"> View Following</button>
+                <ng-template #hideFollowing>
+                  <button (click)="viewFollowList()" style="border-radius: 5px; width: 150px;"> Hide Following</button>
+                </ng-template>
+                &nbsp;
+                <button *ngIf="!viewFollowers; else hideFollowers" (click)="viewFollowerList()" style="border-radius: 5px; width: 150px;"> View Followers</button>
+                <ng-template #hideFollowers>
+                  <button (click)="viewFollowerList()" style="border-radius: 5px; width: 150px;">Hide Followers</button>
+                </ng-template>
+                <ng-container *ngIf="viewFollowing">
+                  <hr >
+                    <i class="ni business_briefcase-24 mr-2"></i>Following
+                      <ul>
+                          <li *ngFor="let f of followList$ | async">{{f.firstName}} {{f.lastName}}</li>
+                      </ul>
+                      </ng-container>
+                
+                <ng-container *ngIf="viewFollowers">
+                <hr/>
+                <i class="ni business_briefcase-24 mr-2"></i>Followers
+                      <ul>
+                        <li *ngFor="let u of followers$ | async">{{u.firstName}} {{u.lastName}}</li>
+                      </ul>
+                    </ng-container>
               </ng-template>
               <hr>
              <div class="h5 mt-4">
