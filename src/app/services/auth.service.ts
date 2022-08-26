@@ -42,7 +42,7 @@ export class AuthService {
       password: password,
     };
     return this.http.post<any>(`${this.authUrl}/register`, payload, {
-      headers: environment.headers,
+      headers: environment.headers, withCredentials: environment.withCredentials
     });
   }
 
@@ -56,7 +56,5 @@ export class AuthService {
  
 
   }
-  search(first_Name:string): Observable<User> {
-    return this.http.get<User>("http://localhost:8080/auth/users/"+first_Name)
-  }
+ 
 }

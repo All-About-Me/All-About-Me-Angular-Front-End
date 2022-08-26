@@ -25,6 +25,11 @@ export class UserProfileComponent implements OnInit{
   followList$: Observable<User[]>;
   user$=new Observable<User>;
 
+  followers:User[] = [] as User[];
+  followers$: Observable<User[]>;
+  viewFollowing:boolean=false;
+  viewFollowers:boolean=false;
+
   constructor(
     private authService: AuthService,
     private _userService: UserService,
@@ -32,7 +37,11 @@ export class UserProfileComponent implements OnInit{
     private router: Router,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef
-  ) {}
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+  };
+  }
 
   ngOnInit(): void {
     if(this.authService.currentUser){
@@ -51,6 +60,11 @@ export class UserProfileComponent implements OnInit{
      this.followList$.subscribe((data) => {
        this.followList = data;
      });
+
+     this.followers$=this._followerService.getFollowers(this.loggedInUser)
+     this.followers$.subscribe((data)=> {
+      this.followers = data;
+     })
 
     // this.cd.detectChanges();
    /* this.formChangesSubscription = this.ngForm.form.valueChanges.subscribe(
@@ -153,6 +167,22 @@ export class UserProfileComponent implements OnInit{
   unfollow(){
     this._followerService.unfollow(this.loggedInUser, this.user).subscribe();
     this.checkIfFollowing();
+  }
+
+  viewFollowList(){
+    this.viewFollowing=!this.viewFollowing;
+  }
+
+  viewFollowerList(){
+    this.viewFollowers=!this.viewFollowers;
+  }
+
+  unfollowFromList(){
+
+  }
+
+  viewProfilePage(fid:number){
+    this.router.navigate(["/profile-page/"+fid]);
   }
 
   resetPassword(): void {
