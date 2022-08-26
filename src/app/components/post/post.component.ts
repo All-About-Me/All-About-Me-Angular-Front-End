@@ -28,8 +28,7 @@ export class PostComponent implements OnInit, OnChanges {
   replyToPost: boolean = false
   isBookmarked:boolean = false
   isLiked: boolean = true
-  isUnliked: boolean = true
-  totalLikes = Like.length + 1
+  totalLikes:Like[] = []
 
   constructor(private postService: PostService, 
     private authService: AuthService, 
@@ -89,7 +88,7 @@ export class PostComponent implements OnInit, OnChanges {
   toggleLike():any {
     if(this.isLiked)
     {
-      this.totalLikes + 1
+      // this.totalLikes + 1
     }
   }
 }
