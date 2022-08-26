@@ -35,48 +35,84 @@
               <div *ngIf="user.city and user.state" class="h5 font-weight-300">
                 <i class="ni location_pin mr-2"></i>{{user.city}}, {{user.state}}
               </div>
-              <hr>
               <div class="h5 mt-4">
                 <i class="ni business_briefcase-24 mr-2"></i>About Me
               </div>
               <div>
                 <i class="ni education_hat mr-2"></i>{{user.aboutMe}}
-              </div>            
-                <hr >
-                <div class="h5 mt-4" *ngIf="user.id==loggedInUser.id">
-                  <i class="ni business_briefcase-24 mr-2"></i>Following
-                    <ul>
-                        <li *ngFor="let f of followList$ | async">{{f.firstName}} {{f.lastName}}</li>
-                    </ul>
+              </div>
+              <hr class="my-4">
+
+              <!-- <div *ngIf="canEdit; then editOptions; else userOptions"></div> -->
+              <div id="followButton" *ngIf="user.id==loggedInUser.id; then editOptions; else userOptions"></div>
+              <ng-template #userOptions>
+                <div *ngIf="followList$ | async">
+                  <button *ngIf="!checkIfFollowing(); else unfollowButton" (click)="followUser()"
+                    style="border-radius: 5px; width: 150px;">Follow</button>
                 </div>
-              <hr>
-                <!-- <div *ngIf="canEdit; then editOptions; else userOptions"></div> -->
-                <div id="followButton" *ngIf="user.id==loggedInUser.id; then editOptions; else userOptions"></div>
-               <ng-template #userOptions>
-                <div *ngIf="followList$ | async" >
-                <button *ngIf="!checkIfFollowing(); else unfollowButton" (click)="followUser()" style="border-radius: 5px; width: 150px;">Follow</button>
-               </div>
                 <ng-template #unfollowButton>
-                <button (click)="unfollow()" style="border-radius: 5px; width: 150px;">Unfollow</button>
-               </ng-template>
-               <!-- <button style="border-radius: 5px; width: 150px;">Message</button> -->
+                  <button (click)="unfollow()" style="border-radius: 5px; width: 150px;">Unfollow</button>
                 </ng-template>
-                <ng-template #editOptions>
+                <!-- <button style="border-radius: 5px; width: 150px;">Message</button> -->
+              </ng-template>
+              <ng-template #editOptions>
                 <button style="border-radius: 5px; width: 150px;" (click)="allowUpdate()">Update Profile</button>
                 &nbsp;
                 <button (click)="resetPassword()" style="border-radius: 5px; width: 150px;">Change Password</button>
+                <hr >
+                <button *ngIf="!viewFollowing; else hideFollowing" (click)="viewFollowList()" style="border-radius: 5px; width: 150px;"> View Following</button>
+                <ng-template #hideFollowing>
+                  <button (click)="viewFollowList()" style="border-radius: 5px; width: 150px;"> Hide Following</button>
                 </ng-template>
+                &nbsp;
+                <button *ngIf="!viewFollowers; else hideFollowers" (click)="viewFollowerList()" style="border-radius: 5px; width: 150px;"> View Followers</button>
+                <ng-template #hideFollowers>
+                  <button (click)="viewFollowerList()" style="border-radius: 5px; width: 150px;">Hide Followers</button>
+                </ng-template>
+                <ng-container *ngIf="viewFollowing">
+                  <hr >
+                    <i class="ni business_briefcase-24 mr-2"></i><label class="form-control-label">Following</label>
+                      <ul>
+                          <li style="list-style:none;" *ngFor="let f of followList$ | async"><span>{{f.firstName}} {{f.lastName}}</span>
+                          &nbsp;&nbsp;<button (click)="viewProfilePage(f.id)" style="border-radius: 5px; width: 100px">View Profile</button></li>
+                      </ul>
+                      </ng-container>
+                
+                <ng-container *ngIf="viewFollowers">
+                <hr/>
+                <i class="ni business_briefcase-24 mr-2"></i><label class="form-control-label">Followers</label>
+                      <ul>
+                        <li style="list-style:none; text-align:left" *ngFor="let u of followers$ | async">{{u.firstName}} {{u.lastName}}</li>
+                      </ul>
+                    </ng-container>
+              </ng-template>
+              <hr>
+             <div class="h5 mt-4">
+              <i class="ni business_briefcase-24 mr-2"></i>Following
+            </div>
+              <ul>
+                <li class="ni education_hat mr-2" *ngFor="let f of followList$ | async">{{f.firstName}} {{f.lastName}}</li>
+              </ul>
+              <hr />
+              <div class="h5 mt-4">
+                <i class="ni business_briefcase-24 mr-2"></i>Followers
+              </div>
+              <ul>
+                <li class="ni education_hat mr-2" *ngFor="let u of followers$ | async">{{u.firstName}} {{u.lastName}}</li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
       <div class="col-xl-8 order-xl-1">
-        <div class="card bg-secondary shadow" >
+        <div class="card bg-secondary shadow">
           <div class="card-header">
-            <div class="row align-items-center" >
+            <div class="row align-items-center">
               <div class="col-8" id="accountHeader">
                 <h3 class="mb-0" *ngIf="user.id==loggedInUser.id; else viewAcc">My Account</h3>
-                <ng-template #viewAcc> <h3 class="mb=0">View Account</h3></ng-template>
+                <ng-template #viewAcc>
+                  <h3 class="mb=0">View Account</h3>
+                </ng-template>
               </div>
             </div>
           </div>
@@ -90,14 +126,14 @@
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-first-name">First name</label>
                         <input type="text" name="inputFirstName" class="form-control form-control-alternative"
-                          placeholder="First name" [(ngModel)]="user.firstName">
+                          [placeholder]="user.firstName || 'Input First Name'" ngModel>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-last-name">Last name</label>
                         <input type="text" name="inputLastName" class="form-control form-control-alternative"
-                          placeholder="Last name" [(ngModel)]="user.lastName">
+                          [placeholder]="user.lastName || 'Input Last Name'" ngModel>
                       </div>
                     </div>
                   </div>
@@ -106,14 +142,14 @@
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-email">Email address</label>
                         <input type="email" name="inputEmail" class="form-control form-control-alternative"
-                          placeholder="allaboutme@example.com" [(ngModel)]="user.email">
+                          [placeholder]="user.email || 'Input Email'" ngModel>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-phone">Phone Number</label>
                         <input type="text" name="inputPhoneNumber" class="form-control form-control-alternative"
-                          placeholder="Phone Number" [(ngModel)]="user.phoneNumber">
+                          [placeholder]="user.phoneNumber || 'Input Phone Number'" ngModel>
                       </div>
                     </div>
                   </div>
@@ -126,8 +162,8 @@
                     <div class="col-md-12">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-address">Address</label>
-                        <input name="inputAddress" class="form-control form-control-alternative" placeholder="Street"
-                          [(ngModel)]="user.address" type="text">
+                        <input name="inputAddress" class="form-control form-control-alternative"
+                          [placeholder]="user.address || 'Input Address'" ngModel type="text">
                       </div>
                     </div>
                   </div>
@@ -136,21 +172,21 @@
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-city">City</label>
                         <input type="text" name="inputCity" class="form-control form-control-alternative"
-                          placeholder="City" [(ngModel)]="user.city">
+                          [placeholder]="user.city || 'Input City'" ngModel>
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-country">State</label>
                         <input type="text" name="inputState" class="form-control form-control-alternative"
-                          placeholder="State" [(ngModel)]="user.state">
+                          [placeholder]="user.state || 'Input State'" ngModel>
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-country">Postal code</label>
                         <input type="number" name="inputPostalCode" class="form-control form-control-alternative"
-                          placeholder="Postal code" [(ngModel)]="user.postalCode">
+                          [placeholder]="user.postalCode || 'Input Postal Code'" ngModel>
                       </div>
                     </div>
                   </div>
@@ -162,7 +198,7 @@
                   <div class="form-group focused">
                     <label class="form-control-label" for="inputAboutMe">About Me</label>
                     <textarea rows="4" class="form-control form-control-alternative" name="inputAboutMe"
-                      placeholder="A few words about you ..." [(ngModel)]="user.aboutMe"></textarea>
+                      [placeholder]="user.aboutMe || 'Tell us about yourself...'" ngModel></textarea>
                   </div>
                   <div class="form-group">
                     <label class="form-control-label" for="gender">Gender</label>

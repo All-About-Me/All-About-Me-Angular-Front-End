@@ -42,7 +42,7 @@ export class AuthService {
       password: password,
     };
     return this.http.post<any>(`${this.authUrl}/register`, payload, {
-      headers: environment.headers,
+      headers: environment.headers, withCredentials: environment.withCredentials
     });
   }
 
