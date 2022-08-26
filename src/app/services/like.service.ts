@@ -16,7 +16,7 @@ export class LikeService  {
   public getLike():Observable<Like[]> {
     return this.http.get<Like[]>(`${this.postUrl}/like/all`)
   }
-  public addLike(id:number,user:User, post:Post):Observable<Like> {
+  public addLike(user:User, post:Post):Observable<Like> {
     let like = new Like(0, user, post);
     return this.http.post<Like>(`${this.postUrl}/like/add`,like, {headers: environment.headers, withCredentials: environment.withCredentials} )
   }
