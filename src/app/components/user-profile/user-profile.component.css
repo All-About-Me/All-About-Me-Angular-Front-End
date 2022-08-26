@@ -1029,7 +1029,7 @@
     word-wrap: break-word;
     border: 1px solid rgba(0, 0, 0, .05);
     border-radius: .375rem;
-    background-color: #fff;
+    background-color: #fff; 
     background-clip: border-box;
   }
   
@@ -1047,7 +1047,7 @@
     margin-bottom: 0;
     padding: 1.25rem 1.5rem;
     border-bottom: 1px solid rgba(0, 0, 0, .05);
-    background-color: #fff;
+    /* background-color: #fff; */
   }
   
   .card-header:first-child {
@@ -1115,11 +1115,7 @@
   button.bg-white:focus {
     background-color: #e6e6e6 !important;
   }
-  
-  .bg-white {
-    background-color: #fff !important;
-  }
-  
+
   .border-0 {
     border: 0 !important;
   }

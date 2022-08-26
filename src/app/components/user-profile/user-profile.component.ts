@@ -25,6 +25,9 @@ export class UserProfileComponent implements OnInit{
   followList$: Observable<User[]>;
   user$=new Observable<User>;
 
+  followers:User[] = [] as User[];
+  followers$: Observable<User[]>;
+
   constructor(
     private authService: AuthService,
     private _userService: UserService,
@@ -51,6 +54,11 @@ export class UserProfileComponent implements OnInit{
      this.followList$.subscribe((data) => {
        this.followList = data;
      });
+
+     this.followers$=this._followerService.getFollowers(this.loggedInUser)
+     this.followers$.subscribe((data)=> {
+      this.followers = data;
+     })
 
     // this.cd.detectChanges();
    /* this.formChangesSubscription = this.ngForm.form.valueChanges.subscribe(
@@ -156,7 +164,7 @@ export class UserProfileComponent implements OnInit{
   }
 
   unfollowFromList(){
-    
+
   }
 
   resetPassword(): void {
