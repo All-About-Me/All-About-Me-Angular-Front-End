@@ -24,7 +24,7 @@ export class FollowerService {
     return this.http.get<User[]>(this.baseUrl+"/followers/"+user.id);
   }
 
-  unfollow(user:User, follow:User){
-    return this.http.delete<User>(this.baseUrl+"/"+user.id+"/"+follow.id);
+  unfollow(userId:number, followId:number){
+    return this.http.delete<User>(this.baseUrl+"/"+userId+"/"+followId);
   }
 }

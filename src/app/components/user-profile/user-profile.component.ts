@@ -165,7 +165,7 @@ export class UserProfileComponent implements OnInit{
   }
 
   unfollow(){
-    this._followerService.unfollow(this.loggedInUser, this.user).subscribe();
+    this._followerService.unfollow(this.loggedInUser.id, this.user.id).subscribe();
     this.checkIfFollowing();
   }
 
@@ -177,8 +177,8 @@ export class UserProfileComponent implements OnInit{
     this.viewFollowers=!this.viewFollowers;
   }
 
-  unfollowFromList(){
-
+  unfollowFromList(fid:number){
+    this._followerService.unfollow(this.loggedInUser.id, fid).subscribe();
   }
 
   viewProfilePage(fid:number){
