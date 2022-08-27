@@ -28,11 +28,10 @@
               <br>
               <button style="border-radius: 5px; width: 150px;">Profile Photo</button>
               <br><br>
-              <div *ngIf="user$ | async as user"></div>
               <h3>
                 {{user.firstName}} {{user.lastName}}
               </h3>
-              <div *ngIf="user.city and user.state" class="h5 font-weight-300">
+              <div *ngIf="user.city && user.state" class="h5 font-weight-300">
                 <i class="ni location_pin mr-2"></i>{{user.city}}, {{user.state}}
               </div>
               <div class="h5 mt-4">
