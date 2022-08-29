@@ -8,8 +8,8 @@ export class Like {
     user: User;
     
 
-    constructor( user:User, post:Post){
-
+    constructor(id:number, user:User, post:Post){
+        this.id = id;
         this.post = post;
         this.user = user;
     }
