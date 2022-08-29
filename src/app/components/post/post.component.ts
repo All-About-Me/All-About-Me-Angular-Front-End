@@ -69,7 +69,8 @@ export class PostComponent implements OnInit, OnChanges {
   //creates a new comment for this post and sends it to the database as a post
   submitReply = (e: any) => {
     e.preventDefault()
-    let newComment = new Post(0, this.commentForm.value.text || "", "", this.authService.currentUser, [])
+    let date:Date = new Date()
+    let newComment = new Post(0, this.commentForm.value.text || "", "", date, this.authService.currentUser, [])
     this.postService.upsertPost({...this.post, comments: [...this.post.comments, newComment]})
       .subscribe(
         (response) => {
