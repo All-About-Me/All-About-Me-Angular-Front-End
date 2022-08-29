@@ -38,6 +38,13 @@
   fieldset {
     border:none;
   }
+
+  .button-sm {
+    font-size: 12px;
+    border-radius: 5px;
+     width: 100px;
+     padding:0px;
+  }
   
   *,
   *::before,
@@ -535,12 +542,12 @@
   
   .form-control::-ms-input-placeholder {
     opacity: 1;
-    color: #adb5bd;
+    color: #7a93ac;
   }
   
   .form-control::placeholder {
     opacity: 1;
-    color: #adb5bd;
+    color: #0c447d;
   }
   
   .form-control:disabled,

@@ -5,19 +5,27 @@
 </div>
 <div [ngClass]="['sidebyside', 'post-feed-container']">
     
-    <form [formGroup]="submitForm" (ngSubmit)="viewAll()" novalidate>
-        <label for="search_field">Search for User: </label>
-        <input class="her" #box type="text" formControlName="search_field" placeholder="Enter user's first or last name!">
-        <button type="submit" name="submit_btn">Load User Credentials</button>
-        <button type="reset" name="reset_btn">Reset</button> 
-        <ul *ngFor = "let user of users; let indexOfElement =index;">
-            <li
-            style="list-style:none" *ngIf="box.value== user.firstName|| box.value == user.lastName">User Email: {{ user.email }}<br> User First Name: 
-        {{ user.firstName }}<br> User Last Name: {{user.lastName}}<br> User Id: {{user.id}} 
-        <button (click)="linkAll(indexOfElement)">View user profile </button>
-            </li> 
-        </ul>
-    </form>
+    <div class="custom-search" style="text-align:center;">
+        <form [formGroup]="submitForm" (ngSubmit)="viewAll()" novalidate class="search-wrapper cf">
+            <!-- <button type="reset" name="reset_btn">Reset</button> -->
+            <button class="custom-search-botton" type="submit">
+                <mat-icon>search</mat-icon>
+            </button>
+            <input class="custom-search-input" #box type="text" formControlName="search_field"
+                placeholder="Search user's first or last name!">
+            <ul *ngFor="let user of users; let indexOfElement =index;">
+                <li style="list-style:none" *ngIf="box.value== user.firstName|| box.value == user.lastName">User Email:
+                    {{
+                    user.email }}<br> User First Name:
+                    {{ user.firstName }}<br> User Last Name: {{user.lastName}}<br> User Id: {{user.id}}
+                    <button (click)="linkAll(indexOfElement)">View user profile </button>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <br>
+
+
     <form class="form" *ngIf="!createPost; else createPostTemplate">
         <mat-form-field class="form-full-width">
             <mat-label>Something on your mind?</mat-label>
@@ -47,20 +55,18 @@
 </ng-template>
 
 <div >
-<div class="row">
-<div *ngIf="!showBookmarks; else toggleButton">
-<button (click)="toggleFeed()">Show Bookmarked Posts</button>
-</div>
+<button *ngIf="!showBookmarks; else toggleButton" (click)="toggleFeed()">Show Bookmarked Posts</button>
 <ng-template #toggleButton>
     <button (click)="toggleFeed()">Show Feed</button>
 </ng-template>
-<div *ngIf="!showFollows; else toggleFollow">
-    <button (click)="toggleFollowedPosts()">Show Followed Posts</button>
-</div>
+&nbsp;
+<ng-container *ngIf="!showBookmarks">
+    <button *ngIf="!showFollows; else toggleFollow" (click)="toggleFollowedPosts()">Show Followed Posts</button>
 <ng-template #toggleFollow>
     <button (click)="toggleFollowedPosts()">Show Global Feed</button>
 </ng-template>
-</div>
+</ng-container>
+
 <div *ngIf="!showBookmarks; else bookmarkFeed">
     <div *ngIf = "!showFollows; else followFeed">
     <div id="post-feed" *ngFor="let post of posts">

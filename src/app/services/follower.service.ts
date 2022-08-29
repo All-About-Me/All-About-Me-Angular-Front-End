@@ -17,11 +17,14 @@ export class FollowerService {
   }
 
   getFollows(user:User):Observable<User[]>{
-    return this.http.get<User[]>(this.baseUrl+"/"+user.id);
+    return this.http.get<User[]>(this.baseUrl+"/following/"+user.id);
   }
 
-  unfollow(user:User, follow:User){
-    console.log(this.baseUrl+"/"+user.id+"/"+follow.id);
-    return this.http.delete<User>(this.baseUrl+"/"+user.id+"/"+follow.id);
+  getFollowers(user:User):Observable<User[]>{
+    return this.http.get<User[]>(this.baseUrl+"/followers/"+user.id);
+  }
+
+  unfollow(userId:number, followId:number){
+    return this.http.delete<User>(this.baseUrl+"/"+userId+"/"+followId);
   }
 }

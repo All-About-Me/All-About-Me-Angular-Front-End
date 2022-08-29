@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
 import User from "src/app/models/User";
 import { AuthService } from "src/app/services/auth.service";
 import { UserService } from "../../services/user.service";
@@ -6,6 +6,10 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { FollowerService } from "../../services/follower.service";
 import { Observable, Observer } from "rxjs";
+import { EventListenerFocusTrapInertStrategy } from "@angular/cdk/a11y";
+import { platformBrowserDynamicTesting } from "@angular/platform-browser-dynamic/testing";
+import { ProfanityFilterService } from "../../services/profanity-filter.service";
+import { LocationService } from "../../services/location.service";
 
 @Component({
   selector: "app-user-profile",
@@ -25,14 +29,28 @@ export class UserProfileComponent implements OnInit{
   followList$: Observable<User[]>;
   user$=new Observable<User>;
 
+  followers:User[] = [] as User[];
+  followers$: Observable<User[]>;
+  viewFollowing:boolean=false;
+  viewFollowers:boolean=false;
+  states:string[]
+
   constructor(
     private authService: AuthService,
     private _userService: UserService,
     private _followerService: FollowerService,
     private router: Router,
     private route: ActivatedRoute,
-    private cd: ChangeDetectorRef
-  ) {}
+    private cd: ChangeDetectorRef,
+    private profanityFilterService:ProfanityFilterService,
+    private locationService:LocationService
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+      
+  };
+  
+  }
 
   ngOnInit(): void {
     if(this.authService.currentUser){
@@ -47,13 +65,20 @@ export class UserProfileComponent implements OnInit{
       this.user = data;
     });
 
-     this.followList$=this._followerService.getFollows(this.loggedInUser)
-     this.followList$.subscribe((data) => {
-       this.followList = data;
-     });
+    this.followList$=this._followerService.getFollows(this.loggedInUser)
+    this.followList$.subscribe((data) => {
+      this.followList = data;
+      this.isFollowing = this.checkIfFollowing();
+    });
 
+    this.followers$=this._followerService.getFollowers(this.loggedInUser)
+    this.followers$.subscribe((data)=> {
+      this.followers = data;
+    })
+
+    this.states=this.locationService.getStates();
     // this.cd.detectChanges();
-   /* this.formChangesSubscription = this.ngForm.form.valueChanges.subscribe(
+  /* this.formChangesSubscription = this.ngForm.form.valueChanges.subscribe(
       (x) => {
         if (document.getElementById("confirmUpdate")) {
           document.getElementById("confirmUpdate")?.remove();
@@ -63,13 +88,10 @@ export class UserProfileComponent implements OnInit{
         }
       } 
     );*/
-
   }
 
-  ngAfterViewInit() {
-    this.cd.detectChanges();
-    
-  }
+
+
 
   checkIfFollowing():boolean{
       for (let i=0; i<this.followList.length; i++){
@@ -93,8 +115,8 @@ export class UserProfileComponent implements OnInit{
   }
 
   onSubmit(editProfile: any) {
-    console.log("submitted")
     if (!document.getElementById("confirmUpdate")) {
+      if (this.profanityFilterService.validatePost(editProfile.value.inputAboutMe)){
       let updateForm = editProfile.value;
       console.log(updateForm);
       this.user.firstName = updateForm.inputFirstName;
@@ -105,7 +127,7 @@ export class UserProfileComponent implements OnInit{
       this.user.gender = updateForm.selectGender;
       this.user.aboutMe = updateForm.inputAboutMe;
       this.user.city = updateForm.inputCity;
-      this.user.state = updateForm.inputState;
+      this.user.state = updateForm.selectState;
       this.user.postalCode = updateForm.inputPostalCode;
       console.log(this.user);
       this._userService
@@ -113,6 +135,10 @@ export class UserProfileComponent implements OnInit{
         .subscribe((data) => (this.user = data));
       this.confirmUpdate();
       this.allowUpdate();
+      }
+      else {
+        alert("Your profile contains words banned by this application.");
+      }
     } else {
       this.refuseUpdate();
     }
@@ -148,14 +174,42 @@ export class UserProfileComponent implements OnInit{
       );
       tag.appendChild(text);
       document.getElementById("followButton")?.append(tag);
+      
   }
 
   unfollow(){
-    this._followerService.unfollow(this.loggedInUser, this.user).subscribe();
-    this.checkIfFollowing();
+    this._followerService.unfollow(this.loggedInUser.id, this.user.id).subscribe();
+    
+  }
+
+  viewFollowList(){
+    this.viewFollowing=!this.viewFollowing;
+  }
+
+  viewFollowerList(){
+    this.viewFollowers=!this.viewFollowers;
+  }
+
+  unfollowFromList(fid:number){
+    this._followerService.unfollow(this.loggedInUser.id, fid).subscribe();
+  }
+
+  viewProfilePage(fid:number){
+    this.router.navigate(["/profile-page/"+fid]);
   }
 
   resetPassword(): void {
     this.router.navigate(["/reset-password"]);
   }
-}
+
+  toggleFollow(){
+    if(this.isFollowing){
+      this.unfollow()
+      this.cd.detectChanges()
+    }else{
+      this.followUser()
+      this.cd.detectChanges()
+    }
+    this.isFollowing = !this.isFollowing
+    }
+  }
