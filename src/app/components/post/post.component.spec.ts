@@ -49,16 +49,18 @@ describe("PostComponent", () => {
 
 
 
-  // it("should switch from not bookmarked to bookmarked when button is clicked", () => {
+  it("should switch from not bookmarked to bookmarked when button is clicked", () => {
+    component.isBookmarked=false
+    component.toggleBookmark()
+    expect(component.isBookmarked).toEqual(true)
+  });
 
-    
-  //   const bookmarkButton = fixture.debugElement.query(By.css('[data-testId="bookmarkButton"]'));
-
-  //   bookmarkButton.triggerEventHandler('click');
-  //   expect(component.isBookmarked).toEqual(true)
-
-    
-  // });
+  it("should switch from bookmarked to not bookmarked when button is clicked", () => {
+    component.isBookmarked=true
+    component.toggleBookmark()
+    expect(component.isBookmarked).toEqual(false)
+  });
+  
 
 
 
