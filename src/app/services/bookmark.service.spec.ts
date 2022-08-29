@@ -8,45 +8,21 @@ import Bookmark from '../models/Bookmark';
 
 const user = new User(5,"testuser@gmail.com",'Test','User','','','','','','',8,'password')
 const expectedUrl = `${environment.baseUrl}/bookmarks`
-const fakeBookmark: Bookmark[] = [
-  {
-      "id": 1,
-      "post": {
-          "id": 10001,
-          "text": "Lorem ipsum",
-          "imageUrl": "",
-          "comments": [],
-          "author": {
-              "id": 5,
-              "email": "testuser@gmail.com",
-              "password": "password",
-              "firstName": "Test",
-              "lastName": "User",
-              "phoneNumber": '',
-              "address": '',
-              "gender": '',
-              "aboutMe": '',
-              "city": '',
-              "state": '',
-              "postalCode": 8
-          }
-      },
-      "user": {
-          "id": 5,
-          "email": "testuser@gmail.com",
-          "password": "password",
-          "firstName": "Test",
-          "lastName": "User",
-          "phoneNumber": '',
-          "address": '',
-          "gender": '',
-          "aboutMe": '',
-          "city": '',
-          "state": '',
-          "postalCode": 8
-      }
-  }
-];
+const dateNow = new Date();
+const testPost ={
+  "id": 10001,
+  "text": "Lorem ipsum",
+  "imageUrl": "",
+  "date": dateNow,
+  "comments": [],
+  "author": user
+}
+const fakeBookmark:Bookmark ={
+  "id": 1,
+  "post": testPost,
+  "user": user
+}
+const fakeBookmarkArray: Bookmark[] = [fakeBookmark];
 
 describe('BookmarkService', () => {
   let service: BookmarkService;
@@ -75,9 +51,37 @@ describe('BookmarkService', () => {
 
     const request = controller.expectOne(`${expectedUrl}/${user.id}`);
 
+    request.flush(fakeBookmarkArray)
+
+    expect(actualList).toEqual(fakeBookmarkArray)
+
+    controller.verify();
+  })
+
+  it('makes a new bookmark for a given user and post', () => {
+    let actualBookmark: Bookmark | undefined;
+
+    service.bookmarkPost(user, testPost).subscribe((otherMark) => {
+      actualBookmark=otherMark
+    } )
+
+    const request = controller.expectOne(`${expectedUrl}`);
+
     request.flush(fakeBookmark)
 
-    expect(actualList).toEqual(fakeBookmark)
+    expect(actualBookmark).toEqual(fakeBookmark)
+
+    controller.verify();
+  })
+
+  it('deletes a bookmark, given a bookmark', () => {
+
+    service.deleteBookmark(fakeBookmark).subscribe()
+
+    const request = controller.expectOne(`${expectedUrl}`);
+    request.flush({status: 200})
+
+    expect(request.request.method).toEqual('DELETE')
 
     controller.verify();
   })
