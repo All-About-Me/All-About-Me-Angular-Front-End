@@ -1,5 +1,8 @@
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { Component } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
+import { RouterTestingModule } from "@angular/router/testing";
 import Bookmark from "src/app/models/Bookmark";
 import Post from "src/app/models/Post";
 import User from "src/app/models/User";
@@ -7,26 +10,57 @@ import User from "src/app/models/User";
 import { PostComponent } from "./post.component";
 
 describe("PostComponent", () => {
-  let testHostComponent: TestHostComponent;
-  let testHostFixture: ComponentFixture<TestHostComponent>;
+  let component: PostComponent;
+  let fixture: ComponentFixture<PostComponent>;
+  const testUser = new User(5,"testuser@gmail.com",'Test','User','','','','','','',8,'password')
+  const dateNow = new Date();
+  const testPost ={
+    "id": 10001,
+    "text": "Lorem ipsum",
+    "imageUrl": "",
+    "date": dateNow,
+    "comments": [],
+    "author": testUser
+  }
+  
+  const testBookmark:Bookmark ={
+    "id": 1,
+    "post": testPost,
+    "user": testUser
+  }
+  const testPostArray: Post[] = [testPost];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule, RouterTestingModule],
       declarations: [PostComponent],
     }).compileComponents();
 
-    testHostFixture = TestBed.createComponent(TestHostComponent);
-    testHostComponent = testHostFixture.componentInstance;
-    testHostFixture.detectChanges();
+    fixture = TestBed.createComponent(PostComponent);
+    component = fixture.componentInstance;   
+    component.bookmarkList = testPostArray
+    component.post =testPost
+    fixture.detectChanges();
   });
 
   it("should create", () => {
-    expect(testHostComponent).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
-  it("TestBed should be Truthy", () => {
-    expect(TestBed).toBeTruthy();
-  });
+
+
+  // it("should switch from not bookmarked to bookmarked when button is clicked", () => {
+
+    
+  //   const bookmarkButton = fixture.debugElement.query(By.css('[data-testId="bookmarkButton"]'));
+
+  //   bookmarkButton.triggerEventHandler('click');
+  //   expect(component.isBookmarked).toEqual(true)
+
+    
+  // });
+
+
 
   @Component({
     selector: `host-component`,

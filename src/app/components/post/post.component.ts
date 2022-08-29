@@ -57,9 +57,11 @@ export class PostComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-      if(this.bookmarkList.includes(this.post)){
+    for(let listPost of this.bookmarkList){
+      if(listPost.id==this.post.id){
         this.isBookmarked=true
-      }      
+      }
+    }   
     
   }
 
