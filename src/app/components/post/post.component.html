@@ -20,7 +20,7 @@
         
         <mat-card-actions align="end">
             
-            <div  *ngIf="isLiked">
+            <div  *ngIf="isLiked else unLike">
                 <button mat-icon-button color="accent" (click)="addLike()"><mat-icon>favorite_border</mat-icon>{{allLikes_eachpost.length}}</button>
             </div>
             
