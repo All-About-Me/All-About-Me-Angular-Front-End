@@ -4,6 +4,7 @@
             <div mat-card-avatar class="header-image" (click)="viewProfile()"></div>
             <mat-card-title (click)="viewProfile()">{{post.author.firstName}} {{post.author.lastName}}</mat-card-title>
             <mat-card-subtitle>{{post.author.email}}</mat-card-subtitle>
+            <mat-card-subtitle>{{post.date|date:'MMM dd, YYYY'}}</mat-card-subtitle>
         </mat-card-header>
         <img mat-card-image *ngIf="post.imageUrl" src="{{ post.imageUrl }}" alt="Post Image">
         <mat-card-content>
@@ -19,12 +20,12 @@
         
         <mat-card-actions align="end">
             
-            <div  *ngIf="isLiked else unLike">
+            <div  *ngIf="!isLiked else unLike">
                 <button mat-icon-button color="accent" (click)="addLike()"><mat-icon>favorite_border</mat-icon>{{allLikes_eachpost.length}}</button>
             </div>
-            
+
             <ng-template #unLike>
-                <button mat-icon-button (click)="addLike()"><mat-icon>favorite</mat-icon></button>
+                <button mat-icon-button (click)="addLike()"><mat-icon>favorite</mat-icon>{{allLikes_eachpost.length}}</button>
             </ng-template> 
 
             <button style="border-radius: 5px; width: 60px;" (click)="toggleReplyToPost()">Reply</button>

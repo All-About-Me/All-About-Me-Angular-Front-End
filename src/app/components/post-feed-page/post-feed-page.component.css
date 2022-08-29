@@ -1,0 +1,26 @@
+.custom-search {
+    position: relative;
+    height: auto;
+  }
+  .custom-search-input {
+    width: 100%;
+    padding-right: 100px !important; 
+    box-sizing: border-box;
+    height: 50px;
+    border: 3px solid #ddd;
+    transition: all .3s linear;
+    outline: 0;
+    border-radius: .375rem;
+  }
+  .custom-search-input:focus {
+    border: 3px solid #f36f25;
+} 
+  .custom-search-botton {
+    position: absolute;
+    right: 3px; 
+    top: 3px;
+    bottom: 3px;
+    line-height: 1 !important;
+    z-index: 4;
+    max-height: 44px;
+  }   

@@ -38,6 +38,13 @@
   fieldset {
     border:none;
   }
+
+  .button-sm {
+    font-size: 12px;
+    border-radius: 5px;
+     width: 100px;
+     padding:0px;
+  }
   
   *,
   *::before,

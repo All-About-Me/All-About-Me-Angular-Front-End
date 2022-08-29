@@ -73,8 +73,8 @@
                   </div>
                       <ul>
                           <li  class="ni education_hat mr-2" style="list-style:none;" *ngFor="let f of followList$ | async"><span>{{f.firstName}} {{f.lastName}}</span>
-                          &nbsp;&nbsp;<button (click)="viewProfilePage(f.id)" style="border-radius: 5px; width: 100px">View Profile</button>
-                          &nbsp;&nbsp;<button (click)="unfollowFromList(f.id)" style="border-radius: 5px; width: 100px">Unfollow</button>
+                          <br/><button class="button-sm" (click)="viewProfilePage(f.id)" >View Profile</button>
+                          &nbsp;&nbsp;<button class="button-sm" (click)="unfollowFromList(f.id)" style="border-radius: 5px; width: 100px">Unfollow</button>
                         </li>
                       </ul>
                       </ng-container>
@@ -86,7 +86,7 @@
                 </div>
                       <ul>
                         <li  class="ni education_hat mr-2"  style="list-style:none;" *ngFor="let u of followers$ | async">{{u.firstName}} {{u.lastName}}
-                          &nbsp;&nbsp;<button (click)="viewProfilePage(u.id)" style="border-radius: 5px; width: 100px">View Profile</button></li>
+                          &nbsp;&nbsp;<button class="button-sm" (click)="viewProfilePage(u.id)" style="border-radius: 5px; width: 100px">View Profile</button></li>
                       </ul>
                     </ng-container>
               </ng-template>
@@ -168,8 +168,9 @@
                     <div class="col-lg-4">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-country">State</label>
-                        <input type="text" name="inputState" class="form-control form-control-alternative"
-                          [placeholder]="user.state || 'Input State'" ngModel>
+                        <select class="form-control form-control-alternative" name="selectState" [(ngModel)]="user.state">
+                          <option *ngFor="let state of states" [value]="state">{{state}}</option>
+                          </select>
                       </div>
                     </div>
                     <div class="col-lg-4">
