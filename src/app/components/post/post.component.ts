@@ -36,6 +36,7 @@ export class PostComponent implements OnInit, OnChanges {
   allLikes_eachpost: Like[] = [];
   userLike: Like;
   userUnlike: Like;
+  
 
   constructor(private postService: PostService, 
     private authService: AuthService, 
@@ -103,21 +104,21 @@ export class PostComponent implements OnInit, OnChanges {
     this.router.navigate(["/profile-page/"+this.post.author.id])
   }
   getLike(){
-    this.likeService.getLike(this.post).subscribe(
+    this.likeService.getLike(this.post.id).subscribe(
     (response) => {this.allLikes_eachpost = response}
   )}
   
   addLike(){
-    if(!this.isLiked){
-      this.likeService.addLike(this.authService.currentUser, this.post).subscribe(
+    if(this.isLiked){
+      this.likeService.addLike(this.userLike).subscribe(
         (response) => {
           this.userLike = response
-        this.likeService.getLike(this.post)}
+        this.likeService.getLike(this.post.id)}
       )}
     else{
-      this.likeService.deleteLike(this.authService.currentUser, this.post).subscribe((response) => {
+      this.likeService.deleteLike(this.userLike).subscribe((response) => {
         this.userUnlike = response
-        this.likeService.getLike(this.post)
+        this.likeService.getLike(this.post.id)
       })
     }
   }}

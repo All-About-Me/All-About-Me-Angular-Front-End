@@ -10,17 +10,16 @@ import User from '../models/User';
   providedIn: 'root'
 })
 export class LikeService  {
-  postUrl: string = `${environment.baseUrl}/like`
+  postUrl: string = `${environment.baseUrl}`
   constructor(private http: HttpClient) { }
 
-  public getLike(post:Post):Observable<Like[]> {
-    return this.http.get<Like[]>(`${this.postUrl}/like/all`)
+  public getLike(id:number):Observable<Like[]> {
+    return this.http.get<Like[]>(`${this.postUrl}/liked/{id}`)
   }
-  public addLike(user:User, post:Post):Observable<Like> {
-    let like = new Like(0, user, post);
-    return this.http.post<Like>(`${this.postUrl}/like/add`,like, {headers: environment.headers, withCredentials: environment.withCredentials} )
+  public addLike(like:Like):Observable<Like> {
+    return this.http.post<Like>(`${this.postUrl}/liked/add`,like, {headers: environment.headers, withCredentials: environment.withCredentials} )
   }
-  public deleteLike(user:User, post:Post):Observable<Like> {
-    return this.http.delete<Like>(`${this.postUrl}/like/remove`)
+  public deleteLike(like:Like):Observable<Like> {
+    return this.http.delete<Like>(`${this.postUrl}/liked/remove`)
   }
 }
