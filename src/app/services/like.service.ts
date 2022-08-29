@@ -14,12 +14,12 @@ export class LikeService  {
   constructor(private http: HttpClient) { }
 
   public getLike(id:number):Observable<Like[]> {
-    return this.http.get<Like[]>(`${this.postUrl}/liked/{id}`)
+    return this.http.get<Like[]>(`${this.postUrl}/liked/${id}`)
   }
   public addLike(like:Like):Observable<Like> {
     return this.http.post<Like>(`${this.postUrl}/liked/add`,like, {headers: environment.headers, withCredentials: environment.withCredentials} )
   }
   public deleteLike(like:Like):Observable<Like> {
-    return this.http.delete<Like>(`${this.postUrl}/liked/remove`)
+    return this.http.delete<Like>(`${this.postUrl}/liked/remove`, {body: like, headers: environment.headers, withCredentials: environment.withCredentials} )
   }
 }

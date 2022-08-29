@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { BookmarkService } from 'src/app/services/bookmark.service';
 import { PostService } from 'src/app/services/post.service';
 import { FollowerService } from '../../services/follower.service';
+import { ProfanityFilterService } from '../../services/profanity-filter.service';
 
 
 @Component({
@@ -39,7 +40,8 @@ export class PostFeedPageComponent implements OnInit {
     private authService: AuthService,
     private bookmarkService: BookmarkService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private profanityFilterService:ProfanityFilterService
   ) {}
   users: User | any;
   ngOnInit(): void {
@@ -94,6 +96,7 @@ export class PostFeedPageComponent implements OnInit {
   submitPost = (e: any) => {
     e.preventDefault();
     let date:Date = new Date();
+    if (this.profanityFilterService.validatePost(this.postForm.value.text!)){
     this.postService
       .upsertPost(
         new Post(
@@ -109,6 +112,10 @@ export class PostFeedPageComponent implements OnInit {
         this.posts = [response, ...this.posts];
         this.toggleCreatePost();
       });
+    }
+    else{
+      alert('Your post contains words banned from this application.');
+    }
   };
 
 

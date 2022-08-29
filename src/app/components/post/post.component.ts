@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { BookmarkService } from 'src/app/services/bookmark.service';
 import { LikeService } from 'src/app/services/like.service';
 import { PostService } from 'src/app/services/post.service';
+import { ProfanityFilterService } from '../../services/profanity-filter.service';
 
 @Component({
   selector: 'app-post',
@@ -31,18 +32,20 @@ export class PostComponent implements OnInit, OnChanges {
   @Output() bookmarkListChange = new EventEmitter<Post[]>()
   replyToPost: boolean = false
   isBookmarked:boolean = false
-  isLiked: boolean = true
+  isLiked: boolean = false
   totalLikes:Like[] = []
   allLikes_eachpost: Like[] = [];
-  userLike: Like;
+  userLike: Like
   userUnlike: Like;
+
   
 
   constructor(private postService: PostService, 
     private authService: AuthService, 
     private bookmarkService:BookmarkService,
     private router:Router,
-    private likeService: LikeService) { }
+    private likeService: LikeService,
+    private profanityFilterService:ProfanityFilterService) { }
 
     //when initialized, this post will check the list of bookmarks which it recieves from the post-feed-page.
     //  if it finds a post id which matches its own, then it will set itself as bookmarked (this in turn changes the icon that is displayed)
@@ -52,6 +55,7 @@ export class PostComponent implements OnInit, OnChanges {
       this.isBookmarked=true
     }
   }
+  this.getLike()
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -70,6 +74,7 @@ export class PostComponent implements OnInit, OnChanges {
   submitReply = (e: any) => {
     e.preventDefault()
     let date:Date = new Date()
+    if (this.profanityFilterService.validatePost(this.commentForm.value.text!)){
     let newComment = new Post(0, this.commentForm.value.text || "", "", date, this.authService.currentUser, [])
     this.postService.upsertPost({...this.post, comments: [...this.post.comments, newComment]})
       .subscribe(
@@ -78,6 +83,10 @@ export class PostComponent implements OnInit, OnChanges {
           this.toggleReplyToPost()
         }
       )
+    }
+    else {
+      alert('Your post contains words banned from this application.');
+    }
   }
 
   //toggles the bookmark status of a post. if it is currently bookmarked: will send the new bookmak to the server, 
@@ -106,20 +115,27 @@ export class PostComponent implements OnInit, OnChanges {
   }
   getLike(){
     this.likeService.getLike(this.post.id).subscribe(
-    (response) => {this.allLikes_eachpost = response}
+    (response) => {this.allLikes_eachpost = response
+    for(let listLikes of this.allLikes_eachpost)
+  if(listLikes.user.id == this.authService.currentUser.id)
+  this.isLiked = true
+}
+    
   )}
   
   addLike(){
-    if(this.isLiked){
+    if(!this.isLiked){
+      this.userLike = new Like(0, this.authService.currentUser, this.post)
       this.likeService.addLike(this.userLike).subscribe(
         (response) => {
           this.userLike = response
-        this.likeService.getLike(this.post.id)}
+        this.getLike()}
       )}
     else{
-      this.likeService.deleteLike(this.userLike).subscribe((response) => {
-        this.userUnlike = response
-        this.likeService.getLike(this.post.id)
-      })
+    this.userLike = new Like(0, this.authService.currentUser, this.post)
+    this.likeService.deleteLike(this.userLike).subscribe((response) => {
+     this.userUnlike = response
+     this.getLike()
+    })
     }
   }}
