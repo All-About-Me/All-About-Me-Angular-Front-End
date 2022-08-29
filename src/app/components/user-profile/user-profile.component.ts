@@ -8,6 +8,7 @@ import { FollowerService } from "../../services/follower.service";
 import { Observable, Observer } from "rxjs";
 import { EventListenerFocusTrapInertStrategy } from "@angular/cdk/a11y";
 import { platformBrowserDynamicTesting } from "@angular/platform-browser-dynamic/testing";
+import { ProfanityFilterService } from "../../services/profanity-filter.service";
 
 @Component({
   selector: "app-user-profile",
@@ -38,7 +39,8 @@ export class UserProfileComponent implements OnInit{
     private _followerService: FollowerService,
     private router: Router,
     private route: ActivatedRoute,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private profanityFilterService:ProfanityFilterService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
@@ -108,8 +110,8 @@ export class UserProfileComponent implements OnInit{
   }
 
   onSubmit(editProfile: any) {
-    console.log("submitted")
     if (!document.getElementById("confirmUpdate")) {
+      if (this.profanityFilterService.validatePost(editProfile.value.inputAboutMe)){
       let updateForm = editProfile.value;
       console.log(updateForm);
       this.user.firstName = updateForm.inputFirstName;
@@ -128,6 +130,10 @@ export class UserProfileComponent implements OnInit{
         .subscribe((data) => (this.user = data));
       this.confirmUpdate();
       this.allowUpdate();
+      }
+      else {
+        alert("Your profile contains words banned by this application.");
+      }
     } else {
       this.refuseUpdate();
     }
