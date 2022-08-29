@@ -62,7 +62,6 @@ export class PostComponent implements OnInit, OnChanges {
       if(this.bookmarkList.includes(this.post)){
         this.isBookmarked=true
       }      
-    
   }
 
   //toggles whether the comment creation form is displayed or not
