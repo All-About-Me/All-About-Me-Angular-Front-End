@@ -5,19 +5,27 @@
 </div>
 <div [ngClass]="['sidebyside', 'post-feed-container']">
     
-    <form [formGroup]="submitForm" (ngSubmit)="viewAll()" novalidate>
-        <label for="search_field">Search for User: </label>
-        <input class="her" #box type="text" formControlName="search_field" placeholder="Enter user's first or last name!">
-        <button type="submit" name="submit_btn">Load User Credentials</button>
-        <button type="reset" name="reset_btn">Reset</button> 
-        <ul *ngFor = "let user of users; let indexOfElement =index;">
-            <li
-            style="list-style:none" *ngIf="box.value== user.firstName|| box.value == user.lastName">User Email: {{ user.email }}<br> User First Name: 
-        {{ user.firstName }}<br> User Last Name: {{user.lastName}}<br> User Id: {{user.id}} 
-        <button (click)="linkAll(indexOfElement)">View user profile </button>
-            </li> 
-        </ul>
-    </form>
+    <div class="custom-search" style="text-align:center;">
+        <form [formGroup]="submitForm" (ngSubmit)="viewAll()" novalidate class="search-wrapper cf">
+            <!-- <button type="reset" name="reset_btn">Reset</button> -->
+            <button class="custom-search-botton" type="submit">
+                <mat-icon>search</mat-icon>
+            </button>
+            <input class="custom-search-input" #box type="text" formControlName="search_field"
+                placeholder="Search user's first or last name!">
+            <ul *ngFor="let user of users; let indexOfElement =index;">
+                <li style="list-style:none" *ngIf="box.value== user.firstName|| box.value == user.lastName">User Email:
+                    {{
+                    user.email }}<br> User First Name:
+                    {{ user.firstName }}<br> User Last Name: {{user.lastName}}<br> User Id: {{user.id}}
+                    <button (click)="linkAll(indexOfElement)">View user profile </button>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <br>
+
+
     <form class="form" *ngIf="!createPost; else createPostTemplate">
         <mat-form-field class="form-full-width">
             <mat-label>Something on your mind?</mat-label>
