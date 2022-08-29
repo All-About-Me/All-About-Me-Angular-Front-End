@@ -93,12 +93,14 @@ export class PostFeedPageComponent implements OnInit {
 
   submitPost = (e: any) => {
     e.preventDefault();
+    let date:Date = new Date();
     this.postService
       .upsertPost(
         new Post(
           0,
           this.postForm.value.text || "",
           this.postForm.value.imageUrl || "",
+          date,
           this.authService.currentUser,
           []
         )

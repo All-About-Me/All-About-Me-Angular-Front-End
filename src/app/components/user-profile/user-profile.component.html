@@ -46,12 +46,10 @@
               <div id="followButton" *ngIf="user.id==loggedInUser.id; then editOptions; else userOptions"></div>
               <ng-template #userOptions>
                 <div *ngIf="followList$ | async">
-                  <button *ngIf="!checkIfFollowing(); else unfollowButton" (click)="followUser()"
-                    style="border-radius: 5px; width: 150px;">Follow</button>
+                <button *ngIf="isFollowing else Follow;" (click)="toggleFollow()" style="border-radius: 5px; width: 150px;">Unfollow</button>
+                <ng-template #Follow><button (click)="toggleFollow()" style="border-radius: 5px; width: 150px;">Follow</button></ng-template>
                 </div>
-                <ng-template #unfollowButton>
-                  <button (click)="unfollow()" style="border-radius: 5px; width: 150px;">Unfollow</button>
-                </ng-template>
+                
                 <!-- <button style="border-radius: 5px; width: 150px;">Message</button> -->
               </ng-template>
               <ng-template #editOptions>
