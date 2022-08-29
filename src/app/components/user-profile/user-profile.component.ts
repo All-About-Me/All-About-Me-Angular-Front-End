@@ -9,6 +9,7 @@ import { Observable, Observer } from "rxjs";
 import { EventListenerFocusTrapInertStrategy } from "@angular/cdk/a11y";
 import { platformBrowserDynamicTesting } from "@angular/platform-browser-dynamic/testing";
 import { ProfanityFilterService } from "../../services/profanity-filter.service";
+import { LocationService } from "../../services/location.service";
 
 @Component({
   selector: "app-user-profile",
@@ -32,6 +33,7 @@ export class UserProfileComponent implements OnInit{
   followers$: Observable<User[]>;
   viewFollowing:boolean=false;
   viewFollowers:boolean=false;
+  states:string[]
 
   constructor(
     private authService: AuthService,
@@ -40,7 +42,8 @@ export class UserProfileComponent implements OnInit{
     private router: Router,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef,
-    private profanityFilterService:ProfanityFilterService
+    private profanityFilterService:ProfanityFilterService,
+    private locationService:LocationService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
@@ -72,6 +75,8 @@ export class UserProfileComponent implements OnInit{
     this.followers$.subscribe((data)=> {
       this.followers = data;
     })
+
+    this.states=this.locationService.getStates();
     // this.cd.detectChanges();
   /* this.formChangesSubscription = this.ngForm.form.valueChanges.subscribe(
       (x) => {
@@ -122,7 +127,7 @@ export class UserProfileComponent implements OnInit{
       this.user.gender = updateForm.selectGender;
       this.user.aboutMe = updateForm.inputAboutMe;
       this.user.city = updateForm.inputCity;
-      this.user.state = updateForm.inputState;
+      this.user.state = updateForm.selectState;
       this.user.postalCode = updateForm.inputPostalCode;
       console.log(this.user);
       this._userService

@@ -168,8 +168,9 @@
                     <div class="col-lg-4">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-country">State</label>
-                        <input type="text" name="inputState" class="form-control form-control-alternative"
-                          [placeholder]="user.state || 'Input State'" ngModel>
+                        <select class="form-control form-control-alternative" name="selectState" [(ngModel)]="user.state">
+                          <option *ngFor="let state of states" [value]="state">{{state}}</option>
+                          </select>
                       </div>
                     </div>
                     <div class="col-lg-4">
