@@ -31,11 +31,12 @@ export class PostComponent implements OnInit, OnChanges {
   @Output() bookmarkListChange = new EventEmitter<Post[]>()
   replyToPost: boolean = false
   isBookmarked:boolean = false
-  isLiked: boolean = true
+  isLiked: boolean = false
   totalLikes:Like[] = []
   allLikes_eachpost: Like[] = [];
-  userLike: Like;
+  userLike: Like
   userUnlike: Like;
+
   
 
   constructor(private postService: PostService, 
@@ -52,6 +53,7 @@ export class PostComponent implements OnInit, OnChanges {
       this.isBookmarked=true
     }
   }
+  this.getLike()
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -69,7 +71,8 @@ export class PostComponent implements OnInit, OnChanges {
   //creates a new comment for this post and sends it to the database as a post
   submitReply = (e: any) => {
     e.preventDefault()
-    let newComment = new Post(0, this.commentForm.value.text || "", "", this.authService.currentUser, [])
+    let date:Date = new Date()
+    let newComment = new Post(0, this.commentForm.value.text || "", "", date, this.authService.currentUser, [])
     this.postService.upsertPost({...this.post, comments: [...this.post.comments, newComment]})
       .subscribe(
         (response) => {
@@ -105,20 +108,27 @@ export class PostComponent implements OnInit, OnChanges {
   }
   getLike(){
     this.likeService.getLike(this.post.id).subscribe(
-    (response) => {this.allLikes_eachpost = response}
+    (response) => {this.allLikes_eachpost = response
+    for(let listLikes of this.allLikes_eachpost)
+  if(listLikes.user.id == this.authService.currentUser.id)
+  this.isLiked = true
+}
+    
   )}
   
   addLike(){
-    if(this.isLiked){
+    if(!this.isLiked){
+      this.userLike = new Like(0, this.authService.currentUser, this.post)
       this.likeService.addLike(this.userLike).subscribe(
         (response) => {
           this.userLike = response
-        this.likeService.getLike(this.post.id)}
+        this.getLike()}
       )}
     else{
-      this.likeService.deleteLike(this.userLike).subscribe((response) => {
-        this.userUnlike = response
-        this.likeService.getLike(this.post.id)
-      })
+    this.userLike = new Like(0, this.authService.currentUser, this.post)
+    this.likeService.deleteLike(this.userLike).subscribe((response) => {
+     this.userUnlike = response
+     this.getLike()
+    })
     }
   }}
