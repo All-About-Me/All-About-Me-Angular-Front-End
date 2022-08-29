@@ -17,12 +17,12 @@ const testPost ={
   "comments": [],
   "author": user
 }
-const fakeBookmark:Bookmark ={
+const testBookmark:Bookmark ={
   "id": 1,
   "post": testPost,
   "user": user
 }
-const fakeBookmarkArray: Bookmark[] = [fakeBookmark];
+const testBookmarkArray: Bookmark[] = [testBookmark];
 
 describe('BookmarkService', () => {
   let service: BookmarkService;
@@ -51,9 +51,9 @@ describe('BookmarkService', () => {
 
     const request = controller.expectOne(`${expectedUrl}/${user.id}`);
 
-    request.flush(fakeBookmarkArray)
+    request.flush(testBookmarkArray)
 
-    expect(actualList).toEqual(fakeBookmarkArray)
+    expect(actualList).toEqual(testBookmarkArray)
 
     controller.verify();
   })
@@ -67,16 +67,16 @@ describe('BookmarkService', () => {
 
     const request = controller.expectOne(`${expectedUrl}`);
 
-    request.flush(fakeBookmark)
+    request.flush(testBookmark)
 
-    expect(actualBookmark).toEqual(fakeBookmark)
+    expect(actualBookmark).toEqual(testBookmark)
 
     controller.verify();
   })
 
   it('deletes a bookmark, given a bookmark', () => {
 
-    service.deleteBookmark(fakeBookmark).subscribe()
+    service.deleteBookmark(testBookmark).subscribe()
 
     const request = controller.expectOne(`${expectedUrl}`);
     request.flush({status: 200})
