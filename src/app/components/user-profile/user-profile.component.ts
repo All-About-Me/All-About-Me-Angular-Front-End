@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
 import User from "src/app/models/User";
 import { AuthService } from "src/app/services/auth.service";
 import { UserService } from "../../services/user.service";
@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { FollowerService } from "../../services/follower.service";
 import { Observable, Observer } from "rxjs";
+import { EventListenerFocusTrapInertStrategy } from "@angular/cdk/a11y";
+import { platformBrowserDynamicTesting } from "@angular/platform-browser-dynamic/testing";
 
 @Component({
   selector: "app-user-profile",
@@ -40,7 +42,9 @@ export class UserProfileComponent implements OnInit{
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
+      
   };
+  
   }
 
   ngOnInit(): void {
@@ -56,18 +60,18 @@ export class UserProfileComponent implements OnInit{
       this.user = data;
     });
 
-     this.followList$=this._followerService.getFollows(this.loggedInUser)
-     this.followList$.subscribe((data) => {
-       this.followList = data;
-     });
+    this.followList$=this._followerService.getFollows(this.loggedInUser)
+    this.followList$.subscribe((data) => {
+      this.followList = data;
+      this.isFollowing = this.checkIfFollowing();
+    });
 
-     this.followers$=this._followerService.getFollowers(this.loggedInUser)
-     this.followers$.subscribe((data)=> {
+    this.followers$=this._followerService.getFollowers(this.loggedInUser)
+    this.followers$.subscribe((data)=> {
       this.followers = data;
-     })
-
+    })
     // this.cd.detectChanges();
-   /* this.formChangesSubscription = this.ngForm.form.valueChanges.subscribe(
+  /* this.formChangesSubscription = this.ngForm.form.valueChanges.subscribe(
       (x) => {
         if (document.getElementById("confirmUpdate")) {
           document.getElementById("confirmUpdate")?.remove();
@@ -77,13 +81,10 @@ export class UserProfileComponent implements OnInit{
         }
       } 
     );*/
-
   }
 
-  ngAfterViewInit() {
-    this.cd.detectChanges();
-    
-  }
+
+
 
   checkIfFollowing():boolean{
       for (let i=0; i<this.followList.length; i++){
@@ -162,11 +163,12 @@ export class UserProfileComponent implements OnInit{
       );
       tag.appendChild(text);
       document.getElementById("followButton")?.append(tag);
+      
   }
 
   unfollow(){
     this._followerService.unfollow(this.loggedInUser.id, this.user.id).subscribe();
-    this.checkIfFollowing();
+    
   }
 
   viewFollowList(){
@@ -188,4 +190,15 @@ export class UserProfileComponent implements OnInit{
   resetPassword(): void {
     this.router.navigate(["/reset-password"]);
   }
-}
+
+  toggleFollow(){
+    if(this.isFollowing){
+      this.unfollow()
+      this.cd.detectChanges()
+    }else{
+      this.followUser()
+      this.cd.detectChanges()
+    }
+    this.isFollowing = !this.isFollowing
+    }
+  }
