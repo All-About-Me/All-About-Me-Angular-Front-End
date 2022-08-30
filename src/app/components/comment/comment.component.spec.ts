@@ -1,28 +1,29 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormControl, FormGroup, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import Post from 'src/app/models/Post';
 import User from 'src/app/models/User';
-import { AuthService } from 'src/app/services/auth.service';
-import { PostService } from 'src/app/services/post.service';
-import { ProfanityFilterService } from 'src/app/services/profanity-filter.service';
+
 
 import { CommentComponent } from './comment.component';
 
 describe('CommentComponent', () => {
-  let component: CommentHostComponent;
-  let fixture: ComponentFixture<CommentHostComponent>;
-
+  let component: CommentComponent;
+  let fixture: ComponentFixture<CommentComponent>;
+  let tempDate:Date = new Date();
+  let tempUser:User = new User(-1,"me@email.com","Me","Myself","1234567890","123 Example St.","Male","","City","State",123,"123");
+    
+  let tempPostsArray:Post[] = [];
+  let tempPost:Post= new Post(-1,"test string","",tempDate,tempUser,tempPostsArray);
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule, FormsModule],
-      declarations: [ CommentComponent , CommentHostComponent]
+      declarations: [ CommentComponent]
     }).compileComponents();
-    fixture = TestBed.createComponent(CommentHostComponent);
+    fixture = TestBed.createComponent(CommentComponent);
     component = fixture.componentInstance;
-    component.setInput();
+    component.inputComment = tempPost;
     fixture.detectChanges();
   });
 
@@ -35,31 +36,16 @@ describe('CommentComponent', () => {
   });
 
   it('submitReply should work', () => {
-    // let tempHTTPClint:HttpClientTestingModule = new HttpClientTestingModule();
-    // let tempPostService:PostService = new PostService(tempHTTPClint);
-    // let tempAuthService:AuthService = new AuthService();
-    // let tempProfanityService:ProfanityFilterService = new ProfanityFilterService();
-    // let subComponent:CommentComponent = new CommentComponent(tempPostService,tempAuthService,tempProfanityService);
+    let e:MockEvent = new MockEvent;
+    component.submitReply(e);
     
     console.log("testing submitReply");
 
   });
 
-  @Component({
-    selector:`host-component`,
-    template:'<app-comment [comment] = "input"></app-comment>'
-
-  }) 
-  class CommentHostComponent{
-    input: Post;
-
-    setInput(): void {
-      let tempDate:Date = new Date();
-      let tempUser:User = new User(-1,"me@email.com","Me","Myself","1234567890","123 Example St.","Male","","City","State",123,"123");
-    
-      let tempPosts:Post[] = [];
-      this.input= new Post(-1,"test string","",tempDate,tempUser,tempPosts);
-      console.log("Generated test input");
+  class MockEvent{
+    preventDefault = () =>{
+      // do nothing
     }
   }
 
