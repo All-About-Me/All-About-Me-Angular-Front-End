@@ -19,19 +19,10 @@ describe('UserProfileComponent', () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule, FormsModule],
       declarations: [ UserProfileComponent ],
-      providers:
-      [
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {params: {id: 2}}
-          }
-        }
-      ]
+      
     })
     .compileComponents();
-    authService =TestBed.inject(AuthService)    
-    authService.currentUser=testUser
+   
     fixture = TestBed.createComponent(UserProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -46,16 +37,7 @@ describe('UserProfileComponent', () => {
     expect(TestBed).toBeTruthy();
   });
 
-  it('should set the user based on activated route', ()=>{
-    component.ngOnInit()
-    expect(component.user).toEqual(testUser2);
-  })
-
-  it('should set the loggedInUser based on current user', ()=>{
-    component.ngOnInit()
-    expect(component.loggedInUser).toEqual(testUser);
-  })
-
+ 
   @Component({
     selector: "host-component",
     template: `<app-user-profile></app-user-profile>`,
