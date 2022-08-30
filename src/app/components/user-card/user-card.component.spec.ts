@@ -2,20 +2,30 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import User from 'src/app/models/User';
+import { AuthService } from 'src/app/services/auth.service';
 
 import { UserCardComponent } from './user-card.component';
 
+
 describe('UserCardComponent', () => {
-  let component: HostUserCardComponent;
-  let fixture: ComponentFixture<HostUserCardComponent>;
+  let component: UserCardComponent;
+  let fixture: ComponentFixture<UserCardComponent>;
+  let authService:AuthService;
+  const testUser = new User(5,"testuser@gmail.com",'Test','User','','','','','','',8,'password')
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule],
-      declarations: [ UserCardComponent ]
+      declarations: [ UserCardComponent ],
+      providers: [AuthService]
     })
     .compileComponents();
-    fixture = TestBed.createComponent(HostUserCardComponent);
+    authService =TestBed.inject(AuthService)    
+    authService.currentUser=testUser
+    fixture = TestBed.createComponent(UserCardComponent);
+
     component = fixture.componentInstance;
     fixture.detectChanges();
     
@@ -27,11 +37,15 @@ describe('UserCardComponent', () => {
   it("should be created", () => {
     expect(component).toBeTruthy();
   });
-  
-  @Component({
-    selector: `host-component`,
-    template:`<app-user-card></app-user-card>`
+
+  it('should set the user based on current user', ()=> {
+    
+    component.ngOnInit()
+
+    expect(component.user).toEqual(testUser)
+    
+
   })
-  class HostUserCardComponent{}
+  
 
 });

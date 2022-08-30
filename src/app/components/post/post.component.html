@@ -33,11 +33,11 @@
             <button style="border-radius: 5px; width: 60px;" type="submit">Post</button>
             
             <div  *ngIf="!isBookmarked else unbookmark">
-                <button mat-icon-button color="Gold" (click)="toggleBookmark()"><mat-icon>bookmark_border</mat-icon></button>
+                <button mat-icon-button color="Gold" (click)="toggleBookmark()" data-testId="bookmarkButton"><mat-icon>bookmark_border</mat-icon></button>
             </div>
             
             <ng-template #unbookmark>
-                <button mat-icon-button color="Yellow" (click)="toggleBookmark()"><mat-icon>bookmark</mat-icon></button>
+                <button mat-icon-button color="Yellow" (click)="toggleBookmark()" data-testId="unbookmarkButton"><mat-icon>bookmark</mat-icon></button>
             </ng-template>
         
         </mat-card-actions>
