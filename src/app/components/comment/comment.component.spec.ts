@@ -5,6 +5,9 @@ import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import Post from 'src/app/models/Post';
 import User from 'src/app/models/User';
+import { AuthService } from 'src/app/services/auth.service';
+import { PostService } from 'src/app/services/post.service';
+import { ProfanityFilterService } from 'src/app/services/profanity-filter.service';
 
 import { CommentComponent } from './comment.component';
 
@@ -31,17 +34,28 @@ describe('CommentComponent', () => {
     expect(TestBed).toBeTruthy();
   });
 
+  it('submitReply should work', () => {
+    // let tempHTTPClint:HttpClientTestingModule = new HttpClientTestingModule();
+    // let tempPostService:PostService = new PostService(tempHTTPClint);
+    // let tempAuthService:AuthService = new AuthService();
+    // let tempProfanityService:ProfanityFilterService = new ProfanityFilterService();
+    // let subComponent:CommentComponent = new CommentComponent(tempPostService,tempAuthService,tempProfanityService);
+    
+    console.log("testing submitReply");
+
+  });
+
   @Component({
     selector:`host-component`,
     template:'<app-comment [comment] = "input"></app-comment>'
 
-  })
+  }) 
   class CommentHostComponent{
     input: Post;
 
     setInput(): void {
-      let tempDate = new Date();
-      let tempUser = new User(-1,"me@email.com","Me","Myself","1234567890","123 Example St.","Male","","City","State",123,"123");
+      let tempDate:Date = new Date();
+      let tempUser:User = new User(-1,"me@email.com","Me","Myself","1234567890","123 Example St.","Male","","City","State",123,"123");
     
       let tempPosts:Post[] = [];
       this.input= new Post(-1,"test string","",tempDate,tempUser,tempPosts);
