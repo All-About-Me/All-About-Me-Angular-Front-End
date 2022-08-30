@@ -1,6 +1,6 @@
 <div *ngIf="!currentUserLikes; else alreadyLiked">
-    {{this.likeCount}}&nbsp;<button (click)="likePost()">Like</button>
+    {{this.likeCount}}&nbsp;<button mat-icon-button (click)="likePost()" [ngStyle]="{'color': '#F55887'}"><mat-icon>favorite_border</mat-icon></button>
 </div>
 <ng-template #alreadyLiked>
-    {{this.likeCount}}&nbsp; <button (click)="unlikePost()">Remove Like</button>
+    {{this.likeCount}}&nbsp; <button mat-icon-button (click)="unlikePost()" [ngStyle]="{'color': '#F55887'}"><mat-icon>favorite</mat-icon></button>
 </ng-template>
