@@ -20,8 +20,8 @@ describe('AuthService', () => {
       imports: [HttpClientTestingModule, RouterTestingModule],
       providers: [AuthService]
     });
-    service = TestBed.inject(AuthService); 
-    controller = TestBed.inject(HttpTestingController);
+   service = TestBed.inject(AuthService); 
+   controller = TestBed.inject(HttpTestingController);
   });
 
   it('should be created', () => {

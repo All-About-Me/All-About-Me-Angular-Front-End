@@ -60,8 +60,8 @@ describe("PostComponent", () => {
     component.toggleBookmark()
     expect(component.isBookmarked).toEqual(false)
   });
-  
 
+  
 
 
   @Component({

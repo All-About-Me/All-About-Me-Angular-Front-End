@@ -19,15 +19,9 @@
         
         
         <mat-card-actions align="end">
+
+            <app-like [post]="post"></app-like>
             
-            <div  *ngIf="!isLiked else unLike">
-                <button mat-icon-button color="accent" (click)="addLike()"><mat-icon>favorite_border</mat-icon>{{allLikes_eachpost.length}}</button>
-            </div>
-
-            <ng-template #unLike>
-                <button mat-icon-button (click)="addLike()"><mat-icon>favorite</mat-icon>{{allLikes_eachpost.length}}</button>
-            </ng-template> 
-
             <button style="border-radius: 5px; width: 60px;" (click)="toggleReplyToPost()">Reply</button>
 
             <button style="border-radius: 5px; width: 60px;" type="submit">Post</button>

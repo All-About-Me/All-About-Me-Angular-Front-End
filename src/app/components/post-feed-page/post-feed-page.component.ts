@@ -7,6 +7,7 @@ import Post from 'src/app/models/Post';
 import User from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookmarkService } from 'src/app/services/bookmark.service';
+import { LikeService } from 'src/app/services/like.service';
 import { PostService } from 'src/app/services/post.service';
 import { FollowerService } from '../../services/follower.service';
 import { ProfanityFilterService } from '../../services/profanity-filter.service';
@@ -40,7 +41,8 @@ export class PostFeedPageComponent implements OnInit {
     private authService: AuthService,
     private bookmarkService: BookmarkService,
     private fb: FormBuilder,
-    private router: Router,
+    private router: Router, 
+    private likeService:LikeService,
     private profanityFilterService:ProfanityFilterService
   ) {}
   users: User | any;
@@ -48,6 +50,9 @@ export class PostFeedPageComponent implements OnInit {
     this.postService.getAllPosts().subscribe((response) => {
       this.posts = response;
     });
+    if(this.authService.currentUser){
+      this.likeService.getAllMyLikes(this.authService.currentUser)
+      }
 
     this.loggedInUser = this.authService.currentUser;
     this.getBookmarks();
