@@ -4,7 +4,7 @@ import { ProfanityFilterService } from './profanity-filter.service';
 
 describe('ProfanityFilterService', () => {
   let service: ProfanityFilterService;
-
+  const profanityText:string = "words with Pizza";
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(ProfanityFilterService);
@@ -13,6 +13,10 @@ describe('ProfanityFilterService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should detect profanity', ()=>{
+    expect(service.validatePost(profanityText).valueOf()).toBeFalse();
+  })
 
   it('should refuse a banned word', () => {
     let bannedWord:string =service.bannedWords[1]
