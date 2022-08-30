@@ -18,13 +18,6 @@ describe("ResetPasswordComponent", () => {
     }
     
   }
-  const pwddata = <NgForm>{
-    value: {
-      currentPassword: 'password',
-    newPassword: 'password'
-    }
-    
-  }
   
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -33,6 +26,7 @@ describe("ResetPasswordComponent", () => {
     }).compileComponents();
     fixture = TestBed.createComponent(ResetPasswordComponent);
     component = fixture.componentInstance;
+    component.user = testUser;
     fixture.detectChanges();
   });
 
@@ -45,22 +39,11 @@ describe("ResetPasswordComponent", () => {
 
   it('onCall should change password', fakeAsync(()=>{
     component.user = testUser;
-    fixture.detectChanges();
-    console.log("formdata:")
     component.onCall(formdata);
     fixture.detectChanges();
     tick();
     expect(component.user.password).toEqual('pass')
-    tick();
   }))
 
-  it('onCall should not allow same password', fakeAsync(()=>{
-    component.user = testUser;
-    fixture.detectChanges();
-    component.onCall(pwddata);
-    fixture.detectChanges();
-    tick();
-    expect(component.user.password).toEqual('password')
-  }))
 });
 
