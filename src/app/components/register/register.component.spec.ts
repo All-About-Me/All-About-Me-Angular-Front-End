@@ -1,5 +1,6 @@
+import { Location } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable, of } from 'rxjs';
@@ -20,7 +21,7 @@ describe('RegisterComponent', () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([{ path: "register", component: RegisterComponent }]), FormsModule, ReactiveFormsModule],
       declarations: [ RegisterComponent ],
-      providers: [AuthService]
+      providers: [AuthService, Location]
     })
     .compileComponents();
     fixture = TestBed.createComponent(RegisterComponent);
@@ -31,11 +32,12 @@ describe('RegisterComponent', () => {
     spyOn(service, 'register').and.callFake(() => of(user))
     fixture.detectChanges();
   });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
   
-  // it('should register a user', () => {
+  // it('should register a user', fakeAsync( () => {
   //   const registerFormGroup = component.registerForm;
 
   //   registerFormGroup.get('firstName')?.setValue('Test')
@@ -44,7 +46,7 @@ describe('RegisterComponent', () => {
   //   registerFormGroup.get('password')?.setValue('password')
   //   component.onSubmit(registerFormGroup)
   //   fixture.detectChanges();
-
-  //   expect(location.pathname).toContain('register')
-  // });
+  //   tick()
+  //   expect(location.path()).toContain('login')
+  // }));
 });
