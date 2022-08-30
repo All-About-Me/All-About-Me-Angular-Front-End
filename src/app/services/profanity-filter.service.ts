@@ -9,7 +9,8 @@ bannedWords:string[] = [
   "shit",
   "bitch",
   "crap",
-  "damn"
+  "damn",
+  "pizza"
 ]
   constructor() { }
 
