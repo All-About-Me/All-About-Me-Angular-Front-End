@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import Bookmark from 'src/app/models/Bookmark';
-import { Like } from 'src/app/models/like.model';
+import Like from 'src/app/models/Like';
 import Post from 'src/app/models/Post';
 import User from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
@@ -32,11 +32,6 @@ export class PostComponent implements OnInit, OnChanges {
   @Output() bookmarkListChange = new EventEmitter<Post[]>()
   replyToPost: boolean = false
   isBookmarked:boolean = false
-  isLiked: boolean = false
-  totalLikes:Like[] = []
-  allLikes_eachpost: Like[] = [];
-  userLike: Like
-  userUnlike: Like;
 
   
 
@@ -44,7 +39,6 @@ export class PostComponent implements OnInit, OnChanges {
     private authService: AuthService, 
     private bookmarkService:BookmarkService,
     private router:Router,
-    private likeService: LikeService,
     private profanityFilterService:ProfanityFilterService) { }
 
     //when initialized, this post will check the list of bookmarks which it recieves from the post-feed-page.
@@ -55,7 +49,6 @@ export class PostComponent implements OnInit, OnChanges {
       this.isBookmarked=true
     }
   }
-  this.getLike()
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -115,29 +108,5 @@ export class PostComponent implements OnInit, OnChanges {
   viewProfile(){
     this.router.navigate(["/profile-page/"+this.post.author.id])
   }
-  getLike(){
-    this.likeService.getLike(this.post.id).subscribe(
-    (response) => {this.allLikes_eachpost = response
-    for(let listLikes of this.allLikes_eachpost)
-  if(listLikes.user.id == this.authService.currentUser.id)
-  this.isLiked = true
+
 }
-    
-  )}
-  
-  addLike(){
-    if(!this.isLiked){
-      this.userLike = new Like(0, this.authService.currentUser, this.post)
-      this.likeService.addLike(this.userLike).subscribe(
-        (response) => {
-          this.userLike = response
-        this.getLike()}
-      )}
-    else{
-    this.userLike = new Like(0, this.authService.currentUser, this.post)
-    this.likeService.deleteLike(this.userLike).subscribe((response) => {
-     this.userUnlike = response
-     this.getLike()
-    })
-    }
-  }}
