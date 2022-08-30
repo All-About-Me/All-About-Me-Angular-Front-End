@@ -55,13 +55,15 @@ export class PostComponent implements OnInit, OnChanges {
       }
     }
   }
-  check(imageUrl:any) : any {
+  check(imageUrl:string) : boolean {
     if(imageUrl.includes("youtube")){
       this.url = "https://www.youtube.com/embed/" + imageUrl.substring(32,43);
       this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
       //this.str = this.videoLink === "https://www.youtube.com/embed/nrZxwPwmgrw"
       // + imageUrl.substring(32,43)
       return true;
+    }else{
+      return false
     }
   }
   ngOnChanges(changes: SimpleChanges): void {

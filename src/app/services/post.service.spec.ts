@@ -17,10 +17,6 @@ describe('PostService', () => {
     service = TestBed.inject(PostService);
   });
 
-  afterEach(()=>{
-    
-  })
- 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });

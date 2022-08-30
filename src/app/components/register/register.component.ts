@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
   }
   
   onSubmit(e: any): void {
-    // e.preventDefault()
+    e.preventDefault()
     this.authService.register(this.registerForm.value.firstName || "", this.registerForm.value.lastName || "", this.registerForm.value.email || "", this.registerForm.value.password || "")
       .subscribe(
         (response) => {
