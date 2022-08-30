@@ -161,6 +161,7 @@ button {
 .sidebyside {
   display: inline-block;
   vertical-align: top;
+  width: 14.25em;
 }
 
 .post-feed-container {
