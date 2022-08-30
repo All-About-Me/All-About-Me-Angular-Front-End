@@ -38,15 +38,14 @@ describe('CommentComponent', () => {
   it('submitReply should work', () => {
     let e:MockEvent = new MockEvent;
     component.submitReply(e);
-    
+    // I think the best way to finish this test is to spy on postService.upsertPost and check that it has been called
+    // I am still working on how to do that. - MGE
     console.log("testing submitReply");
 
   });
 
   class MockEvent{
-    preventDefault = () =>{
-      // do nothing
-    }
+    preventDefault = () =>{}  // do nothing
   }
 
 });
