@@ -14,7 +14,7 @@
             <input class="custom-search-input" #box type="text" formControlName="search_field"
                 placeholder="Search user's first or last name!">
             <ul *ngFor="let user of users; let indexOfElement =index;">
-                <li style="list-style:none" *ngIf="box.value== user.firstName|| box.value == user.lastName">User Email:
+                <li style="list-style:none" *ngIf="(box.value|lowercase)== (user.firstName|lowercase)|| (box.value|lowercase) == (user.lastName|lowercase)">User Email:
                     {{
                     user.email }}<br> User First Name:
                     {{ user.firstName }}<br> User Last Name: {{user.lastName}}<br> User Id: {{user.id}}
