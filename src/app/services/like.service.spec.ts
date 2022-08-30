@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { environment } from 'src/environments/environment';
-import { Like } from '../models/like.model';
+import Like from '../models/Like';
 import User from '../models/User';
 
 import { LikeService } from './like.service';
@@ -44,7 +44,7 @@ describe('LikeService', () => {
 
   it('should get a list of likes given a post id', () => {
     let actualList: Like[] | undefined;
-    service.getLike(testPost.id).subscribe((otherList) => {
+    service.getAllLikesForPost(testPost).subscribe((otherList) => {
       actualList=otherList
     } )
 
@@ -60,7 +60,7 @@ describe('LikeService', () => {
   it('should add a like', () => {
     let actualLike:Like | undefined
 
-    service.addLike(testLike).subscribe((otherLike) => {
+    service.likePost(user,testPost).subscribe((otherLike) => {
       actualLike=otherLike
     } )
 
@@ -76,8 +76,8 @@ describe('LikeService', () => {
   it('should delete a like', () => {
     let actualLike:Like | undefined
 
-    service.deleteLike(testLike).subscribe((otherLike) => {
-      actualLike=otherLike
+    service.unLike(testLike).subscribe((otherLike) => {
+      // actualLike=otherLike
     } )
 
     const request = controller.expectOne(`${expectedUrl}/remove`);
