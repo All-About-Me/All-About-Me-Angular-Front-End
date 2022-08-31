@@ -14,4 +14,7 @@ describe('LocationService', () => {
     let stateListTest=service.getStates();
     expect(service.states).toEqual(stateListTest)
   });
+  it('it should get all states', () =>{
+    expect(service.getStates().length).toEqual(50)
+  })
 });
