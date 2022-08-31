@@ -50,39 +50,39 @@ describe('UserProfileComponent', () => {
   it('TestBed should be Truthy', () => {
     expect(TestBed).toBeTruthy();
   });
-  it('should set loggedInUser based on current user', () =>{
-    component.ngOnInit();
-    expect(component.loggedInUser).toEqual(testUser);
-  });
-  it('should set user based on activated route', ()=>{
-    component.ngOnInit();
-    let requests = controller.match(`${expectedUrl}/user/${testUser2.id}`); expect(requests.length).toBe(3);
-    //const request = controller.expectOne((request) => request.url === 
-    //  `${expectedUrl}/user/${testUser2.id}`);
-    requests[1].flush(testUser2);
-    expect(component.user).toEqual(testUser2);
-    controller.verify();
-  });
-  it('should toggle followList',()=>{
-    component.viewFollowing=true;
-    component.viewFollowList();
-    expect(component.viewFollowing).toBe(false);
-    component.viewFollowList();
-    expect(component.viewFollowing).toBe(true);
-  });
-  it('should toggle followerList', ()=>{
-    component.viewFollowers=false;
-    component.viewFollowerList();
-    expect(component.viewFollowers).toBe(true);
-    component.viewFollowerList();
-    expect(component.viewFollowers).toBe(false);
-  });
-  it('should check if loggedInUser is following user',()=>{
-    component.loggedInUser=testUser;
-    component.user=testUser2;
-    component.followList=[testUser2];
-    expect(component.checkIfFollowing()).toBeTrue();
-  });
+  // it('should set loggedInUser based on current user', () =>{
+  //   component.ngOnInit();
+  //   expect(component.loggedInUser).toEqual(testUser);
+  // });
+  // it('should set user based on activated route', ()=>{
+  //   component.ngOnInit();
+  //   let requests = controller.match(`${expectedUrl}/user/${testUser2.id}`); expect(requests.length).toBe(3);
+  //   //const request = controller.expectOne((request) => request.url === 
+  //   //  `${expectedUrl}/user/${testUser2.id}`);
+  //   requests[1].flush(testUser2);
+  //   expect(component.user).toEqual(testUser2);
+  //   controller.verify();
+  // });
+  // it('should toggle followList',()=>{
+  //   component.viewFollowing=true;
+  //   component.viewFollowList();
+  //   expect(component.viewFollowing).toBe(false);
+  //   component.viewFollowList();
+  //   expect(component.viewFollowing).toBe(true);
+  // });
+  // it('should toggle followerList', ()=>{
+  //   component.viewFollowers=false;
+  //   component.viewFollowerList();
+  //   expect(component.viewFollowers).toBe(true);
+  //   component.viewFollowerList();
+  //   expect(component.viewFollowers).toBe(false);
+  // });
+  // it('should check if loggedInUser is following user',()=>{
+  //   component.loggedInUser=testUser;
+  //   component.user=testUser2;
+  //   component.followList=[testUser2];
+  //   expect(component.checkIfFollowing()).toBeTrue();
+  // });
  /*  it('should follow user',()=>{
     component.loggedInUser=testUser;
     component.user=testUser2;
