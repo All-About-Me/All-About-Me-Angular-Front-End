@@ -10,7 +10,8 @@ describe('LocationService', () => {
     service = TestBed.inject(LocationService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('should get the state list', () => {
+    let stateListTest=service.getStates();
+    expect(service.states).toEqual(stateListTest)
   });
 });
