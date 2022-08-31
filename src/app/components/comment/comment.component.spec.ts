@@ -44,15 +44,12 @@ describe('CommentComponent', () => {
     expect(TestBed).toBeTruthy();
   });
 
-  it('submitReply should be called', () => {
-
+  it('upsertPost should be called on submitReply', () => {
     let e:MockEvent = new MockEvent;
     component.submitReply(e);
-    // I think the best way to finish this test is to spy on postService.upsertPost and check that it has been called
-    // I am still working on how to do that. - MGE
     expect(postSpy).toHaveBeenCalled();
-
   });
+
 
   class MockEvent{
     preventDefault = () =>{}  // do nothing
