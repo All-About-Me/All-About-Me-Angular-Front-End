@@ -121,6 +121,7 @@ export class PostFeedPageComponent implements OnInit {
     else{
       alert('Your post contains words banned from this application.');
     }
+    this.postForm.setValue({'text':'','imageUrl':''})
   };
 
 

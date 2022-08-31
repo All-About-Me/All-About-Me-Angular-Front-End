@@ -19,7 +19,7 @@ describe('RegisterComponent', () => {
   let location:Location;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([{ path: "register", component: RegisterComponent }]), FormsModule, ReactiveFormsModule],
+      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([{ path: "login", component: RegisterComponent }]), FormsModule, ReactiveFormsModule],
       declarations: [ RegisterComponent ],
       providers: [AuthService, Location]
     })
@@ -37,16 +37,16 @@ describe('RegisterComponent', () => {
     expect(component).toBeTruthy();
   });
   
-  // it('should register a user', fakeAsync( () => {
-  //   const registerFormGroup = component.registerForm;
+  it('should register a user', fakeAsync( () => {
+    const registerFormGroup = component.registerForm;
 
-  //   registerFormGroup.get('firstName')?.setValue('Test')
-  //   registerFormGroup.get('lastName')?.setValue('User')
-  //   registerFormGroup.get('email')?.setValue('testuser@gmail.com')
-  //   registerFormGroup.get('password')?.setValue('password')
-  //   component.onSubmit(registerFormGroup)
-  //   fixture.detectChanges();
-  //   tick()
-  //   expect(location.path()).toContain('login')
-  // }));
+    registerFormGroup.get('firstName')?.setValue('Test')
+    registerFormGroup.get('lastName')?.setValue('User')
+    registerFormGroup.get('email')?.setValue('testuser@gmail.com')
+    registerFormGroup.get('password')?.setValue('password')
+    component.onSubmit(new Event('click'))
+    fixture.detectChanges();
+    tick()
+    expect(location.path()).toContain('login')
+  }));
 });

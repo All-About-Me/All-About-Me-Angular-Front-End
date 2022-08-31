@@ -50,7 +50,8 @@ describe('BookmarkService', () => {
     } )
 
     const request = controller.expectOne(`${expectedUrl}/${user.id}`);
-
+    
+    
     request.flush(testBookmarkArray)
 
     expect(actualList).toEqual(testBookmarkArray)
