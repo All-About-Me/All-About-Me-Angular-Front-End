@@ -13,4 +13,7 @@ describe('LocationService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+  it('it should get all states', () =>{
+    expect(service.getStates().length).toEqual(50)
+  })
 });
