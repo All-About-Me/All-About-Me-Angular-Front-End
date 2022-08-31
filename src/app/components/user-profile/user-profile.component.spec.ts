@@ -54,22 +54,28 @@ describe('UserProfileComponent', () => {
     component.ngOnInit();
     expect(component.loggedInUser).toEqual(testUser);
   });
- /* it('should set user based on activated route', ()=>{
-    component.ngOnInit();
-    const request = controller.expectOne(`${expectedUrl}/user/${testUser2.id}`);
+  it('should set user based on activated route', ()=>{
+    component.getRouteId();
+    component.getUser();
+    const request = controller.expectOne((request) => request.url === 
+      `${expectedUrl}/user/${testUser2.id}`);
     request.flush(testUser2);
     expect(component.user).toEqual(testUser2);
     controller.verify();
-  })*/
+  });
   it('should toggle followList',()=>{
     component.viewFollowing=true;
     component.viewFollowList();
     expect(component.viewFollowing).toBe(false);
+    component.viewFollowList();
+    expect(component.viewFollowing).toBe(true);
   });
   it('should toggle followerList', ()=>{
     component.viewFollowers=false;
     component.viewFollowerList();
     expect(component.viewFollowers).toBe(true);
+    component.viewFollowerList();
+    expect(component.viewFollowers).toBe(false);
   });
   it('should check if loggedInUser is following user',()=>{
     component.loggedInUser=testUser;
@@ -77,14 +83,23 @@ describe('UserProfileComponent', () => {
     component.followList=[testUser2];
     expect(component.checkIfFollowing()).toBeTrue();
   });
-  /*it('should follow user',()=>{
+  it('should follow user',()=>{
     component.loggedInUser=testUser;
     component.user=testUser2;
     component.followUser()
     const request = controller.expectOne(`${expectedUrl}/follower/${testUser.id}/add`);
     expect(request).toBeTruthy();
     controller.verify();
-  });*/
+  });
+  it('should get FollowList', ()=>{
+    component.loggedInUser=testUser;
+    component.getFollowing();
+    const request = controller.expectOne(`${expectedUrl}/follower/following/${testUser.id}`);
+    request.flush([testUser2]);
+    
+    expect(component.followList).toEqual([testUser2]);
+    controller.verify();
+  })
 
  
   @Component({

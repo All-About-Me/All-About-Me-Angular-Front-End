@@ -132,7 +132,8 @@ export class PostFeedPageComponent implements OnInit {
   };
 
   linkAll = (input: any) => {
-    this.router.navigate(["/profile-page/" + (input + 1)]);
+    console.log(input);
+    this.router.navigate(["/profile-page/" + (input)]);
   };
 
 }

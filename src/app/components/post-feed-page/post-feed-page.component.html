@@ -18,7 +18,7 @@
                     {{
                     user.email }}<br> User First Name:
                     {{ user.firstName }}<br> User Last Name: {{user.lastName}}<br> User Id: {{user.id}}
-                    <button (click)="linkAll(indexOfElement)">View user profile </button>
+                    <button (click)="linkAll(user.id)">View user profile </button>
                 </li>
             </ul>
         </form>
