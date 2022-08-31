@@ -1,9 +1,11 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import Post from 'src/app/models/Post';
 import User from 'src/app/models/User';
+import { PostService } from 'src/app/services/post.service';
 
 
 import { CommentComponent } from './comment.component';
@@ -16,6 +18,10 @@ describe('CommentComponent', () => {
     
   let tempPostsArray:Post[] = [];
   let tempPost:Post= new Post(-1,"test string","",tempDate,tempUser,tempPostsArray);
+  let debugElement:DebugElement;
+  let postService:PostService;
+  let postSpy:any;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule, FormsModule],
@@ -24,6 +30,9 @@ describe('CommentComponent', () => {
     fixture = TestBed.createComponent(CommentComponent);
     component = fixture.componentInstance;
     component.inputComment = tempPost;
+    debugElement = fixture.debugElement;
+    postService = debugElement.injector.get(PostService);
+    postSpy = spyOn(postService, "upsertPost").and.callThrough();
     fixture.detectChanges();
   });
 
@@ -35,12 +44,13 @@ describe('CommentComponent', () => {
     expect(TestBed).toBeTruthy();
   });
 
-  it('submitReply should work', () => {
+  it('submitReply should be called', () => {
+
     let e:MockEvent = new MockEvent;
     component.submitReply(e);
     // I think the best way to finish this test is to spy on postService.upsertPost and check that it has been called
     // I am still working on how to do that. - MGE
-    console.log("testing submitReply");
+    expect(postSpy).toHaveBeenCalled();
 
   });
 
