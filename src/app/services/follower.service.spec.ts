@@ -57,4 +57,26 @@ describe("FollowerService", () => {
 
     controller.verify();
   })
+
+  it('adds a new follower', () => {
+    
+    service.addFollow(testUser,testUser2).subscribe()
+
+    const request = controller.expectOne(`${expectedUrl}/${testUser.id}/add`);
+
+    expect(request).toBeTruthy()
+
+    controller.verify();
+  })
+
+  it('deletes a follower', () => {
+    
+    service.unfollow(5,2).subscribe()
+
+    const request = controller.expectOne(`${expectedUrl}/5/2`);
+
+    expect(request).toBeTruthy()
+
+    controller.verify();
+  })
 });
