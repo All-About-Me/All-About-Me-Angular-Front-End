@@ -48,7 +48,7 @@ export class ResetPasswordComponent implements OnInit {
     } else {
       // alert("Current Password Incorect");
       this.info=true;
-      this.notice = "Current password incorect!";
+      this.notice = "Current password incorrect!";
     }
   }
 }
